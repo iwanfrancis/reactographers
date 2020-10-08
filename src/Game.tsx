@@ -1,5 +1,6 @@
 import React from 'react';
 import Board from './components/Grid/Grid';
+import styles from './Game.module.scss';
 import { Props, State } from './types';
 export default class Game extends React.PureComponent<Props, State> {
   state: State = {
@@ -17,6 +18,6 @@ export default class Game extends React.PureComponent<Props, State> {
   }
 
   render() {
-    return <div>{this.renderGrid()}</div>;
+    return <div className={styles.gameWrapper}>{this.renderGrid()}</div>;
   }
 }
