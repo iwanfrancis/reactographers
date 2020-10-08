@@ -1,7 +1,7 @@
 import React from 'react';
-import Board from './components/Grid/Grid';
+import Board from '../Grid/Grid';
 import styles from './Game.module.scss';
-import { Props, State } from './types';
+import { Props, State } from '../../types';
 export default class Game extends React.PureComponent<Props, State> {
   state: State = {
     gridValues: Array(11).fill(Array(11).fill(null)),
