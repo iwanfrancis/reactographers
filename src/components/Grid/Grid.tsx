@@ -1,13 +1,13 @@
 import React from 'react';
 import Square from '../Square/Square';
 import styles from './Grid.module.scss';
-import { Terrain } from '../../constants/Terrains';
+import GridData from '../../modules/GridData';
 
 export interface Props {
   columns: number;
   rows: number;
-  gridData: Terrain[][];
-  overlay: Terrain[][];
+  gridData: GridData;
+  overlay: GridData;
   onSquareClick: (x: number, y: number) => any;
   onSquareHoverOn: (x: number, y: number) => any;
 }
@@ -20,8 +20,8 @@ export default class Grid extends React.PureComponent<Props> {
     for (let row = 0; row < rows; row++) {
       const squareRow = [];
       for (let column = 0; column < columns; column++) {
-        let squareType = gridData[row][column];
-        let overlayType = overlay[row][column]
+        let squareType = gridData.get(row, column);
+        let overlayType = overlay.get(row, column)
         squareRow.push(
           <Square 
             key={`${row}:${column}`} 
