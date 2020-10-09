@@ -13,7 +13,7 @@ export interface Props {
 export default class Square extends React.PureComponent<Props> {
   render() {
     const { x, y, squareType, onClick = () => {} } = this.props;
-    const squareCssClass = classNames(styles.square, squareType === 'trees' ? styles.trees : undefined);
+    const squareCssClass = classNames(styles.square, squareType ? styles[squareType] : null);
 
     return <div className={squareCssClass} onClick={() => onClick(x, y)}></div>;
   }

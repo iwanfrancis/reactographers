@@ -12,7 +12,7 @@ export default class Game extends React.PureComponent<Props, State> {
   handleSquareClick = (x: number, y: number) => {
     const gridValues = this.state.gridValues;
     const newGridValues = gridValues.slice();
-    newGridValues[x][y] = 'trees';
+    newGridValues[x][y] = 'village';
     this.setState({ gridValues: newGridValues });
   };
 
