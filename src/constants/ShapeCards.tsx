@@ -1,12 +1,13 @@
 import { Terrain } from "./Terrains";
 
-type Shape = boolean[][][];
+export type Shape = number[][];
+type ShapeRotations = Shape[];
 
 export interface ShapeCard {
     name: string;
     time: number;
     terrains: Terrain[];
-    shapes: Shape[]
+    shapes: ShapeRotations[]
 }
 
 export const FishingVillage = {
