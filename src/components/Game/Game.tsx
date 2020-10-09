@@ -62,7 +62,7 @@ export default class Game extends React.PureComponent<Props, State> {
     let emptyOverlay = new Array(11).fill(null).map(() => {
       return new Array(11).fill(null);
     })
-    const newOverlay = this.addShapeToGrid(emptyOverlay, Terrain.Village, FishingVillage.shapes[0][0], x, y)
+    const newOverlay = this.addShapeToGrid(emptyOverlay, Terrain.Farm, FishingVillage.shapes[0][0], x, y)
     this.setState({
       overlay: newOverlay
     });

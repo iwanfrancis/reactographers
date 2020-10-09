@@ -21,15 +21,14 @@ export default class Grid extends React.PureComponent<Props> {
       const squareRow = [];
       for (let column = 0; column < columns; column++) {
         let squareType = gridData[row][column];
-        if (overlay[row][column]) {
-          squareType = overlay[row][column]
-        }
+        let overlayType = overlay[row][column]
         squareRow.push(
           <Square 
             key={`${row}:${column}`} 
             x={row} 
             y={column} 
             squareType={squareType}
+            overlayType={overlayType}
             onClick={onSquareClick}
             onSquareHoverOn={onSquareHoverOn}/>
         );
