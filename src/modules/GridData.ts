@@ -24,5 +24,24 @@ export default class GridData {
         }
       }
     }
-  
+
+    // Check if a move is legal
+    moveIsLegal(shape: Shape, x: number, y: number) {
+      for (let shX = 0; shX < 4; shX++) {
+        for (let shY = 0; shY < 4; shY++) {
+          const xOffset = (x + shX - 1);
+          const yOffset = (y + shY - 1);
+          if (shape[shX][shY])  {
+            if ( xOffset < 0 || xOffset >= this.grid[0].length
+              || yOffset < 0 || yOffset >= this.grid.length
+              || this.grid[xOffset][yOffset]
+            ) {
+              console.error('Move is illegal')
+              return false
+              }
+          } 
+        }
+      }
+      return true
+    }
   }

@@ -38,7 +38,11 @@ export default class Game extends React.PureComponent<Props, State> {
     const gameHistory = this.state.gameHistory;
     const currentGridData = gameHistory[gameHistory.length - 1].gridData;
     const newGridData = _.clone(currentGridData)
-    newGridData.addShape(Terrain.Monster, FishingVillage.shapes[0][0], x, y)
+    
+    if (newGridData.moveIsLegal(FishingVillage.shapes[0][0], x, y)) {
+      newGridData.addShape(Terrain.Monster, FishingVillage.shapes[0][0], x, y)
+    }
+
     this.setState({
       gameHistory: gameHistory.concat([{
         gridData: newGridData,
