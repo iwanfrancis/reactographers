@@ -9,13 +9,21 @@ export interface Props {
   y: number;
   squareType?: Terrain;
   onClick: (x: number, y: number) => any;
+  onSquareHoverOn: (x: number, y: number) => any;
 }
 
 export default class Square extends React.PureComponent<Props> {
   render() {
-    const { x, y, squareType, onClick = () => {} } = this.props;
+    const { x, y, squareType, onClick = () => {}, onSquareHoverOn = () => {} } = this.props;
     const squareCssClass = classNames(styles.square, squareType ? styles[squareType] : null);
 
-    return <div className={squareCssClass} onClick={() => onClick(x, y)}></div>;
+    return (
+      <div 
+        className={squareCssClass}
+        onClick={() => onClick(x, y)}
+        onMouseEnter={() => onSquareHoverOn(x,y)}>
+      </div>
+    )
   }
 }
+
