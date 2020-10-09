@@ -2,11 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 
 import styles from './Square.module.scss';
+import { Terrain } from '../../constants/Terrains';
 
 export interface Props {
   x: number;
   y: number;
-  squareType?: string;
+  squareType?: Terrain;
   onClick: (x: number, y: number) => any;
 }
 

@@ -1,6 +1,8 @@
 import React from 'react';
+
 import Board from '../Grid/Grid';
 import styles from './Game.module.scss';
+import { Terrain } from '../../constants/Terrains';
 
 export interface Props {
   columns: number;
@@ -8,7 +10,7 @@ export interface Props {
 }
 
 export interface GameState {
-  gridData: string[][]
+  gridData: Terrain[][]
 }
 
 export interface State {
@@ -20,7 +22,7 @@ export default class Game extends React.PureComponent<Props, State> {
   state: State = {
     gameHistory: [{
       gridData: new Array(11).fill(null).map(() => {
-        return new Array(11).fill(false);
+        return new Array(11).fill(null);
       }),
     }]
   };
@@ -29,7 +31,7 @@ export default class Game extends React.PureComponent<Props, State> {
     const gameHistory = this.state.gameHistory;
     const currentgridData = gameHistory[gameHistory.length - 1].gridData;
     const newGridData = currentgridData.slice();
-    newGridData[x][y] = 'village';
+    newGridData[x][y] = Terrain.Village;
     this.setState({
       gameHistory: gameHistory.concat([{
         gridData: newGridData,

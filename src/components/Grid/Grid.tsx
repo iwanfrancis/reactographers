@@ -1,11 +1,12 @@
 import React from 'react';
 import Square from '../Square/Square';
 import styles from './Grid.module.scss';
+import { Terrain } from '../../constants/Terrains';
 
 export interface Props {
   columns: number;
   rows: number;
-  gridData: string[][];
+  gridData: Terrain[][];
   onSquareClick: (x: number, y: number) => any;
 }
 
