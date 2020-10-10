@@ -19,6 +19,7 @@ export interface State {
   exploreDeck: ExploreDeck;
   currentTerrain: Terrain | null;
   currentShape: Shape | null;
+  currentRotation: number;
 }
 
 export default class Game extends React.PureComponent<Props, State> {
@@ -30,18 +31,19 @@ export default class Game extends React.PureComponent<Props, State> {
     })),
     exploreDeck: new ExploreDeck(),
     currentTerrain: null,
-    currentShape: null
+    currentShape: null,
+    currentRotation: 0
   };
 
 
   handleSquareClick = (x: number, y: number) => {
-    const { mapHistory, currentTerrain, currentShape } = this.state;
+    const { mapHistory, currentTerrain, currentShape, currentRotation } = this.state;
     const currentMapData = mapHistory[mapHistory.length - 1];
     const newMapData = _.clone(currentMapData)
     
     if (currentTerrain && currentShape) {
       if (newMapData.moveIsLegal(ShapeCards[1].shapes[0][0], x, y)) {
-        newMapData.addShape(currentTerrain, currentShape[0], x, y)
+        newMapData.addShape(currentTerrain, currentShape[currentRotation], x, y)
       }
   
       this.setState({
@@ -50,29 +52,48 @@ export default class Game extends React.PureComponent<Props, State> {
     }
   }
 
-  handleSquareHoverOn = (x: number, y: number) => {
-    const { currentTerrain, currentShape } = this.state;
+  setOverlay = (x: number, y: number) => {
+    const { currentTerrain, currentShape, currentRotation } = this.state;
 
     if (currentTerrain && currentShape) {
       const newOverlay = new MapData(new Array(11).fill(null).map(() => {
         return new Array(11).fill(null);
       }));
-      newOverlay.addShape(currentTerrain, currentShape[0], x, y)
+      newOverlay.addShape(currentTerrain, currentShape[currentRotation], x, y)
       this.setState({
         overlay: newOverlay
       });
     }
   }
 
+  handleShapeRotate = (x: number , y: number) => {
+    const { currentShape, currentRotation } = this.state;
+    let newRotation = currentRotation;
+    if (currentShape) {
+      if ((currentShape.length - 1) <= currentRotation) {
+        newRotation = 0;
+      } else {
+        newRotation = currentRotation + 1;
+      }
+
+      this.setState({
+        currentRotation: newRotation
+      })
+
+      this.setOverlay(x, y);
+    }
+  }
+
   setCurrentTerrain = (terrain: Terrain) => {
     this.setState({
-      currentTerrain: terrain
+      currentTerrain: terrain,
     })
   }
 
   setCurrentShape = (shape: Shape) => {
     this.setState({
-      currentShape: shape
+      currentShape: shape,
+      currentRotation: 0
     })
   }
 
@@ -84,7 +105,8 @@ export default class Game extends React.PureComponent<Props, State> {
         mapData={currentMapData}
         overlay={overlay}
         onSquareClick={this.handleSquareClick} 
-        onSquareHoverOn={this.handleSquareHoverOn}/>
+        onSquareHoverOn={this.setOverlay}
+        onRotateShape={this.handleShapeRotate}/>
     )
   }
 
