@@ -4,15 +4,19 @@ import _ from 'lodash';
 import Grid from '../Grid/Grid';
 import styles from './Game.module.scss';
 import MapData from '../../classes/MapData';
+import ShapeCards from '../../constants/ShapeCards';
 import { Terrain } from '../../constants/Terrains';
-import { FishingVillage } from '../../constants/ShapeCards';
 import { NormalMap } from '../../constants/Maps';
+import ExploreDeck from '../../classes/ExploreDeck';
+import { Card } from '../../constants/Card';
+import CurrentCard from '../CurrentCard/CurrentCard';
 
 export interface Props {}
 
 export interface State {
   mapHistory: MapData[];
   overlay: MapData;
+  exploreDeck: ExploreDeck;
 }
 
 export default class Game extends React.PureComponent<Props, State> {
@@ -22,6 +26,7 @@ export default class Game extends React.PureComponent<Props, State> {
     overlay: new MapData(new Array(11).fill(null).map(() => {
       return new Array(11).fill(null);
     })),
+    exploreDeck: new ExploreDeck()
   };
 
   handleSquareClick = (x: number, y: number) => {
@@ -29,8 +34,8 @@ export default class Game extends React.PureComponent<Props, State> {
     const currentMapData = mapHistory[mapHistory.length - 1];
     const newMapData = _.clone(currentMapData)
     
-    if (newMapData.moveIsLegal(FishingVillage.shapes[0][0], x, y)) {
-      newMapData.addShape(Terrain.Monster, FishingVillage.shapes[0][0], x, y)
+    if (newMapData.moveIsLegal(ShapeCards[1].shapes[0][0], x, y)) {
+      newMapData.addShape(Terrain.Monster,ShapeCards[1].shapes[0][0], x, y)
     }
 
     this.setState({
@@ -42,7 +47,7 @@ export default class Game extends React.PureComponent<Props, State> {
     const newOverlay = new MapData(new Array(11).fill(null).map(() => {
       return new Array(11).fill(null);
     }));
-    newOverlay.addShape(Terrain.Farm, FishingVillage.shapes[0][0], x, y)
+    newOverlay.addShape(Terrain.Farm, ShapeCards[1].shapes[0][0], x, y)
     this.setState({
       overlay: newOverlay
     });
@@ -60,7 +65,20 @@ export default class Game extends React.PureComponent<Props, State> {
     )
   }
 
+  renderCurrentCard() {
+    const currentCard = this.state.exploreDeck.draw();
+    return (
+      <CurrentCard card={currentCard} />
+    )
+  }
+
   render() {
-    return <div className={styles.gameWrapper}>{this.renderGrid()}</div>;
+    return (
+      <div className={styles['game-wrapper']}>
+        <div></div>
+        <div>{this.renderGrid()}</div>
+        <div>{this.renderCurrentCard()}</div>
+      </div>
+    )
   }
 }

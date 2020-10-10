@@ -1,4 +1,4 @@
-import { Shape } from "../constants/ShapeCards";
+import { Shape } from "../constants/Card";
 import { Terrain } from "../constants/Terrains";
 
 export default class MapData {
