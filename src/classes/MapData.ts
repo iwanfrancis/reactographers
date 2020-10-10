@@ -2,9 +2,9 @@ import { Shape } from "../constants/ShapeCards";
 import { Terrain } from "../constants/Terrains";
 
 export default class MapData {
-    grid: Terrain[][]
+    grid: (Terrain | undefined)[][]
   
-    constructor(grid: Terrain[][]) {
+    constructor(grid: (Terrain | undefined)[][]) {
       this.grid = grid
     }
   

@@ -6,6 +6,7 @@ import styles from './Game.module.scss';
 import MapData from '../../classes/MapData';
 import { Terrain } from '../../constants/Terrains';
 import { FishingVillage } from '../../constants/ShapeCards';
+import { NormalMap } from '../../constants/Maps';
 
 export interface Props {
   columns: number;
@@ -25,9 +26,7 @@ export default class Game extends React.PureComponent<Props, State> {
   // Set up initial game state
   state: State = {
     gameHistory: [{
-      mapData: new MapData(new Array(11).fill(null).map(() => {
-        return new Array(11).fill(null);
-      })),
+      mapData: new MapData(NormalMap.grid)
     }],
     overlay: new MapData(new Array(11).fill(null).map(() => {
       return new Array(11).fill(null);

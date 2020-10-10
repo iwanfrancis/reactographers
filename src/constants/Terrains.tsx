@@ -3,5 +3,6 @@ export enum Terrain {
     Village = 'village',
     Farm = 'farm',
     Water = 'water',
-    Monster = 'monster'
+    Monster = 'monster',
+    Mountain = 'mountain'
 }
