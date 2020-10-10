@@ -24,15 +24,26 @@
         display: flex;
         flex-grow: 1;
         border-bottom: 1px solid black;
+        cursor: pointer;
 
         .terrain {
             display: flex;
             justify-content: center;
             align-items: center;
             flex-grow: 1;
+            border: 3px solid transparent;
 
-            &:nth-child(2) {
-                border-left: 1px solid black;
+            &:hover {
+                border: 3px solid lightgray;
+            }
+
+            .terrain-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            &.active {
+                border: 3px solid red;
             }
         }
     }
@@ -40,16 +51,28 @@
     .shapes {
         display: flex;
         flex-grow: 1;
+        cursor: pointer;
 
         .shape {
             display: flex;
             justify-content: center;
             align-items: center;
             flex-grow: 1;
+            border: 3px solid transparent;
 
-            &:nth-child(2) {
-                border-left: 1px solid black;
+            &:hover {
+                border: 3px solid lightgray;
+            }
+
+            &.active {
+                border: 3px solid red;
             }
         }
     }
+}
+
+.divider {
+    width: 1px;
+    background-color: black;
+    height: 100%;
 }

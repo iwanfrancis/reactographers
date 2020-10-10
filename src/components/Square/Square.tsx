@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import styles from './Square.module.scss';
+import terrainStyles from '../../constants/Terrains.module.scss'
 import { Terrain } from '../../constants/Terrains';
 
 export interface Props {
@@ -16,8 +17,8 @@ export interface Props {
 export default class Square extends React.PureComponent<Props> {
   render() {
     const { x, y, squareType, overlayType, onClick = () => {}, onSquareHoverOn = () => {} } = this.props;
-    const squareCssClass = classNames(styles.square, squareType ? styles[squareType] : null);
-    const overlayCssClass = classNames(styles.overlay, overlayType ? styles[overlayType] : null);
+    const squareCssClass = classNames(styles.square, squareType ? terrainStyles[squareType] : null);
+    const overlayCssClass = classNames(styles.overlay, overlayType ? terrainStyles[overlayType] : null);
 
     return (
       <div 

@@ -90,8 +90,14 @@ export default class Game extends React.PureComponent<Props, State> {
 
   renderCurrentCard() {
     const currentCard = this.state.exploreDeck.getCurrentCard();
+    const {currentShape, currentTerrain } = this.state;
     return (
-      <CurrentCard card={currentCard} setCurrentShape={this.setCurrentShape} setCurrentTerrain={this.setCurrentTerrain}/>
+      <CurrentCard 
+        card={currentCard}
+        currentShape={currentShape}
+        setCurrentShape={this.setCurrentShape}
+        currentTerrain={currentTerrain}
+        setCurrentTerrain={this.setCurrentTerrain}/>
     )
   }
 

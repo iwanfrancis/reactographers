@@ -1,43 +1,59 @@
 import React from 'react';
+import classNames from 'classnames'
 
 import { Card, ShapeCard, isShapeCard, Shape } from '../../constants/Card';
 import { Terrain } from '../../constants/Terrains';
 import styles from './CurrentCard.module.scss';
+import terrainStyles from '../../constants/Terrains.module.scss'
 
 export interface Props {
   card: Card;
+  currentTerrain: Terrain | null;
+  currentShape: Shape | null;
   setCurrentTerrain: (terrain: Terrain) => any;
   setCurrentShape: (shape: Shape) => any;
 }
 
 export default class CurrentCard extends React.PureComponent<Props> {
 
+
   renderTerrainOptions(terrains: Terrain[]) {
-    const { setCurrentTerrain = ()=>{} } = this.props;
+    const { currentTerrain, setCurrentTerrain = ()=>{} } = this.props;
     return (
       <div className={styles.terrains}>
-        {terrains.map(terrain => {
-          return(
-            <div key={terrain} className={styles.terrain} onClick={() => setCurrentTerrain(terrain)}>
-              {terrain}
-            </div>
-          )
-        })}
+        {terrains.map((terrain, i) => {
+          const active = (terrain === currentTerrain) ? styles.active : undefined
+          const terrainContainerClass = classNames(active, styles.terrain)
+          const terrainIconClass = classNames(styles['terrain-icon'], terrainStyles[terrain])
+          return (
+            <React.Fragment key={terrain}>
+              {i > 0 && <div className={styles.divider}></div>}
+              <div  className={terrainContainerClass} onClick={() => setCurrentTerrain(terrain)}>
+                <div className={terrainIconClass}></div>
+              </div>
+            </React.Fragment>
+          )})
+        }
       </div>
     )
   }
 
   renderShapeOptions(shapes: Shape[]) {
-    const { setCurrentShape = ()=>{} } = this.props;
+    const { currentShape, setCurrentShape = ()=>{} } = this.props;
     return (
       <div className={styles.shapes}>
         {shapes.map((shape, i) => {
-            return(
-              <div key={i} className={styles.shape} onClick={() => setCurrentShape(shape)}>
+           const active = (shape === currentShape) ? styles.active : undefined
+           const shapeContainerClass = classNames(active, styles.shape)
+          return (
+            <React.Fragment key={i}>
+              {i > 0 && <div className={styles.divider}></div>}
+              <div className={shapeContainerClass} onClick={() => setCurrentShape(shape)}>
                 shape
               </div>
-            )
-          })}
+            </React.Fragment>
+          )})
+        }
       </div>
     )
   }
