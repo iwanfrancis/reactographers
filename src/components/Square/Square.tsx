@@ -17,17 +17,19 @@ export interface Props {
 
 export default class Square extends React.PureComponent<Props> {
 
-  onRightClick(self: any, e: any, x: number, y: number) {
-    e.preventDefault();
-    self.props.onRotateShape(x, y)
+  handleClick(self: any, e: MouseEvent, x: number, y: number) {
+    if (e.buttons === 1) {
+      self.props.onClick(x, y);
+    }
+    if (e.buttons === 2) {
+      self.props.onRotateShape(x, y);
+    }
   }
 
   render() {
     const { 
       x, y, squareType, overlayType,
-      onClick = () => {},
       onSquareHoverOn = () => {},
-      onRotateShape = () => {} 
     } = this.props;
     const squareCssClass = classNames(styles.square, squareType ? terrainStyles[squareType] : null);
     const overlayCssClass = classNames(styles.overlay, overlayType ? terrainStyles[overlayType] : null);
@@ -35,9 +37,9 @@ export default class Square extends React.PureComponent<Props> {
     return (
       <div 
         className={squareCssClass}
-        onClick={() => onClick(x, y)}
         onMouseEnter={() => onSquareHoverOn(x,y)}
-        onContextMenu={(e: any) => this.onRightClick(this, e, x, y) }>
+        onContextMenu={(e: any) => e.preventDefault() }
+        onMouseDown={(e: any) => this.handleClick(this, e, x, y)}>
           <div className={overlayCssClass}></div>
       </div>
     )
