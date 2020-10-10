@@ -8,7 +8,7 @@ import ShapeCards from '../../constants/ShapeCards';
 import { Terrain } from '../../constants/Terrains';
 import { NormalMap } from '../../constants/Maps';
 import ExploreDeck from '../../classes/ExploreDeck';
-import { Card } from '../../constants/Card';
+import { Card, Shape } from '../../constants/Card';
 import CurrentCard from '../CurrentCard/CurrentCard';
 
 export interface Props {}
@@ -17,6 +17,8 @@ export interface State {
   mapHistory: MapData[];
   overlay: MapData;
   exploreDeck: ExploreDeck;
+  currentTerrain: Terrain | null;
+  currentShape: Shape | null;
 }
 
 export default class Game extends React.PureComponent<Props, State> {
@@ -26,31 +28,51 @@ export default class Game extends React.PureComponent<Props, State> {
     overlay: new MapData(new Array(11).fill(null).map(() => {
       return new Array(11).fill(null);
     })),
-    exploreDeck: new ExploreDeck()
+    exploreDeck: new ExploreDeck(),
+    currentTerrain: null,
+    currentShape: null
   };
 
   handleSquareClick = (x: number, y: number) => {
-    const mapHistory = this.state.mapHistory;
+    const { mapHistory, currentTerrain, currentShape } = this.state;
     const currentMapData = mapHistory[mapHistory.length - 1];
     const newMapData = _.clone(currentMapData)
     
-    if (newMapData.moveIsLegal(ShapeCards[1].shapes[0][0], x, y)) {
-      newMapData.addShape(Terrain.Monster,ShapeCards[1].shapes[0][0], x, y)
+    if (currentTerrain && currentShape) {
+      if (newMapData.moveIsLegal(ShapeCards[1].shapes[0][0], x, y)) {
+        newMapData.addShape(currentTerrain, currentShape[0], x, y)
+      }
+  
+      this.setState({
+        mapHistory: mapHistory.concat([newMapData])
+      });
     }
-
-    this.setState({
-      mapHistory: mapHistory.concat([newMapData])
-    });
   }
 
   handleSquareHoverOn = (x: number, y: number) => {
-    const newOverlay = new MapData(new Array(11).fill(null).map(() => {
-      return new Array(11).fill(null);
-    }));
-    newOverlay.addShape(Terrain.Farm, ShapeCards[1].shapes[0][0], x, y)
+    const { currentTerrain, currentShape } = this.state;
+
+    if (currentTerrain && currentShape) {
+      const newOverlay = new MapData(new Array(11).fill(null).map(() => {
+        return new Array(11).fill(null);
+      }));
+      newOverlay.addShape(currentTerrain, currentShape[0], x, y)
+      this.setState({
+        overlay: newOverlay
+      });
+    }
+  }
+
+  setCurrentTerrain = (terrain: Terrain) => {
     this.setState({
-      overlay: newOverlay
-    });
+      currentTerrain: terrain
+    })
+  }
+
+  setCurrentShape = (shape: Shape) => {
+    this.setState({
+      currentShape: shape
+    })
   }
 
   renderGrid() {
@@ -68,16 +90,16 @@ export default class Game extends React.PureComponent<Props, State> {
   renderCurrentCard() {
     const currentCard = this.state.exploreDeck.draw();
     return (
-      <CurrentCard card={currentCard} />
+      <CurrentCard card={currentCard} setCurrentShape={this.setCurrentShape} setCurrentTerrain={this.setCurrentTerrain}/>
     )
   }
 
   render() {
     return (
       <div className={styles['game-wrapper']}>
-        <div></div>
-        <div>{this.renderGrid()}</div>
-        <div>{this.renderCurrentCard()}</div>
+        <div className={styles['game-section']}> something</div>
+        <div className={styles['game-section']}>{this.renderGrid()}</div>
+        <div className={styles['game-section']}>{this.renderCurrentCard()}</div>
       </div>
     )
   }

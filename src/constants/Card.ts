@@ -1,7 +1,7 @@
 import { Terrain } from "./Terrains";
 
-export type Shape = number[][];
-type ShapeRotations = Shape[];
+export type ShapeRotation = number[][];
+export type Shape = ShapeRotation[];
 
 export interface Card {
     name: string;
@@ -10,7 +10,7 @@ export interface Card {
 
 export interface ShapeCard extends Card {
     terrains: Terrain[];
-    shapes: ShapeRotations[]
+    shapes: Shape[]
 }
 
 export function isCard(object: any): object is Card {

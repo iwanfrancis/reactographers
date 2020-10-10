@@ -4,5 +4,11 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
+
+  .game-section {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1
+  }
 }
 

@@ -1,4 +1,4 @@
-import { Shape } from "../constants/Card";
+import { ShapeRotation } from "../constants/Card";
 import { Terrain } from "../constants/Terrains";
 
 export default class MapData {
@@ -17,7 +17,7 @@ export default class MapData {
     }
   
     // Maps a shape and terrain to the grid. Puts shape[1][1] on the click location
-    public addShape(terrain: Terrain, shape: Shape, x: number, y: number) {
+    public addShape(terrain: Terrain, shape: ShapeRotation, x: number, y: number) {
       for (let shX = 0; shX < 4; shX++) {
         for (let shY = 0; shY < 4; shY++) {
           if (shape[shX][shY]) {
@@ -32,7 +32,7 @@ export default class MapData {
     }
 
     // Check if a move is legal
-    public moveIsLegal(shape: Shape, x: number, y: number) {
+    public moveIsLegal(shape: ShapeRotation, x: number, y: number) {
       for (let shX = 0; shX < 4; shX++) {
         for (let shY = 0; shY < 4; shY++) {
           const xOffset = (x + shX - 1);
