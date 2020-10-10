@@ -49,7 +49,7 @@ export default class Game extends React.PureComponent<Props, State> {
     const newMapData = _.clone(currentMapData)
     
     if (currentTerrain && currentShape) {
-      if (newMapData.moveIsLegal(ShapeCards[1].shapes[0][0], x, y)) {
+      if (newMapData.moveIsLegal(currentShape[currentRotation], x, y)) {
         newMapData.addShape(currentTerrain, currentShape[currentRotation], x, y)
       }
   
@@ -73,16 +73,17 @@ export default class Game extends React.PureComponent<Props, State> {
   handleShapeRotate = (x: number , y: number) => {
     const { currentTerrain, currentShape, currentRotation } = this.state;
     let newRotation = currentRotation;
+
     if (currentTerrain && currentShape) {
+
       if ((currentShape.length - 1) <= currentRotation) {
         newRotation = 0;
       } else {
         newRotation = currentRotation + 1;
       }
-
-      const newOverlay = this.generateNewOverlay(currentTerrain, currentShape[newRotation], x, y)
+ 
       this.setState({
-        overlay: newOverlay,
+        overlay: this.generateNewOverlay(currentTerrain, currentShape[newRotation], x, y),
         currentRotation: newRotation
       })
       
