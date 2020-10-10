@@ -10,29 +10,23 @@ import { NormalMap } from '../../constants/Maps';
 
 export interface Props {}
 
-export interface GameState {
-  mapData: MapData;
-}
-
 export interface State {
-  gameHistory: GameState[];
+  mapHistory: MapData[];
   overlay: MapData;
 }
 
 export default class Game extends React.PureComponent<Props, State> {
   // Set up initial game state
   state: State = {
-    gameHistory: [{
-      mapData: new MapData(NormalMap.grid)
-    }],
+    mapHistory: [new MapData(NormalMap.grid)],
     overlay: new MapData(new Array(11).fill(null).map(() => {
       return new Array(11).fill(null);
     })),
   };
 
   handleSquareClick = (x: number, y: number) => {
-    const gameHistory = this.state.gameHistory;
-    const currentMapData = gameHistory[gameHistory.length - 1].mapData;
+    const mapHistory = this.state.mapHistory;
+    const currentMapData = mapHistory[mapHistory.length - 1];
     const newMapData = _.clone(currentMapData)
     
     if (newMapData.moveIsLegal(FishingVillage.shapes[0][0], x, y)) {
@@ -40,9 +34,7 @@ export default class Game extends React.PureComponent<Props, State> {
     }
 
     this.setState({
-      gameHistory: gameHistory.concat([{
-        mapData: newMapData,
-      }])
+      mapHistory: mapHistory.concat([newMapData])
     });
   }
 
@@ -57,8 +49,8 @@ export default class Game extends React.PureComponent<Props, State> {
   }
 
   renderGrid() {
-    const { gameHistory, overlay } = this.state;
-    const currentMapData = gameHistory[gameHistory.length - 1].mapData; 
+    const { mapHistory, overlay } = this.state;
+    const currentMapData = mapHistory[mapHistory.length - 1]; 
     return (
       <Grid 
         mapData={currentMapData}
