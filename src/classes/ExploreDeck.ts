@@ -7,6 +7,7 @@ export default class ExploreDeck {
 
     constructor() {
         this.shuffle();
+        this.draw();
     }
 
     public shuffle(): void {
@@ -26,5 +27,9 @@ export default class ExploreDeck {
             return this.drawnCards[this.drawnCards.length - 1];
         }
         
+    }
+
+    public getCurrentCard(): Card {
+        return this.drawnCards[this.drawnCards.length - 1]
     }
 }

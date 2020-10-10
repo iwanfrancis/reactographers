@@ -33,6 +33,7 @@ export default class Game extends React.PureComponent<Props, State> {
     currentShape: null
   };
 
+
   handleSquareClick = (x: number, y: number) => {
     const { mapHistory, currentTerrain, currentShape } = this.state;
     const currentMapData = mapHistory[mapHistory.length - 1];
@@ -88,7 +89,7 @@ export default class Game extends React.PureComponent<Props, State> {
   }
 
   renderCurrentCard() {
-    const currentCard = this.state.exploreDeck.draw();
+    const currentCard = this.state.exploreDeck.getCurrentCard();
     return (
       <CurrentCard card={currentCard} setCurrentShape={this.setCurrentShape} setCurrentTerrain={this.setCurrentTerrain}/>
     )
