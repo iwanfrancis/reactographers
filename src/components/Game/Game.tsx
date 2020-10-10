@@ -8,7 +8,7 @@ import ShapeCards from '../../constants/ShapeCards';
 import { Terrain } from '../../constants/Terrains';
 import { NormalMap } from '../../constants/Maps';
 import ExploreDeck from '../../classes/ExploreDeck';
-import { Card, Shape } from '../../constants/Card';
+import { Card, Shape, ShapeRotation } from '../../constants/Card';
 import CurrentCard from '../CurrentCard/CurrentCard';
 
 export interface Props {}
@@ -35,6 +35,13 @@ export default class Game extends React.PureComponent<Props, State> {
     currentRotation: 0
   };
 
+  generateNewOverlay(terrain: Terrain, shape: ShapeRotation, x: number, y: number) {
+    const newOverlay = new MapData(new Array(11).fill(null).map(() => {
+      return new Array(11).fill(null);
+    }));
+    return newOverlay.addShape(terrain, shape, x, y)
+  }
+
 
   handleSquareClick = (x: number, y: number) => {
     const { mapHistory, currentTerrain, currentShape, currentRotation } = this.state;
@@ -56,10 +63,7 @@ export default class Game extends React.PureComponent<Props, State> {
     const { currentTerrain, currentShape, currentRotation } = this.state;
 
     if (currentTerrain && currentShape) {
-      const newOverlay = new MapData(new Array(11).fill(null).map(() => {
-        return new Array(11).fill(null);
-      }));
-      newOverlay.addShape(currentTerrain, currentShape[currentRotation], x, y)
+      const newOverlay = this.generateNewOverlay(currentTerrain, currentShape[currentRotation], x, y)
       this.setState({
         overlay: newOverlay
       });
@@ -67,20 +71,21 @@ export default class Game extends React.PureComponent<Props, State> {
   }
 
   handleShapeRotate = (x: number , y: number) => {
-    const { currentShape, currentRotation } = this.state;
+    const { currentTerrain, currentShape, currentRotation } = this.state;
     let newRotation = currentRotation;
-    if (currentShape) {
+    if (currentTerrain && currentShape) {
       if ((currentShape.length - 1) <= currentRotation) {
         newRotation = 0;
       } else {
         newRotation = currentRotation + 1;
       }
 
+      const newOverlay = this.generateNewOverlay(currentTerrain, currentShape[newRotation], x, y)
       this.setState({
+        overlay: newOverlay,
         currentRotation: newRotation
       })
-
-      this.setOverlay(x, y);
+      
     }
   }
 

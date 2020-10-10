@@ -29,6 +29,7 @@ export default class MapData {
           } 
         }
       }
+      return this;
     }
 
     // Check if a move is legal
