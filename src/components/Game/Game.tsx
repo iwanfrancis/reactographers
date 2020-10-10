@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import Grid from '../Grid/Grid';
 import styles from './Game.module.scss';
-import GridData from '../../modules/GridData';
+import MapData from '../../classes/MapData';
 import { Terrain } from '../../constants/Terrains';
 import { FishingVillage } from '../../constants/ShapeCards';
 
@@ -13,45 +13,45 @@ export interface Props {
 }
 
 export interface GameState {
-  gridData: GridData;
+  mapData: MapData;
 }
 
 export interface State {
   gameHistory: GameState[];
-  overlay: GridData;
+  overlay: MapData;
 }
 
 export default class Game extends React.PureComponent<Props, State> {
   // Set up initial game state
   state: State = {
     gameHistory: [{
-      gridData: new GridData(new Array(11).fill(null).map(() => {
+      mapData: new MapData(new Array(11).fill(null).map(() => {
         return new Array(11).fill(null);
       })),
     }],
-    overlay: new GridData(new Array(11).fill(null).map(() => {
+    overlay: new MapData(new Array(11).fill(null).map(() => {
       return new Array(11).fill(null);
     })),
   };
 
   handleSquareClick = (x: number, y: number) => {
     const gameHistory = this.state.gameHistory;
-    const currentGridData = gameHistory[gameHistory.length - 1].gridData;
-    const newGridData = _.clone(currentGridData)
+    const currentMapData = gameHistory[gameHistory.length - 1].mapData;
+    const newMapData = _.clone(currentMapData)
     
-    if (newGridData.moveIsLegal(FishingVillage.shapes[0][0], x, y)) {
-      newGridData.addShape(Terrain.Monster, FishingVillage.shapes[0][0], x, y)
+    if (newMapData.moveIsLegal(FishingVillage.shapes[0][0], x, y)) {
+      newMapData.addShape(Terrain.Monster, FishingVillage.shapes[0][0], x, y)
     }
 
     this.setState({
       gameHistory: gameHistory.concat([{
-        gridData: newGridData,
+        mapData: newMapData,
       }])
     });
   }
 
   handleSquareHoverOn = (x: number, y: number) => {
-    const newOverlay = new GridData(new Array(11).fill(null).map(() => {
+    const newOverlay = new MapData(new Array(11).fill(null).map(() => {
       return new Array(11).fill(null);
     }));
     newOverlay.addShape(Terrain.Farm, FishingVillage.shapes[0][0], x, y)
@@ -63,12 +63,12 @@ export default class Game extends React.PureComponent<Props, State> {
   renderGrid() {
     const { rows, columns } = this.props;
     const { gameHistory, overlay } = this.state;
-    const currentGridData = gameHistory[gameHistory.length - 1].gridData; 
+    const currentMapData = gameHistory[gameHistory.length - 1].mapData; 
     return (
       <Grid 
         columns={columns} 
         rows={rows}
-        gridData={currentGridData}
+        mapData={currentMapData}
         overlay={overlay}
         onSquareClick={this.handleSquareClick} 
         onSquareHoverOn={this.handleSquareHoverOn}/>

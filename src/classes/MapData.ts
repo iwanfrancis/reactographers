@@ -1,7 +1,7 @@
 import { Shape } from "../constants/ShapeCards";
 import { Terrain } from "../constants/Terrains";
 
-export default class GridData {
+export default class MapData {
     grid: Terrain[][]
   
     constructor(grid: Terrain[][]) {
