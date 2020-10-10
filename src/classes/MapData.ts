@@ -12,32 +12,33 @@ export default class MapData {
       this.cols = grid[0].length;
     }
   
-    get(x: number, y: number) {
+    public get(x: number, y: number) {
       return this.grid[x][y];
     }
   
     // Maps a shape and terrain to the grid. Puts shape[1][1] on the click location
-    addShape(terrain: Terrain, shape: Shape, x: number, y: number) {
+    public addShape(terrain: Terrain, shape: Shape, x: number, y: number) {
       for (let shX = 0; shX < 4; shX++) {
         for (let shY = 0; shY < 4; shY++) {
           if (shape[shX][shY]) {
             const xOffset = (x + shX - 1);
             const yOffset = (y + shY - 1);
-            this.grid[xOffset][yOffset] = terrain;
+            if (this.coordWithinBounds(xOffset, yOffset)) {
+              this.grid[xOffset][yOffset] = terrain;
+            } 
           } 
         }
       }
     }
 
     // Check if a move is legal
-    moveIsLegal(shape: Shape, x: number, y: number) {
+    public moveIsLegal(shape: Shape, x: number, y: number) {
       for (let shX = 0; shX < 4; shX++) {
         for (let shY = 0; shY < 4; shY++) {
           const xOffset = (x + shX - 1);
           const yOffset = (y + shY - 1);
           if (shape[shX][shY])  {
-            if ( xOffset < 0 || xOffset >= this.grid[0].length
-              || yOffset < 0 || yOffset >= this.grid.length
+            if ( !this.coordWithinBounds(xOffset, yOffset)
               || this.grid[xOffset][yOffset]
             ) {
               console.error('Move is illegal')
@@ -45,6 +46,14 @@ export default class MapData {
               }
           } 
         }
+      }
+      return true
+    }
+
+    private coordWithinBounds(x: number, y: number) {
+      if ( x < 0 || x >= this.grid[0].length 
+        || y < 0 || y >= this.grid.length) {
+          return false
       }
       return true
     }
