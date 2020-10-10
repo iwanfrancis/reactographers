@@ -16,12 +16,28 @@ export default class CurrentCard extends React.PureComponent<Props> {
             const shapeCard = card as ShapeCard;
             return (
                 <div className={styles.card}>
-                    <div>{shapeCard.time}{shapeCard.name}</div>
-                    <div>
-                        {shapeCard.terrains}
+                    <div className={styles.header}>
+                        {shapeCard.time}   {shapeCard.name}
                     </div>
-                    <div>
-                        shapes
+                    <div className={styles.options}>
+                        <div className={styles.terrains}>
+                            {shapeCard.terrains.map(terrain => {
+                                return(
+                                    <div className={styles.terrain}>
+                                        {terrain}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <div className={styles.shapes}>
+                            {shapeCard.shapes.map(shape => {
+                                    return(
+                                        <div className={styles.shape}>
+                                            shape
+                                        </div>
+                                    )
+                                })}
+                        </div>
                     </div>
                 </div>
             )
