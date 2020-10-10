@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Game columns={11} rows={11} />
+    <Game />
   </React.StrictMode>,
   document.getElementById('root')
 );

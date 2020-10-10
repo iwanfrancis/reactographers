@@ -3,13 +3,17 @@ import { Terrain } from "../constants/Terrains";
 
 export default class MapData {
     grid: (Terrain | undefined)[][]
+    rows: number;
+    cols: number;
   
     constructor(grid: (Terrain | undefined)[][]) {
       this.grid = grid
+      this.rows = grid.length;
+      this.cols = grid[0].length;
     }
   
     get(x: number, y: number) {
-      return this.grid[x][y]
+      return this.grid[x][y];
     }
   
     // Maps a shape and terrain to the grid. Puts shape[1][1] on the click location

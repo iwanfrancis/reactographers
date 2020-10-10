@@ -4,8 +4,6 @@ import styles from './Grid.module.scss';
 import MapData from '../../classes/MapData';
 
 export interface Props {
-  columns: number;
-  rows: number;
   mapData: MapData;
   overlay: MapData;
   onSquareClick: (x: number, y: number) => any;
@@ -14,12 +12,12 @@ export interface Props {
 
 export default class Grid extends React.PureComponent<Props> {
   render() {
-    const { columns, rows, mapData, overlay, onSquareClick, onSquareHoverOn } = this.props;
+    const { mapData, overlay, onSquareClick, onSquareHoverOn } = this.props;
     const squares = [];
 
-    for (let row = 0; row < rows; row++) {
+    for (let row = 0; row < mapData.rows; row++) {
       const squareRow = [];
-      for (let column = 0; column < columns; column++) {
+      for (let column = 0; column < mapData.cols; column++) {
         let squareType = mapData.get(row, column);
         let overlayType = overlay.get(row, column)
         squareRow.push(

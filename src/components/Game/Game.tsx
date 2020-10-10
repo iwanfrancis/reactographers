@@ -8,10 +8,7 @@ import { Terrain } from '../../constants/Terrains';
 import { FishingVillage } from '../../constants/ShapeCards';
 import { NormalMap } from '../../constants/Maps';
 
-export interface Props {
-  columns: number;
-  rows: number;
-}
+export interface Props {}
 
 export interface GameState {
   mapData: MapData;
@@ -60,13 +57,10 @@ export default class Game extends React.PureComponent<Props, State> {
   }
 
   renderGrid() {
-    const { rows, columns } = this.props;
     const { gameHistory, overlay } = this.state;
     const currentMapData = gameHistory[gameHistory.length - 1].mapData; 
     return (
       <Grid 
-        columns={columns} 
-        rows={rows}
         mapData={currentMapData}
         overlay={overlay}
         onSquareClick={this.handleSquareClick} 
