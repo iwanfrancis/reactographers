@@ -22,7 +22,7 @@
 
     .terrains {
         display: flex;
-        flex-grow: 1;
+        height: 50%;
         border-bottom: 1px solid black;
         cursor: pointer;
 
@@ -50,8 +50,8 @@
 
     .shapes {
         display: flex;
-        flex-grow: 1;
         cursor: pointer;
+        height: 50%;
 
         .shape {
             display: flex;

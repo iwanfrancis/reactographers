@@ -1,0 +1,24 @@
+.row {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+.square {
+  float: left;
+  height: 15px;
+  width: 15px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+}
+
+.gray {
+  background-color: lightgray;
+  border: 1px solid white;
+}
+
+.transparent {
+  background: transparent;
+  border: 1px solid transparent;
+}

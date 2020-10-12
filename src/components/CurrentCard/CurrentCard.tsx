@@ -5,6 +5,7 @@ import { Card, ShapeCard, isShapeCard, Shape } from '../../constants/Card';
 import { Terrain } from '../../constants/Terrains';
 import styles from './CurrentCard.module.scss';
 import terrainStyles from '../../constants/Terrains.module.scss'
+import CardShape from './CardShape/CardShape';
 
 export interface Props {
   card: Card;
@@ -49,7 +50,7 @@ export default class CurrentCard extends React.PureComponent<Props> {
             <React.Fragment key={i}>
               {i > 0 && <div className={styles.divider}></div>}
               <div className={shapeContainerClass} onClick={() => setCurrentShape(shape)}>
-                shape
+                <CardShape shape={shape}/>
               </div>
             </React.Fragment>
           )})
