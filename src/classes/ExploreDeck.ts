@@ -1,8 +1,8 @@
 import { Card } from "../constants/Card";
-import ShapeCards from "../constants/ShapeCards";
+import ExploreCards from "../constants/ExploreCards";
 
 export default class ExploreDeck {
-    cards: Card[] = ShapeCards.slice();
+    cards: Card[] = ExploreCards.slice();
     drawnCards: Card[] = []
 
     constructor() {

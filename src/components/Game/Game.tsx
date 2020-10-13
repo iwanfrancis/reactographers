@@ -4,7 +4,7 @@ import _ from 'lodash';
 import Grid from '../Grid/Grid';
 import styles from './Game.module.scss';
 import MapData from '../../classes/MapData';
-import ShapeCards from '../../constants/ShapeCards';
+import ExploreCards from '../../constants/ExploreCards';
 import { Terrain } from '../../constants/Terrains';
 import { NormalMap } from '../../constants/Maps';
 import ExploreDeck from '../../classes/ExploreDeck';

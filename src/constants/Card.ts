@@ -11,6 +11,7 @@ export interface Card {
 export interface ShapeCard extends Card {
     terrains: Terrain[];
     shapes: Shape[]
+    coinIndex?: number // index of shape with coin (only ever one per card)
 }
 
 export function isCard(object: any): object is Card {
