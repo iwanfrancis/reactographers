@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames'
 
-import { Card, ShapeCard, isShapeCard, Shape } from '../../constants/Card';
+import { Card, ShapeCard, isShapeCard, Shape } from '../../classes/Card';
 import { Terrain } from '../../constants/Terrains';
 import styles from './CurrentCard.module.scss';
 import terrainStyles from '../../constants/Terrains.module.scss'

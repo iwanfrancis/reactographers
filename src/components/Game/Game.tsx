@@ -8,7 +8,7 @@ import ExploreCards from '../../constants/ExploreCards';
 import { Terrain } from '../../constants/Terrains';
 import { NormalMap } from '../../constants/Maps';
 import ExploreDeck from '../../classes/ExploreDeck';
-import { Card, Shape, ShapeRotation } from '../../constants/Card';
+import { Card, Shape, ShapeRotation } from '../../classes/Card';
 import CurrentCard from '../CurrentCard/CurrentCard';
 
 export interface Props {}

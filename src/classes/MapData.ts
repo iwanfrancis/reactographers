@@ -1,4 +1,4 @@
-import { ShapeRotation } from "../constants/Card";
+import { ShapeRotation } from "./Card";
 import { Terrain } from "../constants/Terrains";
 
 export default class MapData {

@@ -1,4 +1,4 @@
-import { Card } from "../constants/Card";
+import { Card } from "./Card";
 import ExploreCards from "../constants/ExploreCards";
 
 export default class ExploreDeck {
