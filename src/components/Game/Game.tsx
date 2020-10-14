@@ -8,7 +8,7 @@ import { Terrain } from '../../constants/Terrains';
 import { NormalMap } from '../../constants/Maps';
 import ExploreDeck from '../../classes/ExploreDeck';
 import { Shape, ShapeRotation } from '../../classes/Card';
-import CurrentCard from '../CurrentCard/CurrentCard';
+import CurrentCard from '../Cards/CurrentCard/CurrentCard';
 import Seasons, { Season } from '../../constants/Seasons';
 import SeasonCard from '../SeasonCard/SeasonCard';
 
@@ -82,7 +82,6 @@ export default function Game() {
     }
   }
 
-
   const drawPhase = () => {
     exploreDeck.draw();
   }
@@ -107,7 +106,7 @@ export default function Game() {
     )
   }
 
-  const renderCurrentCard = () => {
+  const renderExploreCards = () => {
     const currentCard = exploreDeck.getCurrentCard();
     return (
       <CurrentCard 
@@ -128,7 +127,7 @@ export default function Game() {
           {renderSeasons()}
         </div>
         <div className={styles['explore-deck-container']}>
-          {renderCurrentCard()}
+          {renderExploreCards()}
         </div>
       </div>
     </div>

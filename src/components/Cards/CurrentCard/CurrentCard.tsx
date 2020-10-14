@@ -1,10 +1,10 @@
 import React from 'react';
 import classNames from 'classnames'
 
-import { Card, ShapeCard, isShapeCard, Shape } from '../../classes/Card';
-import { Terrain } from '../../constants/Terrains';
+import { Card, ShapeCard, isShapeCard, Shape } from '../../../classes/Card';
+import { Terrain } from '../../../constants/Terrains';
 import styles from './CurrentCard.module.scss';
-import terrainStyles from '../../constants/Terrains.module.scss'
+import terrainStyles from '../../../constants/Terrains.module.scss'
 import CardShape from './CardShape/CardShape';
 
 export interface Props {

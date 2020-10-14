@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { Shape, ShapeRotation } from "../../../classes/Card";
+import { Shape, ShapeRotation } from "../../../../classes/Card";
 import styles from "./CardShape.module.scss";
 
 export interface Props {

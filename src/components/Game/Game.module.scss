@@ -14,13 +14,13 @@
   .card-section {
     display: flex;
     flex-grow: 1;
-    justify-content: space-around;
     align-items: center;
     flex-direction: column;
 
     .seasons-container {
       display: flex;
       flex-direction: row;
+      padding: 50px 0px;
     }
   }
 }
