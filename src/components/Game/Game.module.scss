@@ -1,14 +1,27 @@
 .game-wrapper {
   display: flex;
   justify-content: space-around;
-  align-items: center;
   width: 100vw;
   height: 100vh;
 
   .game-section {
     display: flex;
     justify-content: center;
-    flex-grow: 1
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  .card-section {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+
+    .seasons-container {
+      display: flex;
+      flex-direction: row;
+    }
   }
 }
 

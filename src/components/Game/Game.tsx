@@ -4,12 +4,13 @@ import _ from 'lodash';
 import Grid from '../Grid/Grid';
 import styles from './Game.module.scss';
 import MapData from '../../classes/MapData';
-import ExploreCards from '../../constants/ExploreCards';
 import { Terrain } from '../../constants/Terrains';
 import { NormalMap } from '../../constants/Maps';
 import ExploreDeck from '../../classes/ExploreDeck';
-import { Card, Shape, ShapeRotation } from '../../classes/Card';
+import { Shape, ShapeRotation } from '../../classes/Card';
 import CurrentCard from '../CurrentCard/CurrentCard';
+import Seasons, { Season } from '../../constants/Seasons';
+import SeasonCard from '../SeasonCard/SeasonCard';
 
 export interface Props {}
 
@@ -17,6 +18,7 @@ export interface State {
   mapHistory: MapData[];
   overlay: MapData;
   exploreDeck: ExploreDeck;
+  currentSeason: Season;
   currentTerrain: Terrain | null;
   currentShape: Shape | null;
   currentRotation: number;
@@ -30,6 +32,7 @@ export default class Game extends React.PureComponent<Props, State> {
       return new Array(11).fill(null);
     })),
     exploreDeck: new ExploreDeck(),
+    currentSeason: Seasons[0],
     currentTerrain: null,
     currentShape: null,
     currentRotation: 0
@@ -115,6 +118,16 @@ export default class Game extends React.PureComponent<Props, State> {
         onRotateShape={this.handleShapeRotate}/>
     )
   }
+  
+  renderSeasons() {
+    const currentSeason = this.state.currentSeason;
+    const {currentShape, currentTerrain } = this.state;
+    return (
+      Seasons.map(season => {
+        return <SeasonCard season={season} />
+      })
+    )
+  }
 
   renderCurrentCard() {
     const currentCard = this.state.exploreDeck.getCurrentCard();
@@ -134,7 +147,14 @@ export default class Game extends React.PureComponent<Props, State> {
       <div className={styles['game-wrapper']}>
         <div className={styles['game-section']}> something</div>
         <div className={styles['game-section']}>{this.renderGrid()}</div>
-        <div className={styles['game-section']}>{this.renderCurrentCard()}</div>
+        <div className={styles['card-section']}>
+          <div className={styles['seasons-container']}>
+            {this.renderSeasons()}
+          </div>
+          <div className={styles['explore-deck-container']}>
+            {this.renderCurrentCard()}
+          </div>
+        </div>
       </div>
     )
   }

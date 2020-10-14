@@ -1,6 +1,6 @@
 export enum Edict {
-  A,
-  B,
-  C,
-  D
+  A = 'A',
+  B = 'B',
+  C = 'C',
+  D = 'D'
 }

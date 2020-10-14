@@ -1,4 +1,4 @@
-import { Edict } from "./Edicts";
+import { Edict } from "./Edict";
 
 export interface Season {
   name: string;
