@@ -9,12 +9,27 @@
 }
 
 .header {
+    font-size: 1.5rem;
+}
+
+.body {
     flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    .title {
+        position: absolute;
+        background: white;
+        padding: 0px 5px;
+        margin: -.75rem;
+        font-size: 1.5rem;
+    }
 }
 
 .options {
+    height: 50%;
     display: flex;
-    flex-grow: 1;
     flex-direction: column;
     box-sizing: border-box;
     border: 2px solid black;

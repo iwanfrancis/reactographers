@@ -67,7 +67,12 @@ export default class CurrentCard extends React.PureComponent<Props> {
       return (
         <div className={styles.card}>
           <div className={styles.header}>
-            {shapeCard.time}   {shapeCard.name}
+            {shapeCard.time}
+          </div>
+          <div className={styles.body}>
+            <div className={styles.title}>
+              {shapeCard.name}
+            </div>
           </div>
           <div className={styles.options}>
             {this.renderTerrainOptions(shapeCard.terrains)}
