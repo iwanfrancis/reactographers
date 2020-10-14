@@ -64,19 +64,27 @@ export default function Game() {
       }
   
       setMapHistory(mapHistory.concat([newMapData]));
+      checkPhase();
     }
-  }
-
-  const drawPhase = () => {
-    exploreDeck.draw();
   }
 
   const checkPhase = () => {
     const timeInSeason = exploreDeck.getTotalTime();
 
+    setCurrentShape(undefined);
+    setCurrentTerrain(undefined);
+    setCurrentRotation(0);
+
     if (timeInSeason >= currentSeason.length) {
       console.log('end of season')
+    } else {
+      drawPhase();
     }
+  }
+
+
+  const drawPhase = () => {
+    exploreDeck.draw();
   }
 
   const renderGrid = () => {
