@@ -26,7 +26,7 @@ export default class SeasonCard extends React.PureComponent<Props> {
         <div className={styles.edicts}>
           {season.edicts.map(edict => {
             return (
-              <div className={styles.edict}>
+              <div key={edict} className={styles.edict}>
                 {edict}
               </div>
             )

@@ -41,15 +41,13 @@ export default class CardShape extends React.PureComponent<Props> {
     const dimensions = this.findDimensions(shape);
     const squares = [];
 
-    console.log(dimensions);
-
     for (let row = dimensions.topLeftY; row <= dimensions.bottomRightY; row++) {
       const squareRow = [];
       for (let column = dimensions.topLeftX; column <= dimensions.bottomRightX; column++) {
         const squareClass = shape[row][column] === 1 ? 
           classNames(styles.gray, styles.square) : classNames(styles.transparent, styles.square)
         squareRow.push(
-          <div className={squareClass}></div>
+          <div key={`${row}:${column}`} className={squareClass}></div>
         );
       }
       squares.push(

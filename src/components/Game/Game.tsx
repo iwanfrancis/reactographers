@@ -124,7 +124,7 @@ export default class Game extends React.PureComponent<Props, State> {
     const {currentShape, currentTerrain } = this.state;
     return (
       Seasons.map(season => {
-        return <SeasonCard season={season} isCurrentSeason={season === currentSeason} />
+        return <SeasonCard key={season.name} season={season} isCurrentSeason={season === currentSeason} />
       })
     )
   }
