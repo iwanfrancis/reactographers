@@ -34,13 +34,6 @@ export default function Game(props: Props) {
   const [currentShape, setCurrentShape] = useState<Shape>();
   const [currentRotation, setCurrentRotation] = useState(0);
 
-  const generateNewOverlay = (terrain: Terrain, shape: ShapeRotation, x: number, y: number) => {
-    const newOverlay = new MapData(new Array(11).fill(null).map(() => {
-      return new Array(11).fill(null);
-    }));
-    return newOverlay.addShape(terrain, shape, x, y)
-  }
-
   const handleSquareClick = (x: number, y: number) => {
     const currentMapData = mapHistory[mapHistory.length - 1];
     const newMapData = _.clone(currentMapData)
@@ -56,8 +49,7 @@ export default function Game(props: Props) {
 
   const updateOverlay = (x: number, y: number) => {
     if (currentTerrain && currentShape) {
-      const newOverlay = generateNewOverlay(currentTerrain, currentShape[currentRotation], x, y)
-      setOverlay(newOverlay);
+      setOverlay(new MapData().addShape(currentTerrain, currentShape[currentRotation], x, y));
     }
   }
 
@@ -72,9 +64,8 @@ export default function Game(props: Props) {
         newRotation = currentRotation + 1;
       }
       
-      setOverlay(generateNewOverlay(currentTerrain, currentShape[newRotation], x, y))
+      setOverlay(new MapData().addShape(currentTerrain, currentShape[currentRotation], x, y))
       setCurrentRotation(newRotation);
-      
     }
   }
 
