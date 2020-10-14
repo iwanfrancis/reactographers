@@ -9,6 +9,14 @@
   display: flex;
   flex-direction: column;
 
+  &.notCurrentSeason {
+    background-color: lightgray;
+  }
+
+  &.currentSeason {
+    background-color: white;
+  }
+
   .body {
     flex-grow: 1;
     display: flex;

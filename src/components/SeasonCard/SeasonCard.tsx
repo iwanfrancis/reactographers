@@ -1,18 +1,22 @@
+import classNames from "classnames";
 import React from "react";
 import { Season } from "../../constants/Seasons";
 import styles from "./SeasonCard.module.scss";
 
 export interface Props {
-  season: Season
+  season: Season;
+  isCurrentSeason: boolean;
 }
 
 export default class SeasonCard extends React.PureComponent<Props> {
 
   render() {
-    const season = this.props.season;
-    
+    const { season, isCurrentSeason } = this.props;
+
+    const cardClass = classNames(styles.card, isCurrentSeason ? styles.currentSeason : styles.notCurrentSeason);
+
     return (
-      <div className={styles.card}>
+      <div className={cardClass}>
         <div className={styles.header}>
           {season.length}
         </div>
