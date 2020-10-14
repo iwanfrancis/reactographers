@@ -9,10 +9,10 @@ import CardShape from './CardShape/CardShape';
 
 export interface Props {
   card: Card;
-  currentTerrain: Terrain | null;
-  currentShape: Shape | null;
-  setCurrentTerrain: (terrain: Terrain) => any;
-  setCurrentShape: (shape: Shape) => any;
+  currentTerrain: Terrain | undefined;
+  currentShape: Shape | undefined;
+  setCurrentTerrain: React.Dispatch<React.SetStateAction<Terrain | undefined>>;
+  setCurrentShape: React.Dispatch<React.SetStateAction<Shape | undefined>>;
 }
 
 export default class CurrentCard extends React.PureComponent<Props> {
