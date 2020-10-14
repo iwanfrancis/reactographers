@@ -12,8 +12,6 @@ import CurrentCard from '../CurrentCard/CurrentCard';
 import Seasons, { Season } from '../../constants/Seasons';
 import SeasonCard from '../SeasonCard/SeasonCard';
 
-export interface Props {}
-
 export interface State {
   mapHistory: MapData[];
   overlay: MapData;
@@ -24,7 +22,7 @@ export interface State {
   currentRotation: number;
 }
 
-export default function Game(props: Props) {
+export default function Game() {
 
   const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid)])
   const [overlay, setOverlay] = useState(new MapData(new Array(11).fill(null).map(() => new Array(11).fill(null))));
@@ -34,7 +32,29 @@ export default function Game(props: Props) {
   const [currentShape, setCurrentShape] = useState<Shape>();
   const [currentRotation, setCurrentRotation] = useState(0);
 
-  const handleSquareClick = (x: number, y: number) => {
+  const updateOverlay = (x: number, y: number) => {
+    if (currentTerrain && currentShape) {
+      setOverlay(new MapData().addShape(currentTerrain, currentShape[currentRotation], x, y));
+    }
+  }
+
+  const rotateShape = (x: number , y: number) => {
+    let newRotation = currentRotation;
+
+    if (currentTerrain && currentShape) {
+
+      if ((currentShape.length - 1) <= currentRotation) {
+        newRotation = 0;
+      } else {
+        newRotation = currentRotation + 1;
+      }
+
+      setCurrentRotation(newRotation);
+      setOverlay(new MapData().addShape(currentTerrain, currentShape[newRotation], x, y))
+    }
+  }
+
+  const drawShape = (x: number, y: number) => {
     const currentMapData = mapHistory[mapHistory.length - 1];
     const newMapData = _.clone(currentMapData)
     
@@ -47,25 +67,15 @@ export default function Game(props: Props) {
     }
   }
 
-  const updateOverlay = (x: number, y: number) => {
-    if (currentTerrain && currentShape) {
-      setOverlay(new MapData().addShape(currentTerrain, currentShape[currentRotation], x, y));
-    }
+  const drawPhase = () => {
+    exploreDeck.draw();
   }
 
-  const handleShapeRotate = (x: number , y: number) => {
-    let newRotation = currentRotation;
+  const checkPhase = () => {
+    const timeInSeason = exploreDeck.getTotalTime();
 
-    if (currentTerrain && currentShape) {
-
-      if ((currentShape.length - 1) <= currentRotation) {
-        newRotation = 0;
-      } else {
-        newRotation = currentRotation + 1;
-      }
-      
-      setOverlay(new MapData().addShape(currentTerrain, currentShape[currentRotation], x, y))
-      setCurrentRotation(newRotation);
+    if (timeInSeason >= currentSeason.length) {
+      console.log('end of season')
     }
   }
 
@@ -75,9 +85,9 @@ export default function Game(props: Props) {
       <Grid 
         mapData={currentMapData}
         overlay={overlay}
-        onSquareClick={handleSquareClick} 
+        onSquareClick={drawShape} 
         onSquareHoverOn={updateOverlay}
-        onRotateShape={handleShapeRotate}/>
+        onRotateShape={rotateShape}/>
     )
   }
   
