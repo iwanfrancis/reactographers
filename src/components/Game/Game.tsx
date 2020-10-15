@@ -11,6 +11,7 @@ import { Shape, ShapeRotation } from '../../classes/Card';
 import CurrentCard from '../Cards/CurrentCard/CurrentCard';
 import Seasons, { Season } from '../../constants/Seasons';
 import SeasonCard from '../SeasonCard/SeasonCard';
+import DrawnCard from '../Cards/DrawnCard/DrawnCard';
 
 export interface State {
   mapHistory: MapData[];
@@ -108,13 +109,21 @@ export default function Game() {
 
   const renderExploreCards = () => {
     const currentCard = exploreDeck.getCurrentCard();
+    const previousCards = exploreDeck.getPreviousCards();
+
     return (
-      <CurrentCard 
-        card={currentCard}
-        currentShape={currentShape}
-        setCurrentShape={setCurrentShape}
-        currentTerrain={currentTerrain}
-        setCurrentTerrain={setCurrentTerrain}/>
+      <React.Fragment>
+        {previousCards.map((card, i) => {
+          return <DrawnCard card={card} offset={i * 50} />
+        })}
+        <CurrentCard 
+          card={currentCard}
+          currentShape={currentShape}
+          setCurrentShape={setCurrentShape}
+          currentTerrain={currentTerrain}
+          setCurrentTerrain={setCurrentTerrain}
+          offset={previousCards.length * 50}/>
+      </React.Fragment>
     )
   }
 

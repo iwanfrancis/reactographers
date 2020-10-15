@@ -1,0 +1,15 @@
+.card {
+    position: absolute;
+    width: 250px;
+    height: 320px;
+    border: 2px solid black;
+    border-radius: 3%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.header {
+    font-size: 1.5rem;
+}

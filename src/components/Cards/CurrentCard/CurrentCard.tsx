@@ -13,6 +13,7 @@ export interface Props {
   currentShape: Shape | undefined;
   setCurrentTerrain: React.Dispatch<React.SetStateAction<Terrain | undefined>>;
   setCurrentShape: React.Dispatch<React.SetStateAction<Shape | undefined>>;
+  offset: number;
 }
 
 export default class CurrentCard extends React.PureComponent<Props> {
@@ -60,12 +61,16 @@ export default class CurrentCard extends React.PureComponent<Props> {
   }
 
   render() {
-    const { card } = this.props;
+    const { card, offset } = this.props;
+
+    const offsetStyle = {
+      top: `${offset}px`
+    }
 
     if (isShapeCard(card)) {
       const shapeCard = card as ShapeCard;
       return (
-        <div className={styles.card}>
+        <div className={styles.card} style={offsetStyle}>
           <div className={styles.header}>
             {shapeCard.time}
           </div>

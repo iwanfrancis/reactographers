@@ -33,6 +33,10 @@ export default class ExploreDeck {
         return this.drawnCards[this.drawnCards.length - 1]
     }
 
+    public getPreviousCards(): Card[] {
+        return this.drawnCards.slice(0, this.drawnCards.length - 1);
+    }
+
     public getTotalTime(): number {
         return this.drawnCards.reduce((total: number, card: Card) => total + card.time, 0)
     }
