@@ -24,7 +24,6 @@ export interface State {
 }
 
 export default function Game() {
-
   const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid)])
   const [overlay, setOverlay] = useState(new MapData(new Array(11).fill(null).map(() => new Array(11).fill(null))));
   const [exploreDeck, setExploreDeck] = useState(new ExploreDeck);
@@ -78,6 +77,16 @@ export default function Game() {
 
     if (timeInSeason >= currentSeason.length) {
       console.log('end of season')
+      
+      const currentSeasonIndex = Seasons.indexOf(currentSeason);
+      if (currentSeasonIndex >= Seasons.length -1) {
+        console.log('end of game');
+      } else {
+        setCurrentSeason(Seasons[currentSeasonIndex + 1]);
+      }
+
+      exploreDeck.reset();
+      drawPhase();
     } else {
       drawPhase();
     }
@@ -114,7 +123,7 @@ export default function Game() {
     return (
       <React.Fragment>
         {previousCards.map((card, i) => {
-          return <DrawnCard card={card} offset={i * 50} />
+          return <DrawnCard key={card.name} card={card} offset={i * 50} />
         })}
         <CurrentCard 
           card={currentCard}

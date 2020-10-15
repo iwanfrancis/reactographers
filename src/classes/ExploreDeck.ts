@@ -29,6 +29,12 @@ export default class ExploreDeck {
         
     }
 
+    public reset(): void {
+        this.cards = this.cards.concat(this.drawnCards);
+        this.drawnCards = []
+        this.shuffle();
+    }
+
     public getCurrentCard(): Card {
         return this.drawnCards[this.drawnCards.length - 1]
     }
