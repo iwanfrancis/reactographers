@@ -18,7 +18,7 @@ export interface State {
   overlay: MapData;
   exploreDeck: ExploreDeck;
   currentSeason: Season;
-  currentTerrain: Terrain | null;
+  currentTerrain: Terrain;
   currentShape: Shape | null;
   currentRotation: number;
 }

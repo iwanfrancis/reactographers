@@ -3,11 +3,11 @@ import { Terrain } from "../constants/Terrains";
 import { MapSize } from "../constants/Maps";
 
 export default class MapData {
-    grid: (Terrain | undefined)[][]
+    grid: (Terrain)[][]
     rows: number;
     cols: number;
   
-    constructor(grid?: (Terrain | undefined)[][]) {
+    constructor(grid?: (Terrain)[][]) {
       if (grid) {
         this.grid = grid
       } else {
@@ -45,7 +45,7 @@ export default class MapData {
           const yOffset = (y + shY - 1);
           if (shape[shX][shY])  {
             if ( !this.coordWithinBounds(xOffset, yOffset)
-              || this.grid[xOffset][yOffset]
+              || this.grid[xOffset][yOffset] !== Terrain.Empty
             ) {
               console.error('Move is illegal')
               return false
@@ -54,6 +54,22 @@ export default class MapData {
         }
       }
       return true
+    }
+
+    public getAdjacentSquares(row: number, col: number) {
+      const up = this.grid[row - 1][col];
+      const right = this.grid[row][col + 1];
+      const down = this.grid[row + 1][col];
+      const left = this.grid[row][col - 1];
+    }
+
+    public applyScoringFunction(scoringFunction: (row: number, col: number, terrain: Terrain) => void ) {
+      for (let row = 0; row < this.grid[0].length; row++) {
+        for (let col = 0; col < this.grid.length; col++) {
+          const terrain = this.grid[row][col];
+          scoringFunction(row, col, terrain);
+        }
+      }
     }
 
     private coordWithinBounds(x: number, y: number) {

@@ -11,16 +11,16 @@ export const MapSize = {
 
 export const NormalMap = {
     grid: [
-        [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-        [undefined, undefined, undefined, Terrain.Mountain, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-        [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, Terrain.Mountain, undefined, undefined],
-        [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-        [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-        [undefined, undefined, undefined, undefined, undefined, Terrain.Mountain, undefined, undefined, undefined, undefined, undefined],
-        [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-        [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-        [undefined, undefined, Terrain.Mountain, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-        [undefined, undefined, undefined, undefined, undefined, undefined, undefined, Terrain.Mountain, undefined, undefined, undefined],
-        [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]
+        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Mountain, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Mountain, Terrain.Empty, Terrain.Empty],
+        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Mountain, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        [Terrain.Empty, Terrain.Empty, Terrain.Mountain, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Mountain, Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty]
     ]
 }
