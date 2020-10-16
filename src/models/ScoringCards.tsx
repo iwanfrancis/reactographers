@@ -92,10 +92,6 @@ const SentinelWood: ScoringCard = {
   }
 }
 
-
-
-
-
 export const ForestScoringCards = [
   SentinelWood
 ];

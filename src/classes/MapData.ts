@@ -38,7 +38,7 @@ export default class MapData {
       return this;
     }
 
-    // Check if a move is legal
+    // Given a shape and a grid position, check it can be legally placed
     public moveIsLegal(shape: ShapeRotation, gridPos: GridPosition) {
       for (let shRow = 0; shRow < 4; shRow++) {
         for (let shCol = 0; shCol < 4; shCol++) {
@@ -57,6 +57,7 @@ export default class MapData {
       return true
     }
 
+    // Given a grid position, return the terrain types of all adjacent squares.
     public getAdjacentSquares(gridPos: GridPosition) {
       const row = gridPos.row;
       const col = gridPos.col;
@@ -69,6 +70,7 @@ export default class MapData {
       }
     }
 
+    // Given a scoring function, apply the scoring function to each square on the grid
     public applyScoringFunction(scoringFunction: (gridPos: GridPosition, terrain: Terrain) => void ) {
       for (let row = 0; row < this.grid[0].length; row++) {
         for (let col = 0; col < this.grid.length; col++) {
@@ -78,6 +80,7 @@ export default class MapData {
       }
     }
 
+    // Given a grid position, check whether it is within the bounds of the grid
     private coordWithinBounds(gridPos: GridPosition) {
       if ( gridPos.row < 0 || gridPos.row >= this.grid.length 
         || gridPos.col < 0 || gridPos.col >= this.grid[0].length) {
