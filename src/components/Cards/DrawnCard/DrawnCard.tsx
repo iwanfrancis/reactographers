@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card } from '../../../classes/Card';
+import { Card } from '../../../models/Card';
 import styles from './DrawnCard.module.scss';
 
 export interface Props {

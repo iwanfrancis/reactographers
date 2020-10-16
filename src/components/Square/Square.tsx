@@ -2,8 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import styles from './Square.module.scss';
-import terrainStyles from '../../constants/Terrains.module.scss'
-import { Terrain } from '../../constants/Terrains';
+import { Terrain } from '../../models/Terrains';
 import GridPosition from '../../models/GridPosition';
 
 export interface Props {
@@ -31,8 +30,8 @@ export default class Square extends React.PureComponent<Props> {
       gridPos, squareType, overlayType,
       onSquareHoverOn = () => {},
     } = this.props;
-    const squareCssClass = classNames(styles.square, squareType ? terrainStyles[squareType] : null);
-    const overlayCssClass = classNames(styles.overlay, overlayType ? terrainStyles[overlayType] : null);
+    const squareCssClass = classNames(styles.square, squareType ? styles[squareType] : null);
+    const overlayCssClass = classNames(styles.overlay, overlayType ? styles[overlayType] : null);
 
     return (
       <div 

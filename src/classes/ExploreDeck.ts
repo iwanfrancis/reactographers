@@ -1,5 +1,5 @@
-import { Card } from "./Card";
-import ExploreCards from "../constants/ExploreCards";
+import { Card } from "../models/Card";
+import ExploreCards from "../models/ExploreCards";
 
 export default class ExploreDeck {
     cards: Card[] = ExploreCards.slice();

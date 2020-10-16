@@ -1,6 +1,6 @@
 import React from "react";
 import MapData from "../classes/MapData";
-import GridPosition from "../models/GridPosition";
+import GridPosition from "./GridPosition";
 import { Terrain } from "./Terrains";
 
 export enum ScoringCardType {

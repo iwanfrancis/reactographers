@@ -1,4 +1,4 @@
-import { ShapeCard } from "../classes/Card";
+import { ShapeCard } from "./Card";
 import { Terrain } from "./Terrains";
 
 const Farmland: ShapeCard = {

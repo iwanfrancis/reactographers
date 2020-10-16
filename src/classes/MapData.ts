@@ -1,6 +1,6 @@
-import { ShapeRotation } from "./Card";
-import { Terrain } from "../constants/Terrains";
-import { MapSize } from "../constants/Maps";
+import { ShapeRotation } from "../models/Card";
+import { Terrain } from "../models/Terrains";
+import { MapSize } from "../models/Maps";
 import GridPosition from "../models/GridPosition";
 
 export default class MapData {

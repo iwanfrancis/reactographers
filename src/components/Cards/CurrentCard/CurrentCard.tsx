@@ -1,10 +1,9 @@
 import React from 'react';
 import classNames from 'classnames'
 
-import { Card, ShapeCard, isShapeCard, Shape } from '../../../classes/Card';
-import { Terrain } from '../../../constants/Terrains';
+import { Card, ShapeCard, isShapeCard, Shape } from '../../../models/Card';
+import { Terrain } from '../../../models/Terrains';
 import styles from './CurrentCard.module.scss';
-import terrainStyles from '../../../constants/Terrains.module.scss'
 import CardShape from './CardShape/CardShape';
 
 export interface Props {
@@ -26,7 +25,7 @@ export default class CurrentCard extends React.PureComponent<Props> {
         {terrains.map((terrain, i) => {
           const active = (terrain === currentTerrain) ? styles.active : undefined
           const terrainContainerClass = classNames(active, styles.terrain)
-          const terrainIconClass = classNames(styles['terrain-icon'], terrainStyles[terrain])
+          const terrainIconClass = classNames(styles['terrain-icon'], styles[terrain])
           return (
             <React.Fragment key={terrain}>
               {i > 0 && <div className={styles.divider}></div>}
