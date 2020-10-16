@@ -32,18 +32,18 @@ const TheCauldrons: ScoringCard = {
     let reputation = 0;
     mapData.applyScoringFunction((gridPos: GridPosition, terrain: Terrain) => {
       if (terrain === Terrain.Empty) {
-        const adjacent = mapData.getAdjacentSquares(gridPos);
-        const adjacentSquaresFilled = Object.values(adjacent).every(square => square !== Terrain.Empty)
+        const adjacentSquares = mapData.getAdjacentSquares(gridPos);
+        const adjacentSquaresFilled = Object.values(adjacentSquares).every(square => square !== Terrain.Empty)
         if (adjacentSquaresFilled) reputation++;
       }
     })
-    console.log('The Cauldrons', reputation);
+    console.log('The Cauldrons:', reputation);
     return reputation;
   }
 }
 
 const MagesValley: ScoringCard = {
-  type: ScoringCardType.Spacial,
+  type: ScoringCardType.FarmAndSea,
   name: 'Mages Valley',
   text: [
     'Earn two reputation stars for each water space adjacent to a mountain space.',
@@ -55,8 +55,8 @@ const MagesValley: ScoringCard = {
     let reputation = 0;
     mapData.applyScoringFunction((gridPos: GridPosition, terrain: Terrain) => {
       if (terrain === Terrain.Mountain) {
-        const adjacent = mapData.getAdjacentSquares(gridPos);
-        const pointsForMountain = Object.values(adjacent).reduce((points: number, terrain: Terrain) => {
+        const adjacentSquares = mapData.getAdjacentSquares(gridPos);
+        const pointsForMountain = Object.values(adjacentSquares).reduce((points: number, terrain: Terrain) => {
           if (terrain === Terrain.Water) return points + 2;
           else if (terrain === Terrain.Farm) return points + 1;
           else return points;
@@ -65,14 +65,40 @@ const MagesValley: ScoringCard = {
         reputation = reputation + pointsForMountain;
       }
     })
-    console.log('Mages Valley: ', reputation);
+    console.log('Mages Valley:', reputation);
+    return reputation;
+  }
+}
+
+const SentinelWood: ScoringCard = {
+  type: ScoringCardType.Forests,
+  name: 'Sentinel Wood',
+  text: [
+    'Earn one reputation star for each forest space adjacent to the edge of the map.'
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 25,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+    mapData.applyScoringFunction((gridPos: GridPosition, terrain: Terrain) => {
+      if (terrain === Terrain.Forest) {
+        const adjacentSquares = mapData.getAdjacentSquares(gridPos);
+        const forestWorthPoint = Object.values(adjacentSquares).some(terrain => terrain === Terrain.OutOfBounds);
+        if (forestWorthPoint) reputation++;
+      }
+    })
+    console.log('Sentinel Wood:', reputation);
     return reputation;
   }
 }
 
 
 
-export const ForestScoringCards = [];
+
+
+export const ForestScoringCards = [
+  SentinelWood
+];
 export const VillageScoringCards = [];
 export const SpacialScoringCards = [
   TheCauldrons
