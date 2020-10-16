@@ -4,31 +4,32 @@ import classNames from 'classnames';
 import styles from './Square.module.scss';
 import terrainStyles from '../../constants/Terrains.module.scss'
 import { Terrain } from '../../constants/Terrains';
+import Coord from '../../models/GridPosition';
+import GridPosition from '../../models/GridPosition';
 
 export interface Props {
-  x: number;
-  y: number;
+  gridPos: GridPosition
   squareType?: Terrain;
   overlayType?: Terrain;
-  onClick: (x: number, y: number) => any;
-  onSquareHoverOn: (x: number, y: number) => any;
-  onRotateShape: (x: number, y: number) => any;
+  onClick: (gridPos: GridPosition) => any;
+  onSquareHoverOn: (gridPos: GridPosition) => any;
+  onRotateShape: (gridPos: GridPosition) => any;
 }
 
 export default class Square extends React.PureComponent<Props> {
 
-  handleClick(self: any, e: MouseEvent, x: number, y: number) {
+  handleClick(self: any, e: MouseEvent, gridPos: GridPosition) {
     if (e.buttons === 1) {
-      self.props.onClick(x, y);
+      self.props.onClick(gridPos);
     }
     if (e.buttons === 2) {
-      self.props.onRotateShape(x, y);
+      self.props.onRotateShape(gridPos);
     }
   }
 
   render() {
     const { 
-      x, y, squareType, overlayType,
+      gridPos, squareType, overlayType,
       onSquareHoverOn = () => {},
     } = this.props;
     const squareCssClass = classNames(styles.square, squareType ? terrainStyles[squareType] : null);
@@ -37,9 +38,9 @@ export default class Square extends React.PureComponent<Props> {
     return (
       <div 
         className={squareCssClass}
-        onMouseEnter={() => onSquareHoverOn(x,y)}
+        onMouseEnter={() => onSquareHoverOn(gridPos)}
         onContextMenu={(e: any) => e.preventDefault() }
-        onMouseDown={(e: any) => this.handleClick(this, e, x, y)}>
+        onMouseDown={(e: any) => this.handleClick(this, e, gridPos)}>
           <div className={overlayCssClass}></div>
       </div>
     )

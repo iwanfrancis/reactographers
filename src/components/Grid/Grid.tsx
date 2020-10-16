@@ -2,13 +2,14 @@ import React from 'react';
 import Square from '../Square/Square';
 import styles from './Grid.module.scss';
 import MapData from '../../classes/MapData';
+import GridPosition from '../../models/GridPosition';
 
 export interface Props {
   mapData: MapData;
   overlay: MapData;
-  onSquareClick: (x: number, y: number) => any;
-  onSquareHoverOn: (x: number, y: number) => any;
-  onRotateShape: (x: number, y: number) => any;
+  onSquareClick: (gridPos: GridPosition) => any;
+  onSquareHoverOn: (gridPos: GridPosition) => any;
+  onRotateShape: (gridPos: GridPosition) => any;
 }
 
 export default class Grid extends React.PureComponent<Props> {
@@ -23,9 +24,8 @@ export default class Grid extends React.PureComponent<Props> {
         let overlayType = overlay.get(row, column)
         squareRow.push(
           <Square 
-            key={`${row}:${column}`} 
-            x={row} 
-            y={column} 
+            key={`${column}:${row}`} 
+            gridPos={{row: row, col: column}}
             squareType={squareType}
             overlayType={overlayType}
             onClick={onSquareClick}

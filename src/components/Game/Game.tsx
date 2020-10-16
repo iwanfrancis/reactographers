@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import _ from 'lodash';
+import _, { map } from 'lodash';
 
 import Grid from '../Grid/Grid';
 import styles from './Game.module.scss';
@@ -12,6 +12,8 @@ import CurrentCard from '../Cards/CurrentCard/CurrentCard';
 import Seasons, { Season } from '../../constants/Seasons';
 import SeasonCard from '../SeasonCard/SeasonCard';
 import DrawnCard from '../Cards/DrawnCard/DrawnCard';
+import { SpacialScoringCards } from '../../constants/ScoringCards';
+import GridPosition from '../../models/GridPosition';
 
 export interface State {
   mapHistory: MapData[];
@@ -26,19 +28,20 @@ export interface State {
 export default function Game() {
   const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid)])
   const [overlay, setOverlay] = useState(new MapData(new Array(11).fill(null).map(() => new Array(11).fill(null))));
-  const [exploreDeck, setExploreDeck] = useState(new ExploreDeck);
+  const [exploreDeck] = useState(new ExploreDeck);
   const [currentSeason, setCurrentSeason] = useState<Season>(Seasons[0]);
   const [currentTerrain, setCurrentTerrain] = useState<Terrain>();
   const [currentShape, setCurrentShape] = useState<Shape>();
   const [currentRotation, setCurrentRotation] = useState(0);
+  const [currentScoringCard, setCurrentScoringCard] = useState(SpacialScoringCards[0])
 
-  const updateOverlay = (x: number, y: number) => {
+  const updateOverlay = (gridPos: GridPosition) => {
     if (currentTerrain && currentShape) {
-      setOverlay(new MapData().addShape(currentTerrain, currentShape[currentRotation], x, y));
+      setOverlay(new MapData().addShape(currentTerrain, currentShape[currentRotation], gridPos));
     }
   }
 
-  const rotateShape = (x: number , y: number) => {
+  const rotateShape = (gridPos: GridPosition) => {
     let newRotation = currentRotation;
 
     if (currentTerrain && currentShape) {
@@ -50,17 +53,17 @@ export default function Game() {
       }
 
       setCurrentRotation(newRotation);
-      setOverlay(new MapData().addShape(currentTerrain, currentShape[newRotation], x, y))
+      setOverlay(new MapData().addShape(currentTerrain, currentShape[newRotation], gridPos))
     }
   }
 
-  const drawShape = (x: number, y: number) => {
+  const drawShape = (gridPos: GridPosition) => {
     const currentMapData = mapHistory[mapHistory.length - 1];
     const newMapData = _.clone(currentMapData)
     
     if (currentTerrain && currentShape) {
-      if (newMapData.moveIsLegal(currentShape[currentRotation], x, y)) {
-        newMapData.addShape(currentTerrain, currentShape[currentRotation], x, y)
+      if (newMapData.moveIsLegal(currentShape[currentRotation], gridPos)) {
+        newMapData.addShape(currentTerrain, currentShape[currentRotation], gridPos)
       }
   
       setMapHistory(mapHistory.concat([newMapData]));
@@ -82,6 +85,7 @@ export default function Game() {
       if (currentSeasonIndex >= Seasons.length -1) {
         console.log('end of game');
       } else {
+        scoringPhase();
         setCurrentSeason(Seasons[currentSeasonIndex + 1]);
       }
 
@@ -94,6 +98,11 @@ export default function Game() {
 
   const drawPhase = () => {
     exploreDeck.draw();
+  }
+
+  const scoringPhase = () => {
+    const currentMapData = mapHistory[mapHistory.length - 1];
+    currentScoringCard.score(currentMapData);
   }
 
   const renderGrid = () => {

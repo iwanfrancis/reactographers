@@ -1,6 +1,7 @@
 import { ShapeRotation } from "./Card";
 import { Terrain } from "../constants/Terrains";
 import { MapSize } from "../constants/Maps";
+import GridPosition from "../models/GridPosition";
 
 export default class MapData {
     grid: (Terrain)[][]
@@ -17,19 +18,19 @@ export default class MapData {
       this.cols = this.grid[0].length;
     }
   
-    public get(x: number, y: number) {
-      return this.grid[x][y];
+    public get(row: number, col: number) {
+      return this.grid[row][col];
     }
   
     // Maps a shape and terrain to the grid. Puts shape[1][1] on the click location
-    public addShape(terrain: Terrain, shape: ShapeRotation, x: number, y: number) {
-      for (let shX = 0; shX < 4; shX++) {
-        for (let shY = 0; shY < 4; shY++) {
-          if (shape[shX][shY]) {
-            const xOffset = (x + shX - 1);
-            const yOffset = (y + shY - 1);
-            if (this.coordWithinBounds(xOffset, yOffset)) {
-              this.grid[xOffset][yOffset] = terrain;
+    public addShape(terrain: Terrain, shape: ShapeRotation, gridPos: GridPosition) {
+      for (let shRow = 0; shRow < 4; shRow++) {
+        for (let shCol = 0; shCol < 4; shCol++) {
+          if (shape[shRow][shCol]) {
+            const rowOffset = (gridPos.row + shRow - 1);
+            const colOffset = (gridPos.col + shCol - 1);
+            if (this.coordWithinBounds({row: rowOffset, col: colOffset})) {
+              this.grid[rowOffset][colOffset] = terrain;
             } 
           } 
         }
@@ -38,14 +39,14 @@ export default class MapData {
     }
 
     // Check if a move is legal
-    public moveIsLegal(shape: ShapeRotation, x: number, y: number) {
-      for (let shX = 0; shX < 4; shX++) {
-        for (let shY = 0; shY < 4; shY++) {
-          const xOffset = (x + shX - 1);
-          const yOffset = (y + shY - 1);
-          if (shape[shX][shY])  {
-            if ( !this.coordWithinBounds(xOffset, yOffset)
-              || this.grid[xOffset][yOffset] !== Terrain.Empty
+    public moveIsLegal(shape: ShapeRotation, gridPos: GridPosition) {
+      for (let shRow = 0; shRow < 4; shRow++) {
+        for (let shCol = 0; shCol < 4; shCol++) {
+          const rowOffset = (gridPos.row + shRow - 1);
+          const colOffset = (gridPos.col + shCol - 1);
+          if (shape[shRow][shCol])  {
+            if ( !this.coordWithinBounds({row: rowOffset, col: colOffset})
+              || this.grid[rowOffset][colOffset] !== Terrain.Empty
             ) {
               console.error('Move is illegal')
               return false
@@ -56,12 +57,23 @@ export default class MapData {
       return true
     }
 
-    public getAdjacentSquares(row: number, col: number) {
-      const up = this.grid[row - 1][col];
-      const right = this.grid[row][col + 1];
-      const down = this.grid[row + 1][col];
-      const left = this.grid[row][col - 1];
-    }
+    // public getAdjacentSquares(row: number, col: number) {
+    //   let up;
+    //   let right;
+    //   let down;
+    //   let left;
+
+    //   if (this.coordWithinBounds((col - 1), row)) {
+
+    //   }
+
+    //   return {
+    //     up: this.grid[row - 1][col] || Terrain.OutOfBounds,
+    //     right: this.grid[row][col + 1] || Terrain.OutOfBounds,
+    //     down: this.grid[row + 1][col] || Terrain.OutOfBounds,
+    //     left: this.grid[row][col - 1] || Terrain.OutOfBounds
+    //   }
+    // }
 
     public applyScoringFunction(scoringFunction: (row: number, col: number, terrain: Terrain) => void ) {
       for (let row = 0; row < this.grid[0].length; row++) {
@@ -72,9 +84,9 @@ export default class MapData {
       }
     }
 
-    private coordWithinBounds(x: number, y: number) {
-      if ( x < 0 || x >= this.grid[0].length 
-        || y < 0 || y >= this.grid.length) {
+    private coordWithinBounds(gridPos: GridPosition) {
+      if ( gridPos.row < 0 || gridPos.row >= this.grid.length 
+        || gridPos.col < 0 || gridPos.col >= this.grid[0].length) {
           return false
       }
       return true
