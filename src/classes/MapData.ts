@@ -2,6 +2,7 @@ import { ShapeRotation } from "./Card";
 import { Terrain } from "../constants/Terrains";
 import { MapSize } from "../constants/Maps";
 import GridPosition from "../models/GridPosition";
+import Grid from "../components/Grid/Grid";
 
 export default class MapData {
     grid: (Terrain)[][]
@@ -57,29 +58,23 @@ export default class MapData {
       return true
     }
 
-    // public getAdjacentSquares(row: number, col: number) {
-    //   let up;
-    //   let right;
-    //   let down;
-    //   let left;
+    public getAdjacentSquares(gridPos: GridPosition) {
+      const row = gridPos.row;
+      const col = gridPos.col;
 
-    //   if (this.coordWithinBounds((col - 1), row)) {
+      return {
+        up: this.coordWithinBounds({row: row - 1, col: col }) ? this.grid[row - 1][col] : Terrain.OutOfBounds,
+        down: this.coordWithinBounds({row: row + 1, col: col }) ? this.grid[row + 1][col] : Terrain.OutOfBounds,
+        left: this.coordWithinBounds({row: row, col: col - 1 }) ? this.grid[row][col - 1] : Terrain.OutOfBounds,
+        right: this.coordWithinBounds({row: row, col: col + 1 }) ? this.grid[row][col + 1] : Terrain.OutOfBounds
+      }
+    }
 
-    //   }
-
-    //   return {
-    //     up: this.grid[row - 1][col] || Terrain.OutOfBounds,
-    //     right: this.grid[row][col + 1] || Terrain.OutOfBounds,
-    //     down: this.grid[row + 1][col] || Terrain.OutOfBounds,
-    //     left: this.grid[row][col - 1] || Terrain.OutOfBounds
-    //   }
-    // }
-
-    public applyScoringFunction(scoringFunction: (row: number, col: number, terrain: Terrain) => void ) {
+    public applyScoringFunction(scoringFunction: (gridPos: GridPosition, terrain: Terrain) => void ) {
       for (let row = 0; row < this.grid[0].length; row++) {
         for (let col = 0; col < this.grid.length; col++) {
           const terrain = this.grid[row][col];
-          scoringFunction(row, col, terrain);
+          scoringFunction({row: row, col: col}, terrain);
         }
       }
     }
