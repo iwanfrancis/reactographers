@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import _, { map } from 'lodash';
+import _ from 'lodash';
 
 import Grid from '../Grid/Grid';
 import styles from './Game.module.scss';
@@ -7,7 +7,7 @@ import MapData from '../../classes/MapData';
 import { Terrain } from '../../constants/Terrains';
 import { NormalMap } from '../../constants/Maps';
 import ExploreDeck from '../../classes/ExploreDeck';
-import { Shape, ShapeRotation } from '../../classes/Card';
+import { Shape } from '../../classes/Card';
 import CurrentCard from '../Cards/CurrentCard/CurrentCard';
 import Seasons, { Season } from '../../constants/Seasons';
 import SeasonCard from '../SeasonCard/SeasonCard';
@@ -28,7 +28,7 @@ export interface State {
 export default function Game() {
   const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid)])
   const [overlay, setOverlay] = useState(new MapData(new Array(11).fill(null).map(() => new Array(11).fill(null))));
-  const [exploreDeck] = useState(new ExploreDeck);
+  const [exploreDeck] = useState(new ExploreDeck());
   const [currentSeason, setCurrentSeason] = useState<Season>(Seasons[0]);
   const [currentTerrain, setCurrentTerrain] = useState<Terrain>();
   const [currentShape, setCurrentShape] = useState<Shape>();

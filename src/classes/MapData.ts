@@ -2,7 +2,6 @@ import { ShapeRotation } from "./Card";
 import { Terrain } from "../constants/Terrains";
 import { MapSize } from "../constants/Maps";
 import GridPosition from "../models/GridPosition";
-import Grid from "../components/Grid/Grid";
 
 export default class MapData {
     grid: (Terrain)[][]

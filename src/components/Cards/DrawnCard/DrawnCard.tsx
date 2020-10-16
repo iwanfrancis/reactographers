@@ -1,8 +1,6 @@
 import React from 'react';
-import classNames from 'classnames'
 
-import { Card, ShapeCard, isShapeCard, Shape } from '../../../classes/Card';
-import { Terrain } from '../../../constants/Terrains';
+import { Card } from '../../../classes/Card';
 import styles from './DrawnCard.module.scss';
 
 export interface Props {

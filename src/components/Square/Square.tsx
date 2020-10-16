@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import styles from './Square.module.scss';
 import terrainStyles from '../../constants/Terrains.module.scss'
 import { Terrain } from '../../constants/Terrains';
-import Coord from '../../models/GridPosition';
 import GridPosition from '../../models/GridPosition';
 
 export interface Props {

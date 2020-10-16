@@ -23,8 +23,8 @@ const TheCauldrons: ScoringCard = {
   type: ScoringCardType.Spacial,
   name: 'The Cauldrons',
   text: [
-    'Earn one reputation star for each empty space surrounded on all four\
-     sides by filled spaces or the edge of the map'
+    'Earn one reputation star for each empty space surrounded on all four'
+    + 'sides by filled spaces or the edge of the map'
   ],
   diagram: <div></div>,
   singlePlayerScore: 20,
