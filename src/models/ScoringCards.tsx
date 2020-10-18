@@ -92,10 +92,35 @@ const SentinelWood: ScoringCard = {
   }
 }
 
+const Wildholds: ScoringCard = {
+  type: ScoringCardType.Villages,
+  name: 'Wildholds',
+  text: [
+    'Earn eight reputation stars for each cluster of six or more village spaces.'
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 16,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+
+    const clusters = mapData.getClusters(Terrain.Village)
+    clusters.map(cluster => {
+      if (cluster.gridPositions.length >= 6) {
+        reputation = reputation + 8;
+      }
+    })
+
+    console.log('Wildholds:', reputation);
+    return reputation;
+  }
+}
+
 export const ForestScoringCards = [
   SentinelWood
 ];
-export const VillageScoringCards = [];
+export const VillageScoringCards = [
+  Wildholds
+];
 export const SpacialScoringCards = [
   TheCauldrons
 ];

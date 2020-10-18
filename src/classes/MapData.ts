@@ -88,25 +88,40 @@ export default class MapData {
       for (let row = 0; row < this.rows; row++) {
         for (let col = 0; col < this.cols; col++) {
           if (this.grid[row][col] === terrain) {
-            const gridPos = {row: row, col: col, terrain: terrain}
-            let cluster = {
-              terrain: terrain,
-              gridPositions: []
-            }
-            const findClusterSquares = (cluster: Cluster, gridPos: GridPosition) => {
-              if (gridPos.terrain === cluster.terrain && !cluster.gridPositions.includes(gridPos)) {
-                cluster.gridPositions.push(gridPos);
 
-                const adjacentSquares = this.getAdjacentSquares(gridPos);
-                adjacentSquares.map(square => findClusterSquares(cluster, square))
+            const gridPos = {row: row, col: col, terrain: terrain};
+            const alreadyInCluster = clusters.some(cluster => {
+              return cluster.gridPositions.some(clGridPos => {
+                return (clGridPos.row === gridPos.row && clGridPos.col === gridPos.col);
+              })
+            })
+
+            const findClusterSquares = (cluster: Cluster, gridPos: GridPosition) => {
+              if (gridPos.terrain === cluster.terrain) {
+                const alreadyInCluster = cluster.gridPositions.some(clGridPos => {
+                  return (clGridPos.row === gridPos.row && clGridPos.col === gridPos.col);
+                })
+
+                if (!alreadyInCluster) {
+                  cluster.gridPositions.push(gridPos);
+                  const adjacentSquares = this.getAdjacentSquares(gridPos);
+                  adjacentSquares.map(square => findClusterSquares(cluster, square))
+                }
               }
             }
-            findClusterSquares(cluster, gridPos)
-            clusters.push(cluster);
+
+            if (!alreadyInCluster) {
+              let cluster = {
+                terrain: terrain,
+                gridPositions: []
+              }
+              findClusterSquares(cluster, gridPos);
+              clusters.push(cluster);
+            }
           }
         }
       }
-      console.log('clusters:', clusters)
+
       return clusters;
     }
 
