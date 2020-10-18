@@ -20,8 +20,8 @@ export default class Grid extends React.PureComponent<Props> {
     for (let row = 0; row < mapData.rows; row++) {
       const squareRow = [];
       for (let column = 0; column < mapData.cols; column++) {
-        let squareType = mapData.get(row, column);
-        let overlayType = overlay.get(row, column)
+        let squareType = mapData.get({row: row, col: column});
+        let overlayType = overlay.get({row: row, col: column})
         squareRow.push(
           <Square 
             key={`${column}:${row}`} 

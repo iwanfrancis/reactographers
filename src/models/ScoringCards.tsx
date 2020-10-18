@@ -30,10 +30,10 @@ const TheCauldrons: ScoringCard = {
   singlePlayerScore: 20,
   score: (mapData: MapData) => {
     let reputation = 0;
-    mapData.applyScoringFunction((gridPos: GridPosition, terrain: Terrain) => {
-      if (terrain === Terrain.Empty) {
+    mapData.applyScoringFunction((gridPos: GridPosition) => {
+      if (gridPos.terrain === Terrain.Empty) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
-        const adjacentSquaresFilled = Object.values(adjacentSquares).every(square => square !== Terrain.Empty)
+        const adjacentSquaresFilled = Object.values(adjacentSquares).every(square => square.terrain !== Terrain.Empty)
         if (adjacentSquaresFilled) reputation++;
       }
     })
@@ -53,12 +53,12 @@ const MagesValley: ScoringCard = {
   singlePlayerScore: 22,
   score: (mapData: MapData) => {
     let reputation = 0;
-    mapData.applyScoringFunction((gridPos: GridPosition, terrain: Terrain) => {
-      if (terrain === Terrain.Mountain) {
+    mapData.applyScoringFunction((gridPos: GridPosition) => {
+      if (gridPos.terrain === Terrain.Mountain) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
-        const pointsForMountain = Object.values(adjacentSquares).reduce((points: number, terrain: Terrain) => {
-          if (terrain === Terrain.Water) return points + 2;
-          else if (terrain === Terrain.Farm) return points + 1;
+        const pointsForMountain = Object.values(adjacentSquares).reduce((points: number, square: GridPosition) => {
+          if (square.terrain === Terrain.Water) return points + 2;
+          else if (square.terrain === Terrain.Farm) return points + 1;
           else return points;
         }, 0);
 
@@ -80,10 +80,10 @@ const SentinelWood: ScoringCard = {
   singlePlayerScore: 25,
   score: (mapData: MapData) => {
     let reputation = 0;
-    mapData.applyScoringFunction((gridPos: GridPosition, terrain: Terrain) => {
-      if (terrain === Terrain.Forest) {
+    mapData.applyScoringFunction((gridPos: GridPosition) => {
+      if (gridPos.terrain === Terrain.Forest) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
-        const forestWorthPoint = Object.values(adjacentSquares).some(terrain => terrain === Terrain.OutOfBounds);
+        const forestWorthPoint = Object.values(adjacentSquares).some(square => square.terrain === Terrain.OutOfBounds);
         if (forestWorthPoint) reputation++;
       }
     })
