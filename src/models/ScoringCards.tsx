@@ -53,18 +53,17 @@ export const MagesValley: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
     mapData.applyScoringFunction((gridPos: GridPosition) => {
-      if (gridPos.terrain === Terrain.Mountain) {
+      if (gridPos.terrain === Terrain.Water || gridPos.terrain === Terrain.Farm) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
-        const pointsForMountain = Object.values(adjacentSquares).reduce((points: number, square: GridPosition) => {
-          if (square.terrain === Terrain.Water) return points + 2;
-          else if (square.terrain === Terrain.Farm) return points + 1;
-          else return points;
-        }, 0);
-
-        reputation = reputation + pointsForMountain;
+        if (Object.values(adjacentSquares).some(square => square.terrain === Terrain.Mountain)) {
+          if (gridPos.terrain === Terrain.Water) {
+            reputation = reputation + 2;
+          } else if (gridPos.terrain === Terrain.Farm) {
+            reputation = reputation + 1;
+          }
+        }
       }
     })
-    console.log('Mages Valley:', reputation);
     return reputation;
   }
 }
