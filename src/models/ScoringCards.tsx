@@ -19,7 +19,7 @@ export interface ScoringCard {
   score: (mapData: MapData) => number;
 }
 
-const TheCauldrons: ScoringCard = {
+export const TheCauldrons: ScoringCard = {
   type: ScoringCardType.Spacial,
   name: 'The Cauldrons',
   text: [
@@ -37,12 +37,11 @@ const TheCauldrons: ScoringCard = {
         if (adjacentSquaresFilled) reputation++;
       }
     })
-    console.log('The Cauldrons:', reputation);
     return reputation;
   }
 }
 
-const MagesValley: ScoringCard = {
+export const MagesValley: ScoringCard = {
   type: ScoringCardType.FarmAndSea,
   name: 'Mages Valley',
   text: [
@@ -70,7 +69,7 @@ const MagesValley: ScoringCard = {
   }
 }
 
-const SentinelWood: ScoringCard = {
+export const SentinelWood: ScoringCard = {
   type: ScoringCardType.Forests,
   name: 'Sentinel Wood',
   text: [
@@ -92,7 +91,7 @@ const SentinelWood: ScoringCard = {
   }
 }
 
-const Wildholds: ScoringCard = {
+export const Wildholds: ScoringCard = {
   type: ScoringCardType.Villages,
   name: 'Wildholds',
   text: [
