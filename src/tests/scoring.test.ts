@@ -1,5 +1,5 @@
 import MapData from "../classes/MapData";
-import { MagesValley, TheCauldrons } from "../models/ScoringCards";
+import { MagesValley, SentinelWood, TheCauldrons } from "../models/ScoringCards";
 import { Terrain } from "../models/Terrains";
 
 describe('the cauldrons', () => {
@@ -179,6 +179,84 @@ describe('mages valley', () => {
         ]
       )
       const score = MagesValley.score(map);
+      expect(score).toBe(2);
+    })
+  })
+})
+
+describe('sentinel wood', () => {
+  describe('gives no reputation stars', () => {
+    test('when the grid is empty', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = SentinelWood.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when there are none forest spaces adjacent to the edge of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Water, Terrain.Farm,  Terrain.Village],
+          [Terrain.Monster, Terrain.Empty, Terrain.Empty],
+          [Terrain.Mountain, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = SentinelWood.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when a forest space is not adjacent to the edge of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Forest, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = SentinelWood.score(map);
+      expect(score).toBe(0);
+    })
+  })
+  describe('gives one reputation star', () => {
+    test('when a forest space is adjacent to the edge of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Forest, Terrain.Empty, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = SentinelWood.score(map);
+      expect(score).toBe(1);
+    })
+
+    test('when a forest space is in the corner of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Forest, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = SentinelWood.score(map);
+      expect(score).toBe(1);
+    })
+  })
+  describe('gives two reputation stars', () => {
+    test('when there are two forest spaces adjacent to the edge of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Forest, Terrain.Empty, Terrain.Forest],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = SentinelWood.score(map);
       expect(score).toBe(2);
     })
   })

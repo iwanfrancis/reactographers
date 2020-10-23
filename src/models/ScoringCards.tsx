@@ -37,6 +37,7 @@ export const TheCauldrons: ScoringCard = {
         if (adjacentSquaresFilled) reputation++;
       }
     })
+    
     return reputation;
   }
 }
@@ -64,6 +65,7 @@ export const MagesValley: ScoringCard = {
         }
       }
     })
+
     return reputation;
   }
 }
@@ -85,7 +87,7 @@ export const SentinelWood: ScoringCard = {
         if (forestWorthPoint) reputation++;
       }
     })
-    console.log('Sentinel Wood:', reputation);
+
     return reputation;
   }
 }
@@ -108,7 +110,6 @@ export const Wildholds: ScoringCard = {
       }
     })
 
-    console.log('Wildholds:', reputation);
     return reputation;
   }
 }
