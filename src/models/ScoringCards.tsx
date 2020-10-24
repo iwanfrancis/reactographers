@@ -31,6 +31,15 @@ export const CanalLake: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
     
+    mapData.applyScoringFunction((gridPos: GridPosition) => {
+      if (gridPos.terrain === Terrain.Water || gridPos.terrain === Terrain.Farm) {
+        const adjacentSquares = mapData.getAdjacentSquares(gridPos);
+        const requiredAdjacentTerrain = gridPos.terrain === Terrain.Water ? Terrain.Farm : Terrain.Water;
+        const requiredTerrainFound = Object.values(adjacentSquares).some(square => square.terrain === requiredAdjacentTerrain);
+        if (requiredTerrainFound) reputation++;
+      }
+    })
+
     return reputation;
   }
 }
