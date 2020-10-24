@@ -30,6 +30,11 @@ export const Borderlands: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
     
+    mapData.scoreRowsAndCols((rowOrCol: Terrain[]) => {
+      if (rowOrCol.every(terrain => terrain !== Terrain.Empty)) {
+        reputation += 6;
+      }
+    })
 
     return reputation;
   }
@@ -47,7 +52,7 @@ export const CanalLake: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
     
-    mapData.applyScoringFunction((gridPos: GridPosition) => {
+    mapData.scoreSquares((gridPos: GridPosition) => {
       if (gridPos.terrain === Terrain.Water || gridPos.terrain === Terrain.Farm) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
         const requiredAdjacentTerrain = gridPos.terrain === Terrain.Water ? Terrain.Farm : Terrain.Water;
@@ -71,7 +76,7 @@ export const TheCauldrons: ScoringCard = {
   singlePlayerScore: 20,
   score: (mapData: MapData) => {
     let reputation = 0;
-    mapData.applyScoringFunction((gridPos: GridPosition) => {
+    mapData.scoreSquares((gridPos: GridPosition) => {
       if (gridPos.terrain === Terrain.Empty) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
         const adjacentSquaresFilled = Object.values(adjacentSquares).every(square => square.terrain !== Terrain.Empty)
@@ -94,7 +99,7 @@ export const Treetower: ScoringCard = {
   singlePlayerScore: 17,
   score: (mapData: MapData) => {
     let reputation = 0;
-    mapData.applyScoringFunction((gridPos: GridPosition) => {
+    mapData.scoreSquares((gridPos: GridPosition) => {
       if (gridPos.terrain === Terrain.Forest) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
         const adjacentSquaresFilled = Object.values(adjacentSquares).every(square => square.terrain !== Terrain.Empty);
@@ -117,7 +122,7 @@ export const MagesValley: ScoringCard = {
   singlePlayerScore: 22,
   score: (mapData: MapData) => {
     let reputation = 0;
-    mapData.applyScoringFunction((gridPos: GridPosition) => {
+    mapData.scoreSquares((gridPos: GridPosition) => {
       if (gridPos.terrain === Terrain.Water || gridPos.terrain === Terrain.Farm) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
         if (Object.values(adjacentSquares).some(square => square.terrain === Terrain.Mountain)) {
@@ -144,7 +149,7 @@ export const SentinelWood: ScoringCard = {
   singlePlayerScore: 25,
   score: (mapData: MapData) => {
     let reputation = 0;
-    mapData.applyScoringFunction((gridPos: GridPosition) => {
+    mapData.scoreSquares((gridPos: GridPosition) => {
       if (gridPos.terrain === Terrain.Forest) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
         const forestWorthPoint = Object.values(adjacentSquares).some(square => square.terrain === Terrain.OutOfBounds);

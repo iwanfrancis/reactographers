@@ -126,13 +126,34 @@ export default class MapData {
     }
 
     // Given a scoring function, apply it to each square on the grid
-    public applyScoringFunction(scoringFunction: (gridPos: GridPosition) => void ): void {
+    public scoreSquares(scoringFunction: (gridPos: GridPosition) => void ): void {
       for (let row = 0; row < this.rows; row++) {
         for (let col = 0; col < this.cols; col++) {
           const terrain = this.grid[row][col];
           scoringFunction({row: row, col: col, terrain: terrain});
         }
       }
+    }
+
+    // Given a scoring function, apply it to each row in the grid
+    public scoreRows(scoringFunction: (row: Terrain[]) => void ): void {
+      this.grid.map(row => {
+        scoringFunction(row);
+      })
+    }
+
+    // Given a scoring function, apply it to each col in the grid
+    public scoreCols(scoringFunction: (col: Terrain[]) => void ): void {
+      for (let colNum = 0; colNum < this.cols; colNum++) {
+        const col = this.grid.map(row => row[colNum]);
+        scoringFunction(col);
+      }
+    }
+
+    // Given a scoring function, apply it to each row and col in the grid
+    public scoreRowsAndCols(scoringFunction: (rowOrCol: Terrain[]) => void ): void {
+      this.scoreRows(scoringFunction);
+      this.scoreCols(scoringFunction);
     }
 
     // Given a grid position, check whether it is within the bounds of the grid
