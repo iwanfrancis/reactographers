@@ -54,7 +54,11 @@ export const Treetower: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
     mapData.applyScoringFunction((gridPos: GridPosition) => {
-      
+      if (gridPos.terrain === Terrain.Forest) {
+        const adjacentSquares = mapData.getAdjacentSquares(gridPos);
+        const adjacentSquaresFilled = Object.values(adjacentSquares).every(square => square.terrain !== Terrain.Empty);
+        if (adjacentSquaresFilled) reputation++;
+      }
     })
     
     return reputation;
