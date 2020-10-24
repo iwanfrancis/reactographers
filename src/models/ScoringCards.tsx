@@ -150,9 +150,14 @@ export const ShieldGate: ScoringCard = {
   singlePlayerScore: 20,
   score: (mapData: MapData) => {
     let reputation = 0;
-    mapData.applyScoringFunction((gridPos: GridPosition) => {
-     
-    })
+    const clusters = mapData.getClusters(Terrain.Village)
+    if (clusters.length > 1) {
+      const sortedClusters = clusters.sort((a, b) => {
+        return b.gridPositions.length - a.gridPositions.length;
+      })
+
+      reputation += sortedClusters[1].gridPositions.length * 2;
+    }
 
     return reputation;
   }
