@@ -1,6 +1,100 @@
 import MapData from "../../classes/MapData";
-import { TheCauldrons } from "../../models/ScoringCards";
+import { Borderlands, TheCauldrons } from "../../models/ScoringCards";
 import { Terrain } from "../../models/Terrains";
+
+describe('borderlands', () => {
+  describe('gives no reputation stars', () => {
+    test('when the grid is empty', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,   Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = Borderlands.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when there are no complete rows or columns', () => {
+      const map = new MapData(
+        [
+          [Terrain.Water, Terrain.Forest,   Terrain.Empty],
+          [Terrain.Farm,   Terrain.Village,  Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty, Terrain.Monster],
+        ]
+      )
+      const score = Borderlands.score(map);
+      expect(score).toBe(0);
+    })
+  })
+
+  describe('gives six reputation stars', () => {
+    test('when there is one complete row', () => {
+      const map = new MapData(
+        [
+          [Terrain.Water, Terrain.Village,   Terrain.Farm],
+          [Terrain.Empty,   Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = Borderlands.score(map);
+      expect(score).toBe(6);
+    })
+  })
+
+  describe('gives six reputation stars', () => {
+    test('when there is one complete column', () => {
+      const map = new MapData(
+        [
+          [Terrain.Water, Terrain.Empty,   Terrain.Empty],
+          [Terrain.Village,   Terrain.Empty,  Terrain.Empty],
+          [Terrain.Farm,   Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = Borderlands.score(map);
+      expect(score).toBe(6);
+    })
+  })
+
+  describe('gives twelve reputation stars', () => {
+    test('when there are two complete rows', () => {
+      const map = new MapData(
+        [
+          [Terrain.Water, Terrain.Village,   Terrain.Farm],
+          [Terrain.Water,   Terrain.Village,  Terrain.Farm],
+          [Terrain.Empty,   Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = Borderlands.score(map);
+      expect(score).toBe(12);
+    })
+
+    test('when there are two complete columns', () => {
+      const map = new MapData(
+        [
+          [Terrain.Water, Terrain.Water,   Terrain.Empty],
+          [Terrain.Village,   Terrain.Village,  Terrain.Empty],
+          [Terrain.Farm,   Terrain.Farm, Terrain.Empty],
+        ]
+      )
+      const score = Borderlands.score(map);
+      expect(score).toBe(12);
+    })
+
+    test('when there is one complete row and one complete column', () => {
+      const map = new MapData(
+        [
+          [Terrain.Water, Terrain.Water,   Terrain.Farm],
+          [Terrain.Village, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Farm,   Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = Borderlands.score(map);
+      expect(score).toBe(12);
+    })
+  })
+})
 
 describe('the cauldrons', () => {
   describe('gives no reputation stars', () => {

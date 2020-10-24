@@ -19,6 +19,22 @@ export interface ScoringCard {
   score: (mapData: MapData) => number;
 }
 
+export const Borderlands: ScoringCard = {
+  type: ScoringCardType.Spacial,
+  name: 'Borderlands',
+  text: [
+    'Earn six reputation stars for each complete row or complete column of filled spaces'
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 24,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+    
+
+    return reputation;
+  }
+}
+
 export const CanalLake: ScoringCard = {
   type: ScoringCardType.FarmAndSea,
   name: 'Canal Lake',
