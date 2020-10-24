@@ -42,6 +42,25 @@ export const TheCauldrons: ScoringCard = {
   }
 }
 
+export const Treetower: ScoringCard = {
+  type: ScoringCardType.Forests,
+  name: 'Treetower',
+  text: [
+    'Earn one reputation star for each forest space surrounded on all four sides by'
+    + ' filled spaces or the edge of the map.'
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 17,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+    mapData.applyScoringFunction((gridPos: GridPosition) => {
+      
+    })
+    
+    return reputation;
+  }
+}
+
 export const MagesValley: ScoringCard = {
   type: ScoringCardType.FarmAndSea,
   name: 'Mages Valley',
@@ -115,7 +134,8 @@ export const Wildholds: ScoringCard = {
 }
 
 export const ForestScoringCards = [
-  SentinelWood
+  SentinelWood,
+  Treetower
 ];
 export const VillageScoringCards = [
   Wildholds
