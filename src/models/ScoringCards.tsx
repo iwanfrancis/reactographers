@@ -211,9 +211,11 @@ export const ForestScoringCards = [
   Treetower
 ];
 export const VillageScoringCards = [
+  ShieldGate,
   Wildholds
 ];
 export const SpacialScoringCards = [
+  Borderlands,
   TheCauldrons
 ];
 export const FarmAndSeaScoringCards = [
