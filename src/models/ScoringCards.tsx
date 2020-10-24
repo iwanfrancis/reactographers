@@ -140,6 +140,24 @@ export const SentinelWood: ScoringCard = {
   }
 }
 
+export const ShieldGate: ScoringCard = {
+  type: ScoringCardType.Villages,
+  name: 'Shieldgate',
+  text: [
+    'Earn two reputation stars for each village space in the second largest cluster of village spaces'
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 20,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+    mapData.applyScoringFunction((gridPos: GridPosition) => {
+     
+    })
+
+    return reputation;
+  }
+}
+
 export const Wildholds: ScoringCard = {
   type: ScoringCardType.Villages,
   name: 'Wildholds',
