@@ -19,6 +19,22 @@ export interface ScoringCard {
   score: (mapData: MapData) => number;
 }
 
+export const CanalLake: ScoringCard = {
+  type: ScoringCardType.FarmAndSea,
+  name: 'Canal Lake',
+  text: [
+    'Earn one reputation star for each water space adjacent to at least one farm space.',
+    'Earn one reputation star for each farm space adjacent to at least one water space.'
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 24,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+    
+    return reputation;
+  }
+}
+
 export const TheCauldrons: ScoringCard = {
   type: ScoringCardType.Spacial,
   name: 'The Cauldrons',
@@ -148,6 +164,7 @@ export const SpacialScoringCards = [
   TheCauldrons
 ];
 export const FarmAndSeaScoringCards = [
+  CanalLake,
   MagesValley
 ];
 
