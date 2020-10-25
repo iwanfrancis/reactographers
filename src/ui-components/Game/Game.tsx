@@ -31,11 +31,12 @@ export default function Game() {
   const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid)])
   const [overlay, setOverlay] = useState(new MapData(new Array(11).fill(null).map(() => new Array(11).fill(null))));
   const [exploreDeck] = useState(new ExploreDeck());
+  const [edicts, setEdicts] = useState(drawEdicts());
   const [currentSeason, setCurrentSeason] = useState<Season>(Seasons[0]);
   const [currentTerrain, setCurrentTerrain] = useState<Terrain>();
   const [currentShape, setCurrentShape] = useState<Shape>();
   const [currentRotation, setCurrentRotation] = useState(0);
-  const [edicts, setEdicts] = useState(drawEdicts());
+  const [reputation, setReputation] = useState(0);
 
   const updateOverlay = (gridPos: GridPosition) => {
     if (currentTerrain && currentShape) {
@@ -66,10 +67,9 @@ export default function Game() {
     if (currentTerrain && currentShape) {
       if (newMapData.moveIsLegal(currentShape[currentRotation], gridPos)) {
         newMapData.addShape(currentTerrain, currentShape[currentRotation], gridPos)
+        setMapHistory(mapHistory.concat([newMapData]));
+        checkPhase();
       }
-  
-      setMapHistory(mapHistory.concat([newMapData]));
-      checkPhase();
     }
   }
 
@@ -86,6 +86,7 @@ export default function Game() {
       const currentSeasonIndex = Seasons.indexOf(currentSeason);
       if (currentSeasonIndex >= Seasons.length -1) {
         console.log('End of game');
+        console.log(`Final score: ${reputation}`)
       } else {
         scoringPhase();
         const nextSeason = Seasons[currentSeasonIndex + 1];
@@ -107,13 +108,18 @@ export default function Game() {
   const scoringPhase = () => {
     console.log('Begin scoring phase')
     const currentMapData = mapHistory[mapHistory.length - 1];
+    let seasonScore = 0;
     edicts.map(edict => {
       if (currentSeason.edicts.includes(edict.code)) {
         console.log(`Scoring edict ${edict.code} (${edict.scoringCard.name})`)
         const score = edict.scoringCard.score(currentMapData)
         console.log(`Got ${score} reputation points`)
+        seasonScore += score;
       }
     })
+    console.log(`Season score: ${seasonScore}`)
+    console.log(`Total score: ${reputation + seasonScore}`)
+    setReputation(reputation + seasonScore);
   }
 
   const renderGrid = () => {
