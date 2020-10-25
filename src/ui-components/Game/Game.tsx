@@ -137,6 +137,7 @@ export default function Game() {
             key={edict.scoringCard.name}
             card={edict.scoringCard}
             isActive={currentSeason.edicts.includes(edict.code)} 
+            edictCode={edict.code}
           />
         )
       })
