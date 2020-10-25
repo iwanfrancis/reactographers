@@ -12,8 +12,10 @@ import CurrentCard from '../Cards/CurrentCard/CurrentCard';
 import Seasons, { Season } from '../../game-components/Seasons';
 import SeasonCard from '../Cards/SeasonCard/SeasonCard';
 import DrawnCard from '../Cards/DrawnCard/DrawnCard';
-import { drawScoringCards, FarmAndSeaScoringCards, ForestScoringCards, SpacialScoringCards, VillageScoringCards } from '../../game-components/ScoringCards';
+import { drawEdicts } from '../../game-components/ScoringCards';
 import GridPosition from '../../models/GridPosition';
+import ScoreCard from '../Cards/ScoreCard/ScoreCard';
+import { render } from '@testing-library/react';
 
 export interface State {
   mapHistory: MapData[];
@@ -33,7 +35,7 @@ export default function Game() {
   const [currentTerrain, setCurrentTerrain] = useState<Terrain>();
   const [currentShape, setCurrentShape] = useState<Shape>();
   const [currentRotation, setCurrentRotation] = useState(0);
-  const [scoringCards, setScoringCard] = useState(drawScoringCards());
+  const [edicts, setEdicts] = useState(drawEdicts());
 
   const updateOverlay = (gridPos: GridPosition) => {
     if (currentTerrain && currentShape) {
@@ -102,8 +104,8 @@ export default function Game() {
 
   const scoringPhase = () => {
     const currentMapData = mapHistory[mapHistory.length - 1];
-    scoringCards.map(card => {
-      card.score(currentMapData)
+    edicts.map(edicts => {
+      edicts.scoringCard.score(currentMapData)
     })
   }
 
@@ -123,6 +125,20 @@ export default function Game() {
     return (
       Seasons.map(season => {
         return <SeasonCard key={season.name} season={season} isCurrentSeason={season === currentSeason} />
+      })
+    )
+  }
+
+  const renderEdicts = () => {
+    return (
+      edicts.map((edict) => {
+        return (
+          <ScoreCard 
+            key={edict.scoringCard.name}
+            card={edict.scoringCard}
+            isActive={currentSeason.edicts.includes(edict.code)} 
+          />
+        )
       })
     )
   }
@@ -149,9 +165,16 @@ export default function Game() {
 
   return (
     <div className={styles['game-wrapper']}>
-      <div className={styles['game-section']}>something</div>
-      <div className={styles['game-section']}>{renderGrid()}</div>
-      <div className={styles['card-section']}>
+      <div className={styles['left-section']}></div>
+      <div className={styles['middle-section']}>
+        <div className={styles['edict-container']}>
+          {renderEdicts()}
+        </div>
+        <div className={styles['map-container']}>
+          {renderGrid()}
+        </div>
+      </div>
+      <div className={styles['right-section']}>
         <div className={styles['seasons-container']}>
           {renderSeasons()}
         </div>

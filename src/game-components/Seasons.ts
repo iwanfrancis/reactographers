@@ -1,33 +1,33 @@
-import { Edict } from "./Edict";
+import { EdictCode } from "./Edict";
 
 export interface Season {
   name: string;
   length: number;
-  edicts: Edict[];
+  edicts: EdictCode[];
 }
 
 const Spring = {
   name: 'Spring',
   length: 8,
-  edicts: [Edict.A, Edict.B]
+  edicts: [EdictCode.A, EdictCode.B]
 }
 
 const Summer = {
   name: 'Summer',
   length: 8,
-  edicts: [Edict.B, Edict.C]
+  edicts: [EdictCode.B, EdictCode.C]
 }
 
 const Autumn = {
   name: 'Autumn',
   length: 7,
-  edicts: [Edict.C, Edict.D]
+  edicts: [EdictCode.C, EdictCode.D]
 }
 
 const Winter = {
   name: 'Winter',
   length: 6,
-  edicts: [Edict.D, Edict.A]
+  edicts: [EdictCode.D, EdictCode.A]
 }
 
 const Seasons = [

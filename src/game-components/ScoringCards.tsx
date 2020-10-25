@@ -2,6 +2,7 @@ import React from "react";
 import MapData from "../classes/MapData";
 import GridPosition from "../models/GridPosition";
 import { shuffleArray } from "../utils/shuffle";
+import { Edict, EdictCode } from "./Edict";
 import { Terrain } from "./Terrains";
 
 export enum ScoringCardType {
@@ -71,7 +72,7 @@ export const TheCauldrons: ScoringCard = {
   name: 'The Cauldrons',
   text: [
     'Earn one reputation star for each empty space surrounded on all four'
-    + 'sides by filled spaces or the edge of the map'
+    + ' sides by filled spaces or the edge of the map'
   ],
   diagram: <div></div>,
   singlePlayerScore: 20,
@@ -224,13 +225,20 @@ export const FarmAndSeaScoringCards = [
   MagesValley
 ];
 
-export const drawScoringCards = () => {
+export const drawEdicts = (): Edict[] => {
   const scoringCards = []
   scoringCards.push(shuffleArray(ForestScoringCards).pop())
   scoringCards.push(shuffleArray(VillageScoringCards).pop())
   scoringCards.push(shuffleArray(SpacialScoringCards).pop())
   scoringCards.push(shuffleArray(FarmAndSeaScoringCards).pop())
+  
+  const shuffledScoringCards = shuffleArray(scoringCards);
 
-  return shuffleArray(scoringCards);
+  return ([
+    {code: EdictCode.A, scoringCard: shuffledScoringCards[0]},
+    {code: EdictCode.B, scoringCard: shuffledScoringCards[1]},
+    {code: EdictCode.C, scoringCard: shuffledScoringCards[2]},
+    {code: EdictCode.D, scoringCard: shuffledScoringCards[3]},
+  ]);
 }
 
