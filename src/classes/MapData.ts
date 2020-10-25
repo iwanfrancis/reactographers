@@ -3,6 +3,7 @@ import { Terrain } from "../game-components/Terrains";
 import { DefaultMapSize } from "../game-components/Maps";
 import GridPosition from "../models/GridPosition";
 import { Cluster } from "../models/Cluster";
+import Grid from "../ui-components/Grid/Grid";
 
 export default class MapData {
     grid: (Terrain)[][]
@@ -29,6 +30,12 @@ export default class MapData {
   
     public get(gridPos: GridPosition) {
       return this.grid[gridPos.row][gridPos.col];
+    }
+
+    public hasRuinAtPosition(gridPos: GridPosition): boolean {
+      return (this.ruins.some(ruinPos => {
+        return ruinPos.row === gridPos.row && ruinPos.col === gridPos.col
+      }))
     }
   
     // Maps a shape and terrain to the grid. Puts shape[1][1] on the click location
