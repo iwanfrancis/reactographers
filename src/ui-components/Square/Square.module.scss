@@ -2,7 +2,6 @@
   background: #fff;
   border: 1px solid #999;
   float: left;
-  font-size: 24px;
   height: 40px;
   width: 40px;
   margin-right: -1px;
@@ -11,14 +10,16 @@
 }
 
 .overlay {
-  height: 100%;
-  width: 100%;
+  position: absolute;
+  height: 40px;
+  width: 40px;
   opacity: .5;
 }
 
 .ruin {
-  height: 100%;
-  width: 100%;
+  position: absolute;
+  height: 40px;
+  width: 40px;
   background: url('../../assets/sprites/ruin/ruin.svg');
 }
 
