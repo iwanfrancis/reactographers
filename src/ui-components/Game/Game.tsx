@@ -12,7 +12,7 @@ import CurrentCard from '../Cards/CurrentCard/CurrentCard';
 import Seasons, { Season } from '../../game-components/Seasons';
 import SeasonCard from '../Cards/SeasonCard/SeasonCard';
 import DrawnCard from '../Cards/DrawnCard/DrawnCard';
-import { FarmAndSeaScoringCards, ForestScoringCards, SpacialScoringCards, VillageScoringCards } from '../../game-components/ScoringCards';
+import { drawScoringCards, FarmAndSeaScoringCards, ForestScoringCards, SpacialScoringCards, VillageScoringCards } from '../../game-components/ScoringCards';
 import GridPosition from '../../models/GridPosition';
 
 export interface State {
@@ -33,7 +33,7 @@ export default function Game() {
   const [currentTerrain, setCurrentTerrain] = useState<Terrain>();
   const [currentShape, setCurrentShape] = useState<Shape>();
   const [currentRotation, setCurrentRotation] = useState(0);
-  const [currentScoringCards, setCurrentScoringCard] = useState([...SpacialScoringCards, ...ForestScoringCards, ...FarmAndSeaScoringCards, ...VillageScoringCards])
+  const [scoringCards, setScoringCard] = useState(drawScoringCards());
 
   const updateOverlay = (gridPos: GridPosition) => {
     if (currentTerrain && currentShape) {
@@ -102,7 +102,7 @@ export default function Game() {
 
   const scoringPhase = () => {
     const currentMapData = mapHistory[mapHistory.length - 1];
-    currentScoringCards.map(card => {
+    scoringCards.map(card => {
       card.score(currentMapData)
     })
   }

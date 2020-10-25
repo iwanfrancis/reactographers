@@ -1,5 +1,6 @@
 import { Card } from "../models/Card";
 import ExploreCards from "../game-components/ExploreCards";
+import { shuffleArray } from "../utils/shuffle";
 
 export default class ExploreDeck {
     cards: Card[] = ExploreCards.slice();
@@ -11,11 +12,7 @@ export default class ExploreDeck {
     }
 
     public shuffle(): void {
-        const cards = this.cards;
-        for (let i = cards.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [cards[i], cards[j]] = [cards[j], cards[i]];
-        }
+        this.cards = shuffleArray(this.cards);
     }
 
     public draw(): Card {

@@ -1,6 +1,7 @@
 import React from "react";
 import MapData from "../classes/MapData";
 import GridPosition from "../models/GridPosition";
+import { shuffleArray } from "../utils/shuffle";
 import { Terrain } from "./Terrains";
 
 export enum ScoringCardType {
@@ -222,4 +223,14 @@ export const FarmAndSeaScoringCards = [
   CanalLake,
   MagesValley
 ];
+
+export const drawScoringCards = () => {
+  const scoringCards = []
+  scoringCards.push(shuffleArray(ForestScoringCards).pop())
+  scoringCards.push(shuffleArray(VillageScoringCards).pop())
+  scoringCards.push(shuffleArray(SpacialScoringCards).pop())
+  scoringCards.push(shuffleArray(FarmAndSeaScoringCards).pop())
+
+  return shuffleArray(scoringCards);
+}
 
