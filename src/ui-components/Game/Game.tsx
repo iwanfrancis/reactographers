@@ -108,8 +108,10 @@ export default function Game() {
 
   const scoringPhase = () => {
     console.log('Begin scoring phase')
+
     const currentMapData = mapHistory[mapHistory.length - 1];
     let seasonScore = 0;
+
     edicts.forEach(edict => {
       if (currentSeason.edicts.includes(edict.code)) {
         console.log(`Scoring edict ${edict.code} (${edict.scoringCard.name})`)
@@ -118,6 +120,10 @@ export default function Game() {
         seasonScore += score;
       }
     })
+
+    console.log(`${coins} coin${(coins < 1 || coins > 1) ? 's' : ''}. +${coins} reputation`)
+    seasonScore += coins;
+
     console.log(`Season score: ${seasonScore}`)
     console.log(`Total score: ${reputation + seasonScore}`)
     setReputation(reputation + seasonScore);
