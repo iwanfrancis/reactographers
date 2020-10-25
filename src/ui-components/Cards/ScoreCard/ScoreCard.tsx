@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { ShapeCard, isShapeCard } from '../../../models/Card';
 import styles from './ScoreCard.module.scss';
 import { ScoringCard } from '../../../game-components/ScoringCards';
 import classNames from 'classnames';

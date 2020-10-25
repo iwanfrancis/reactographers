@@ -198,7 +198,7 @@ export const Wildholds: ScoringCard = {
     let reputation = 0;
 
     const clusters = mapData.getClusters(Terrain.Village)
-    clusters.map(cluster => {
+    clusters.forEach(cluster => {
       if (cluster.gridPositions.length >= 6) {
         reputation = reputation + 8;
       }

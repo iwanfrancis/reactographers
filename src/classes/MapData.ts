@@ -3,7 +3,6 @@ import { Terrain } from "../game-components/Terrains";
 import { DefaultMapSize } from "../game-components/Maps";
 import GridPosition from "../models/GridPosition";
 import { Cluster } from "../models/Cluster";
-import Grid from "../ui-components/Grid/Grid";
 
 export default class MapData {
     grid: (Terrain)[][]
@@ -152,7 +151,7 @@ export default class MapData {
 
     // Given a scoring function, apply it to each row in the grid
     public scoreRows(scoringFunction: (row: Terrain[]) => void ): void {
-      this.grid.map(row => {
+      this.grid.forEach(row => {
         scoringFunction(row);
       })
     }

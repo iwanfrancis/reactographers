@@ -30,7 +30,7 @@ export default function Game() {
   const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid, NormalMap.ruins)])
   const [overlay, setOverlay] = useState(new MapData(new Array(NormalMap.rows).fill(null).map(() => new Array(NormalMap.cols).fill(null))));
   const [exploreDeck] = useState(new ExploreDeck());
-  const [edicts, setEdicts] = useState(drawEdicts());
+  const [edicts] = useState(drawEdicts());
   const [currentSeason, setCurrentSeason] = useState<Season>(Seasons[0]);
   const [currentTerrain, setCurrentTerrain] = useState<Terrain>();
   const [currentShape, setCurrentShape] = useState<Shape>();
@@ -108,7 +108,7 @@ export default function Game() {
     console.log('Begin scoring phase')
     const currentMapData = mapHistory[mapHistory.length - 1];
     let seasonScore = 0;
-    edicts.map(edict => {
+    edicts.forEach(edict => {
       if (currentSeason.edicts.includes(edict.code)) {
         console.log(`Scoring edict ${edict.code} (${edict.scoringCard.name})`)
         const score = edict.scoringCard.score(currentMapData)
