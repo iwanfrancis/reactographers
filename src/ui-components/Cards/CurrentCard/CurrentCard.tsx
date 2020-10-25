@@ -2,9 +2,9 @@ import React from 'react';
 import classNames from 'classnames'
 
 import { Card, ShapeCard, isShapeCard, Shape } from '../../../models/Card';
-import { Terrain } from '../../../models/Terrains';
+import { Terrain } from '../../../game-components/Terrains';
 import styles from './CurrentCard.module.scss';
-import CardShape from './CardShape/CardShape';
+import CardShape from '../CardShape/CardShape';
 
 export interface Props {
   card: Card;

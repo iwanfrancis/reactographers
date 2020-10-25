@@ -1,5 +1,5 @@
 import GridPosition from "./GridPosition";
-import { Terrain } from "./Terrains";
+import { Terrain } from "../game-components/Terrains";
 
 export interface Cluster {
   terrain: Terrain;

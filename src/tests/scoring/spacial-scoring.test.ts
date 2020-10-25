@@ -1,6 +1,6 @@
 import MapData from "../../classes/MapData";
-import { Borderlands, TheCauldrons } from "../../models/ScoringCards";
-import { Terrain } from "../../models/Terrains";
+import { Borderlands, TheCauldrons } from "../../game-components/ScoringCards";
+import { Terrain } from "../../game-components/Terrains";
 
 describe('borderlands', () => {
   describe('gives no reputation stars', () => {

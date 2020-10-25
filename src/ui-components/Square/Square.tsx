@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import styles from './Square.module.scss';
-import { Terrain } from '../../models/Terrains';
+import { Terrain } from '../../game-components/Terrains';
 import GridPosition from '../../models/GridPosition';
 
 export interface Props {

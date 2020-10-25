@@ -4,15 +4,15 @@ import _ from 'lodash';
 import Grid from '../Grid/Grid';
 import styles from './Game.module.scss';
 import MapData from '../../classes/MapData';
-import { Terrain } from '../../models/Terrains';
-import { NormalMap } from '../../models/Maps';
+import { Terrain } from '../../game-components/Terrains';
+import { NormalMap } from '../../game-components/Maps';
 import ExploreDeck from '../../classes/ExploreDeck';
 import { Shape } from '../../models/Card';
 import CurrentCard from '../Cards/CurrentCard/CurrentCard';
-import Seasons, { Season } from '../../models/Seasons';
-import SeasonCard from '../SeasonCard/SeasonCard';
+import Seasons, { Season } from '../../game-components/Seasons';
+import SeasonCard from '../Cards/SeasonCard/SeasonCard';
 import DrawnCard from '../Cards/DrawnCard/DrawnCard';
-import { FarmAndSeaScoringCards, ForestScoringCards, SpacialScoringCards, VillageScoringCards } from '../../models/ScoringCards';
+import { FarmAndSeaScoringCards, ForestScoringCards, SpacialScoringCards, VillageScoringCards } from '../../game-components/ScoringCards';
 import GridPosition from '../../models/GridPosition';
 
 export interface State {

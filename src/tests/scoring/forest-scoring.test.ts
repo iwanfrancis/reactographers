@@ -1,6 +1,6 @@
 import MapData from "../../classes/MapData";
-import { MagesValley, SentinelWood, TheCauldrons, Treetower, Wildholds } from "../../models/ScoringCards";
-import { Terrain } from "../../models/Terrains";
+import { MagesValley, SentinelWood, TheCauldrons, Treetower, Wildholds } from "../../game-components/ScoringCards";
+import { Terrain } from "../../game-components/Terrains";
 
 describe('sentinel wood', () => {
   describe('gives no reputation stars', () => {

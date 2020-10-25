@@ -1,6 +1,6 @@
 import MapData from "../../classes/MapData";
-import { CanalLake, MagesValley } from "../../models/ScoringCards";
-import { Terrain } from "../../models/Terrains";
+import { CanalLake, MagesValley } from "../../game-components/ScoringCards";
+import { Terrain } from "../../game-components/Terrains";
 
 describe('mages valley', () => {
   describe('gives no reputation stars', () => {

@@ -1,4 +1,4 @@
-import { Terrain } from "./Terrains";
+import { Terrain } from "../game-components/Terrains";
 
 export type ShapeRotation = number[][];
 export type Shape = ShapeRotation[];

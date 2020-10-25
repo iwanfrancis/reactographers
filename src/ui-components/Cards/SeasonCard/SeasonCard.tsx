@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { Season } from "../../models/Seasons";
+import { Season } from "../../../game-components/Seasons";
 import styles from "./SeasonCard.module.scss";
 
 export interface Props {

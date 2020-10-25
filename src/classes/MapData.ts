@@ -1,6 +1,6 @@
 import { ShapeRotation } from "../models/Card";
-import { Terrain } from "../models/Terrains";
-import { MapSize } from "../models/Maps";
+import { Terrain } from "../game-components/Terrains";
+import { MapSize } from "../game-components/Maps";
 import GridPosition from "../models/GridPosition";
 import { Cluster } from "../models/Cluster";
 

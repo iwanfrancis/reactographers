@@ -1,6 +1,6 @@
 import MapData from "../../classes/MapData";
-import { SentinelWood, ShieldGate, Wildholds } from "../../models/ScoringCards";
-import { Terrain } from "../../models/Terrains";
+import { SentinelWood, ShieldGate, Wildholds } from "../../game-components/ScoringCards";
+import { Terrain } from "../../game-components/Terrains";
 
 describe('wildholds', () => {
   describe('gives no reputation stars', () => {

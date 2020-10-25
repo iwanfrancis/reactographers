@@ -1,5 +1,5 @@
 import { Card } from "../models/Card";
-import ExploreCards from "../models/ExploreCards";
+import ExploreCards from "../game-components/ExploreCards";
 
 export default class ExploreDeck {
     cards: Card[] = ExploreCards.slice();
