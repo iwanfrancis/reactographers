@@ -81,14 +81,16 @@ export default function Game() {
     setCurrentRotation(0);
 
     if (timeInSeason >= currentSeason.length) {
-      console.log('end of season')
+      console.log(`End of ${currentSeason.name}`)
       
       const currentSeasonIndex = Seasons.indexOf(currentSeason);
       if (currentSeasonIndex >= Seasons.length -1) {
-        console.log('end of game');
+        console.log('End of game');
       } else {
         scoringPhase();
-        setCurrentSeason(Seasons[currentSeasonIndex + 1]);
+        const nextSeason = Seasons[currentSeasonIndex + 1];
+        console.log(`Beginning of ${nextSeason.name}`)
+        setCurrentSeason(nextSeason);
       }
 
       exploreDeck.reset();
@@ -103,9 +105,14 @@ export default function Game() {
   }
 
   const scoringPhase = () => {
+    console.log('Begin scoring phase')
     const currentMapData = mapHistory[mapHistory.length - 1];
-    edicts.map(edicts => {
-      edicts.scoringCard.score(currentMapData)
+    edicts.map(edict => {
+      if (currentSeason.edicts.includes(edict.code)) {
+        console.log(`Scoring edict ${edict.code} (${edict.scoringCard.name})`)
+        const score = edict.scoringCard.score(currentMapData)
+        console.log(`Got ${score} reputation points`)
+      }
     })
   }
 

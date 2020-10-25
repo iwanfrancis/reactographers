@@ -26,8 +26,8 @@ export default class ScoreCard extends React.PureComponent<Props> {
           {card.name}
         </div>
         <div className={styles.text}>
-          {card.text.map(text => {
-            return <div>{text}</div>
+          {card.text.map((text, i) => {
+            return <div key={'edict-text-' + i}>{text}</div>
           })}
         </div>
       </div>
