@@ -28,8 +28,8 @@ export interface State {
 }
 
 export default function Game() {
-  const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid)])
-  const [overlay, setOverlay] = useState(new MapData(new Array(11).fill(null).map(() => new Array(11).fill(null))));
+  const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid, NormalMap.ruins)])
+  const [overlay, setOverlay] = useState(new MapData(new Array(NormalMap.rows).fill(null).map(() => new Array(NormalMap.cols).fill(null))));
   const [exploreDeck] = useState(new ExploreDeck());
   const [edicts, setEdicts] = useState(drawEdicts());
   const [currentSeason, setCurrentSeason] = useState<Season>(Seasons[0]);

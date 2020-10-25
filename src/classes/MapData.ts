@@ -1,20 +1,28 @@
 import { ShapeRotation } from "../models/Card";
 import { Terrain } from "../game-components/Terrains";
-import { MapSize } from "../game-components/Maps";
+import { DefaultMapSize } from "../game-components/Maps";
 import GridPosition from "../models/GridPosition";
 import { Cluster } from "../models/Cluster";
 
 export default class MapData {
     grid: (Terrain)[][]
+    ruins: GridPosition[]
     rows: number;
     cols: number;
   
-    constructor(grid?: (Terrain)[][]) {
+    constructor(grid?: (Terrain)[][], ruins?: GridPosition[]) {
       if (grid) {
         this.grid = grid
       } else {
-        this.grid = new Array(MapSize.rows).fill(null).map(() => new Array(MapSize.cols).fill(null))
+        this.grid = new Array(DefaultMapSize.rows).fill(null).map(() => new Array(DefaultMapSize.cols).fill(null))
       }
+
+      if (ruins) {
+        this.ruins = ruins
+      } else {
+        this.ruins = []
+      }
+
       this.rows = this.grid.length;
       this.cols = this.grid[0].length;
     }
