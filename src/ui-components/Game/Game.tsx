@@ -36,6 +36,7 @@ export default function Game() {
   const [currentShape, setCurrentShape] = useState<Shape>();
   const [currentRotation, setCurrentRotation] = useState(0);
   const [reputation, setReputation] = useState(0);
+  const [coins, setCoins] = useState(0);
 
   const updateOverlay = (gridPos: GridPosition) => {
     if (currentTerrain && currentShape) {
@@ -66,6 +67,7 @@ export default function Game() {
     if (currentTerrain && currentShape) {
       if (newMapData.moveIsLegal(currentShape[currentRotation], gridPos)) {
         newMapData.addShape(currentTerrain, currentShape[currentRotation], gridPos)
+        setCoins(coins + newMapData.checkForNewSurroundedMountains());
         setMapHistory(mapHistory.concat([newMapData]));
         checkPhase();
       }

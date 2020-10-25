@@ -3,10 +3,12 @@ import { Terrain } from "../game-components/Terrains";
 import { DefaultMapSize } from "../game-components/Maps";
 import GridPosition from "../models/GridPosition";
 import { Cluster } from "../models/Cluster";
+import { isEmpty } from "lodash";
 
 export default class MapData {
     grid: (Terrain)[][]
-    ruins: GridPosition[]
+    ruins: GridPosition[] = []
+    surroundedMountains: GridPosition[] = []
     rows: number;
     cols: number;
   
@@ -19,8 +21,6 @@ export default class MapData {
 
       if (ruins) {
         this.ruins = ruins
-      } else {
-        this.ruins = []
       }
 
       this.rows = this.grid.length;
@@ -137,6 +137,26 @@ export default class MapData {
       }
 
       return clusters;
+    }
+
+    public checkForNewSurroundedMountains(): number {
+      let newSurroundedMountains: GridPosition[] = [];
+
+      this.scoreSquares((gridPos) => {
+        if (gridPos.terrain === Terrain.Mountain) {
+          if (this.surroundedMountains.every(mountain => !(mountain.row === gridPos.row && mountain.col === gridPos.col))) {
+            const adjacentSquares = this.getAdjacentSquares(gridPos);
+            if (Object.values(adjacentSquares).every(square => square.terrain !== Terrain.Empty)) {
+              console.log(`Mountain at ${gridPos.row},${gridPos.col} surrounded! +1 Coin`)
+              newSurroundedMountains.push(gridPos)
+            }
+          }
+        }
+      })
+
+      this.surroundedMountains.push(...newSurroundedMountains)
+
+      return newSurroundedMountains.length;
     }
 
     // Given a scoring function, apply it to each square on the grid
