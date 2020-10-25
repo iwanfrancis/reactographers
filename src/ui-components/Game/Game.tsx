@@ -67,7 +67,13 @@ export default function Game() {
     if (currentTerrain && currentShape) {
       if (newMapData.moveIsLegal(currentShape[currentRotation], gridPos)) {
         newMapData.addShape(currentTerrain, currentShape[currentRotation], gridPos)
-        setCoins(coins + newMapData.checkForNewSurroundedMountains());
+
+        let newCoins = newMapData.checkForNewSurroundedMountains()
+        if (exploreDeck.currentShapeHasCoin(currentShape)) newCoins++;
+
+        console.log(newCoins)
+        setCoins(coins + newCoins);
+
         setMapHistory(mapHistory.concat([newMapData]));
         checkPhase();
       }

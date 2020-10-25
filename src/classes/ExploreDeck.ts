@@ -1,4 +1,4 @@
-import { Card } from "../models/Card";
+import { Card, isShapeCard, Shape } from "../models/Card";
 import ExploreCards from "../game-components/ExploreCards";
 import { shuffleArray } from "../utils/shuffle";
 
@@ -42,5 +42,15 @@ export default class ExploreDeck {
 
     public getTotalTime(): number {
         return this.drawnCards.reduce((total: number, card: Card) => total + card.time, 0)
+    }
+
+    public currentShapeHasCoin(shape: Shape): boolean {
+        const currentCard = this.getCurrentCard();
+        if (isShapeCard(currentCard) && currentCard.coinIndex !== undefined) {
+            if (currentCard.shapes[currentCard.coinIndex] === shape) {
+                return true;
+            } 
+        }
+        return false;
     }
 }

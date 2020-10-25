@@ -3,7 +3,6 @@ import { Terrain } from "../game-components/Terrains";
 import { DefaultMapSize } from "../game-components/Maps";
 import GridPosition from "../models/GridPosition";
 import { Cluster } from "../models/Cluster";
-import { isEmpty } from "lodash";
 
 export default class MapData {
     grid: (Terrain)[][]
