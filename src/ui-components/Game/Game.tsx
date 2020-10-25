@@ -15,7 +15,6 @@ import DrawnCard from '../Cards/DrawnCard/DrawnCard';
 import { drawEdicts } from '../../game-components/ScoringCards';
 import GridPosition from '../../models/GridPosition';
 import ScoreCard from '../Cards/ScoreCard/ScoreCard';
-import { render } from '@testing-library/react';
 
 export interface State {
   mapHistory: MapData[];
