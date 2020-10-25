@@ -72,7 +72,7 @@
 
         .shape {
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
             flex-grow: 1;
             border: 3px solid transparent;
@@ -83,6 +83,14 @@
 
             &.active {
                 border: 3px solid red;
+            }
+
+            .coin {
+                width: 25px;
+                height: 25px;
+                border-radius: 100%;
+                background-color: yellow;
+                border: 1px solid goldenrod;
             }
         }
     }

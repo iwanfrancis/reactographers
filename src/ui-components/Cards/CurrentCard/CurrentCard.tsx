@@ -39,18 +39,20 @@ export default class CurrentCard extends React.PureComponent<Props> {
     )
   }
 
-  renderShapeOptions(shapes: Shape[]) {
+  renderShapeOptions(shapes: Shape[], coinIndex = -1) {
     const { currentShape, setCurrentShape = ()=>{} } = this.props;
     return (
       <div className={styles.shapes}>
         {shapes.map((shape, i) => {
            const active = (shape === currentShape) ? styles.active : undefined
+           const hasCoin = coinIndex === i;
            const shapeContainerClass = classNames(active, styles.shape)
           return (
             <React.Fragment key={i}>
               {i > 0 && <div className={styles.divider}></div>}
               <div className={shapeContainerClass} onClick={() => setCurrentShape(shape)}>
                 <CardShape shape={shape}/>
+                {hasCoin && <div className={styles.coin}></div>}
               </div>
             </React.Fragment>
           )})
@@ -80,7 +82,7 @@ export default class CurrentCard extends React.PureComponent<Props> {
           </div>
           <div className={styles.options}>
             {this.renderTerrainOptions(shapeCard.terrains)}
-            {this.renderShapeOptions(shapeCard.shapes)}
+            {this.renderShapeOptions(shapeCard.shapes, shapeCard.coinIndex)}
           </div>
         </div>
       )
