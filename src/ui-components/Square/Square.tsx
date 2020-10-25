@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import styles from './Square.module.scss';
 import { Terrain } from '../../game-components/Terrains';
 import GridPosition from '../../models/GridPosition';
+import { ReactComponent as Ruin } from '../../assets/sprites/ruin/ruin.svg';
 
 export interface Props {
   gridPos: GridPosition
@@ -41,7 +42,7 @@ export default class Square extends React.PureComponent<Props> {
         onMouseEnter={() => onSquareHoverOn(gridPos)}
         onContextMenu={(e: any) => e.preventDefault() }
         onMouseDown={(e: any) => this.handleClick(this, e, gridPos)}>
-          <div className={ruinCssClass}></div>
+          {hasRuin && <div className={ruinCssClass}><Ruin/></div>}
           <div className={overlayCssClass}></div>
       </div>
     )
