@@ -70,7 +70,10 @@ export default function Game() {
         newMapData.addShape(currentTerrain, currentShape[currentRotation], gridPos)
 
         let newCoins = newMapData.checkForNewSurroundedMountains()
-        if (exploreDeck.currentShapeHasCoin(currentShape)) newCoins++;
+        if (exploreDeck.currentShapeHasCoin(currentShape)) {
+          console.log('Shape had coin! +1 Coin')
+          newCoins++;
+        }
 
         setCoins((coins + newCoins));
 

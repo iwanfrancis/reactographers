@@ -17,7 +17,7 @@ export default function CoinTrack(props: CoinProps) {
     <div className={styles.track}>
       {
         _.times(totalPossibleCoins, (i) => {
-          if ((i + 1) < playerCoins) {
+          if ((i + 1) <= playerCoins) {
             return <div key={`coin ${i}`} className={filledCoinClass}></div>
           } else return <div key={`coin ${i}`} className={emptyCoinClass}></div>
         })
