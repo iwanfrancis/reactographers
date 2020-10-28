@@ -61,7 +61,11 @@ export default function Game() {
     }
   }
 
-  const drawShape = (gridPos: GridPosition) => {
+  const explorePhase = () => {
+    exploreDeck.draw();
+  }
+
+  const drawPhase = (gridPos: GridPosition) => {
     const currentMapData = mapHistory[mapHistory.length - 1];
     const newMapData = _.clone(currentMapData)
     
@@ -105,14 +109,10 @@ export default function Game() {
       }
 
       exploreDeck.reset();
-      drawPhase();
+      explorePhase();
     } else {
-      drawPhase();
+      explorePhase();
     }
-  }
-
-  const drawPhase = () => {
-    exploreDeck.draw();
   }
 
   const scoringPhase = () => {
@@ -144,7 +144,7 @@ export default function Game() {
       <Grid 
         mapData={currentMapData}
         overlay={overlay}
-        onSquareClick={drawShape} 
+        onSquareClick={drawPhase} 
         onSquareHoverOn={updateOverlay}
         onRotateShape={rotateShape}/>
     )
