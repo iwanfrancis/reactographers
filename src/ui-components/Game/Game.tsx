@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 
 import Grid from '../Grid/Grid';
@@ -16,6 +16,7 @@ import { drawEdicts } from '../../game-components/ScoringCards';
 import GridPosition from '../../models/GridPosition';
 import ScoreCard from '../Cards/ScoreCard/ScoreCard';
 import CoinTrack from '../Coins/CoinTrack';
+import { Phase } from '../../game-components/Phase';
 
 export interface State {
   mapHistory: MapData[];
@@ -38,6 +39,25 @@ export default function Game() {
   const [currentRotation, setCurrentRotation] = useState(0);
   const [reputation, setReputation] = useState(0);
   const [coins, setCoins] = useState(0);
+  const [phase, setPhase] = useState(Phase.Draw)
+
+  useEffect(() => {
+    switch (phase) {
+      case Phase.Explore:
+        explorePhase();
+        break;
+      case Phase.Draw:
+        break;
+      case Phase.Check:
+        checkPhase();
+        break;
+      case Phase.Score:
+        scoringPhase();
+        break;
+      case Phase.End:
+        console.log(`Game over! Final score: ${reputation}`)
+    }
+  }, [phase])
 
   const updateOverlay = (gridPos: GridPosition) => {
     if (currentTerrain && currentShape) {
@@ -63,6 +83,7 @@ export default function Game() {
 
   const explorePhase = () => {
     exploreDeck.draw();
+    setPhase(Phase.Draw);
   }
 
   const drawPhase = (gridPos: GridPosition) => {
@@ -80,9 +101,8 @@ export default function Game() {
         }
 
         setCoins((coins + newCoins));
-
         setMapHistory(mapHistory.concat([newMapData]));
-        checkPhase();
+        setPhase(Phase.Check);
       }
     }
   }
@@ -98,20 +118,14 @@ export default function Game() {
       console.log(`End of ${currentSeason.name}`)
       
       const currentSeasonIndex = Seasons.indexOf(currentSeason);
-      if (currentSeasonIndex >= Seasons.length -1) {
-        console.log('End of game');
-        console.log(`Final score: ${reputation}`)
-      } else {
-        scoringPhase();
-        const nextSeason = Seasons[currentSeasonIndex + 1];
-        console.log(`Beginning of ${nextSeason.name}`)
-        setCurrentSeason(nextSeason);
-      }
+      const nextSeason = Seasons[currentSeasonIndex + 1];
 
-      exploreDeck.reset();
-      explorePhase();
+      console.log(`Beginning of ${nextSeason.name}`)
+      setCurrentSeason(nextSeason);
+
+      setPhase(Phase.Score);
     } else {
-      explorePhase();
+      setPhase(Phase.Explore)
     }
   }
 
@@ -136,6 +150,14 @@ export default function Game() {
     console.log(`Season score: ${seasonScore}`)
     console.log(`Total score: ${reputation + seasonScore}`)
     setReputation(reputation + seasonScore);
+
+    const currentSeasonIndex = Seasons.indexOf(currentSeason);
+    if (currentSeasonIndex >= Seasons.length -1) {
+      setPhase(Phase.End);
+    } else {
+      exploreDeck.reset();
+      setPhase(Phase.Explore);
+    }
   }
 
   const renderGrid = () => {
@@ -182,13 +204,13 @@ export default function Game() {
         {previousCards.map((card, i) => {
           return <DrawnCard key={card.name} card={card} offset={i * 50} />
         })}
-        <CurrentCard 
+        {currentCard && <CurrentCard 
           card={currentCard}
           currentShape={currentShape}
           setCurrentShape={setCurrentShape}
           currentTerrain={currentTerrain}
           setCurrentTerrain={setCurrentTerrain}
-          offset={previousCards.length * 50}/>
+          offset={previousCards.length * 50}/>}
       </React.Fragment>
     )
   }
