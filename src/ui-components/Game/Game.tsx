@@ -15,6 +15,7 @@ import DrawnCard from '../Cards/DrawnCard/DrawnCard';
 import { drawEdicts } from '../../game-components/ScoringCards';
 import GridPosition from '../../models/GridPosition';
 import ScoreCard from '../Cards/ScoreCard/ScoreCard';
+import CoinTrack from '../Coins/CoinTrack';
 
 export interface State {
   mapHistory: MapData[];
@@ -71,8 +72,7 @@ export default function Game() {
         let newCoins = newMapData.checkForNewSurroundedMountains()
         if (exploreDeck.currentShapeHasCoin(currentShape)) newCoins++;
 
-        console.log(newCoins)
-        setCoins(coins + newCoins);
+        setCoins((coins + newCoins));
 
         setMapHistory(mapHistory.concat([newMapData]));
         checkPhase();
@@ -199,6 +199,9 @@ export default function Game() {
         </div>
         <div className={styles['map-container']}>
           {renderGrid()}
+        </div>
+        <div className={styles['coin-track-container']}>
+          <CoinTrack coins={coins}></CoinTrack>
         </div>
       </div>
       <div className={styles['right-section']}>
