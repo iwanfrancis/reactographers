@@ -1,5 +1,5 @@
 import MapData from "../../classes/MapData";
-import { MagesValley, SentinelWood, TheCauldrons, Treetower, Wildholds } from "../../game-components/ScoringCards";
+import { MagesValley, SentinelWood, StonesideForest, TheCauldrons, Treetower, Wildholds } from "../../game-components/ScoringCards";
 import { Terrain } from "../../game-components/Terrains";
 
 describe('sentinel wood', () => {
@@ -76,6 +76,100 @@ describe('sentinel wood', () => {
       )
       const score = SentinelWood.score(map);
       expect(score).toBe(2);
+    })
+  })
+})
+
+describe('stoneside forest', () => {
+  describe('gives no reputation stars', () => {
+    test('when the grid is empty', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = StonesideForest.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when two mountains are connected by none forest spaces', () => {
+      const map = new MapData(
+        [
+          [Terrain.Mountain, Terrain.Village,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Village, Terrain.Empty],
+          [Terrain.Empty, Terrain.Village, Terrain.Mountain],
+        ]
+      )
+      const score = StonesideForest.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when two mountains have adjacent (none cluster) forests', () => {
+      const map = new MapData(
+        [
+          [Terrain.Mountain, Terrain.Forest,  Terrain.Empty],
+          [Terrain.Forest, Terrain.Empty, Terrain.Forest],
+          [Terrain.Empty, Terrain.Forest, Terrain.Mountain],
+        ]
+      )
+      const score = StonesideForest.score(map);
+      expect(score).toBe(0);
+    })
+  })
+
+  describe('gives six reputation stars', () => {
+    test('when two mountains are connected by a cluster of forests', () => {
+      const map = new MapData(
+        [
+          [Terrain.Mountain, Terrain.Forest,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Forest, Terrain.Empty],
+          [Terrain.Empty, Terrain.Forest, Terrain.Mountain],
+        ]
+      )
+      const score = StonesideForest.score(map);
+      expect(score).toBe(6);
+    })
+
+    test('when two mountains are connected by a cluster of forests and a third mountain is not connected', () => {
+      const map = new MapData(
+        [
+          [Terrain.Mountain, Terrain.Forest,  Terrain.Empty, Terrain.Mountain],
+          [Terrain.Empty, Terrain.Forest, Terrain.Empty, Terrain.Empty],
+          [Terrain.Empty, Terrain.Forest, Terrain.Mountain, Terrain.Empty],
+        ]
+      )
+      const score = StonesideForest.score(map);
+      expect(score).toBe(6);
+    })
+  })
+
+  describe('gives nine reputation stars', () => {
+    test('when three mountains are connected by a single cluster of forests', () => {
+      const map = new MapData(
+        [
+          [Terrain.Mountain, Terrain.Forest,  Terrain.Forest, Terrain.Mountain],
+          [Terrain.Empty, Terrain.Forest, Terrain.Forest, Terrain.Empty],
+          [Terrain.Empty, Terrain.Forest, Terrain.Mountain, Terrain.Empty],
+        ]
+      )
+      const score = StonesideForest.score(map);
+      expect(score).toBe(9);
+    })
+  })
+
+  describe('gives nine reputation stars', () => {
+    test('when three mountains are connected by a two different clusters of forests', () => {
+      const map = new MapData(
+        [
+          [Terrain.Mountain, Terrain.Forest,  Terrain.Empty, Terrain.Mountain],
+          [Terrain.Empty, Terrain.Forest, Terrain.Empty, Terrain.Forest],
+          [Terrain.Empty, Terrain.Forest, Terrain.Mountain, Terrain.Forest],
+        ]
+      )
+      const score = StonesideForest.score(map);
+      expect(score).toBe(9);
     })
   })
 })

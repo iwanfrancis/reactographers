@@ -1,3 +1,4 @@
+import { Cluster } from "cluster";
 import React from "react";
 import MapData from "../classes/MapData";
 import GridPosition from "../models/GridPosition";
@@ -186,6 +187,60 @@ export const ShieldGate: ScoringCard = {
   }
 }
 
+export const StonesideForest: ScoringCard = {
+  type: ScoringCardType.Forests,
+  name: 'Stoneside Forest',
+  text: [
+    'Earn three reputation stars for each mountain space connected to another mountain space by a cluster of forest spaces'
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 18,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+    
+    mapData.scoreSquares((startingGridPos: GridPosition) => {
+      if (startingGridPos.terrain === Terrain.Mountain) {
+        let connectedMountainFound = false;
+        let connectedForestSpaces: GridPosition[] = [];
+
+        const findLinkToMountain = (connectedForestSpaces: GridPosition[] , gridPos: GridPosition ) => {
+          if (gridPos.row === startingGridPos.row && gridPos.col === startingGridPos.col) {
+            const adjacentSquares = mapData.getAdjacentSquares(gridPos);
+            adjacentSquares.forEach(square => findLinkToMountain(connectedForestSpaces, square))
+          }
+          if (!connectedMountainFound) {
+            if (
+              gridPos.terrain === Terrain.Mountain && 
+              gridPos.row !== startingGridPos.row && 
+              gridPos.col !== startingGridPos.col) {
+                connectedMountainFound = true;
+            } else if (gridPos.terrain === Terrain.Forest) {
+              const alreadyFound = connectedForestSpaces.some(forestGridPos => {
+                return (forestGridPos.row === gridPos.row && forestGridPos.col === gridPos.col);
+              })
+  
+              if (!alreadyFound) {
+                connectedForestSpaces.push(gridPos);
+                const adjacentSquares = mapData.getAdjacentSquares(gridPos);
+                adjacentSquares.forEach(square => findLinkToMountain(connectedForestSpaces, square))
+              }
+            }
+          }
+        }
+
+        findLinkToMountain(connectedForestSpaces, startingGridPos)
+
+        if (connectedMountainFound) {
+          reputation += 3;
+        }
+      }
+    })
+
+    return reputation;
+  }
+}
+
+
 export const Wildholds: ScoringCard = {
   type: ScoringCardType.Villages,
   name: 'Wildholds',
@@ -210,6 +265,7 @@ export const Wildholds: ScoringCard = {
 
 export const ForestScoringCards = [
   SentinelWood,
+  StonesideForest,
   Treetower
 ];
 export const VillageScoringCards = [
