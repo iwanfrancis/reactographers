@@ -108,6 +108,27 @@ export const GreatCity: ScoringCard = {
   }
 }
 
+export const Greenbough: ScoringCard = {
+  type: ScoringCardType.Forests,
+  name: 'Greenbough',
+  text: [
+    'Earn one reputation star for each row and column with at least one forest space. The same forest space may be scored in a row and a column.',
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 22,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+  
+    mapData.scoreRowsAndCols((rowOrCol: Terrain[]) => {
+      if (rowOrCol.some(terrain => terrain === Terrain.Forest)) {
+        reputation += 1;
+      }
+    })
+
+    return reputation;
+  }
+}
+
 export const TheCauldrons: ScoringCard = {
   type: ScoringCardType.Spacial,
   name: 'The Cauldrons',
@@ -340,12 +361,13 @@ export const Wildholds: ScoringCard = {
 }
 
 export const ForestScoringCards = [
+  Greenbough,
   SentinelWood,
   StonesideForest,
   Treetower
 ];
 export const VillageScoringCards = [
-  GreatCity
+  GreatCity,
   ShieldGate,
   Wildholds
 ];

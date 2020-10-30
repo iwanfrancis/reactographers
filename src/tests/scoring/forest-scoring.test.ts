@@ -1,6 +1,74 @@
 import MapData from "../../classes/MapData";
-import { MagesValley, SentinelWood, StonesideForest, TheCauldrons, Treetower, Wildholds } from "../../game-components/ScoringCards";
+import { Greenbough, MagesValley, SentinelWood, StonesideForest, TheCauldrons, Treetower, Wildholds } from "../../game-components/ScoringCards";
 import { Terrain } from "../../game-components/Terrains";
+
+describe('greenbough', () => {
+  describe('gives no reputation stars', () => {
+    test('when there are no forests in any row or column', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = Greenbough.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when there are none forest spaces in any row or column', () => {
+      const map = new MapData(
+        [
+          [Terrain.Village, Terrain.Monster,  Terrain.Empty],
+          [Terrain.Farm, Terrain.Mountain, Terrain.Empty],
+          [Terrain.Water, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = Greenbough.score(map);
+      expect(score).toBe(0);
+    })
+  })
+
+  describe('2 reputation stars', () => {
+    test('when there is a forest space in a column and a row', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Forest, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = Greenbough.score(map);
+      expect(score).toBe(2);
+    })
+  })
+
+  describe('4 reputation stars', () => {
+    test('when there are 3 forest spaces in one column', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Forest,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Forest, Terrain.Empty],
+          [Terrain.Empty, Terrain.Forest, Terrain.Empty],
+        ]
+      )
+      const score = Greenbough.score(map);
+      expect(score).toBe(4);
+    })
+
+    test('when there are 3 forest spaces in one row', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Forest, Terrain.Forest, Terrain.Forest],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = Greenbough.score(map);
+      expect(score).toBe(4);
+    })
+  })
+})
 
 describe('sentinel wood', () => {
   describe('gives no reputation stars', () => {
