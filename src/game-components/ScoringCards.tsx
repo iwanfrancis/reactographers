@@ -187,6 +187,42 @@ export const ShieldGate: ScoringCard = {
   }
 }
 
+export const ShoresideExpanse: ScoringCard = {
+  type: ScoringCardType.FarmAndSea,
+  name: 'Shoreside Expanse',
+  text: [
+    'Earn three reputation stars for each cluster of farm spaces not adjacent to a water space or the edge of the map.',
+    'Earn three reputation stars for each cluster of water spaces not adjacent to a farm space or the edge of the map.'
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 27,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+    
+    const farmClusters = mapData.getClusters(Terrain.Farm)
+    const waterClusters = mapData.getClusters(Terrain.Water)
+    const allClusters = [...farmClusters, ...waterClusters];
+
+    allClusters.forEach(cluster => {
+      const oppositeTerrain = cluster.terrain === Terrain.Farm ? Terrain.Water : Terrain.Farm
+      let clusterWorthPoints = true;
+      
+      cluster.gridPositions.forEach(gridPos => {
+        const adjacentSquares = mapData.getAdjacentSquares(gridPos);
+        if (adjacentSquares.some(square => square.terrain === oppositeTerrain || square.terrain === Terrain.OutOfBounds)) {
+          clusterWorthPoints = false;
+        }
+      })
+
+      if (clusterWorthPoints) {
+        reputation += 3;
+      }
+    })
+
+    return reputation;
+  }
+}
+
 export const StonesideForest: ScoringCard = {
   type: ScoringCardType.Forests,
   name: 'Stoneside Forest',
@@ -278,7 +314,8 @@ export const SpacialScoringCards = [
 ];
 export const FarmAndSeaScoringCards = [
   CanalLake,
-  MagesValley
+  MagesValley,
+  ShoresideExpanse
 ];
 
 export const drawEdicts = (): Edict[] => {

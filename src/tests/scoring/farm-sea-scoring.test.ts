@@ -1,5 +1,5 @@
 import MapData from "../../classes/MapData";
-import { CanalLake, MagesValley } from "../../game-components/ScoringCards";
+import { CanalLake, MagesValley, ShoresideExpanse } from "../../game-components/ScoringCards";
 import { Terrain } from "../../game-components/Terrains";
 
 describe('mages valley', () => {
@@ -194,6 +194,134 @@ describe('canal lake', () => {
       )
       const score = CanalLake.score(map);
       expect(score).toBe(4);
+    })
+  })
+})
+
+describe('shoreside expanse', () => {
+  describe('gives no reputation stars', () => {
+    test('when the grid is empty', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = ShoresideExpanse.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when there is a farm cluster adjacent to the edge of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Farm, Terrain.Empty],
+          [Terrain.Farm, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = ShoresideExpanse.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when there is a water cluster adjacent to the edge of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Water, Terrain.Empty],
+          [Terrain.Water, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = ShoresideExpanse.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when there is a water cluster adjacent to a farm cluster', () => {
+      const map = new MapData(
+        [
+          [Terrain.Water, Terrain.Farm],
+          [Terrain.Water, Terrain.Farm],
+          [Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = ShoresideExpanse.score(map);
+      expect(score).toBe(0);
+    })
+  })
+
+  describe('gives three reputation stars', () => {
+    test('when there is a water cluster not adjacent to the edge of the map or a farm cluster', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Water, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = ShoresideExpanse.score(map);
+      expect(score).toBe(3);
+    })
+
+    test('when there is a farm cluster not adjacent to the edge of the map or a water cluster', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = ShoresideExpanse.score(map);
+      expect(score).toBe(3);
+    })
+
+    test('when there is a farm cluster by itself and a water cluster on the edge of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Water],
+        ]
+      )
+      const score = ShoresideExpanse.score(map);
+      expect(score).toBe(3);
+    })
+  })
+
+  describe('gives six reputation stars', () => {
+    test('when there are two farm clusters by themselves', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [Terrain.Empty, Terrain.Farm, Terrain.Empty, Terrain.Farm, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = ShoresideExpanse.score(map);
+      expect(score).toBe(6);
+    })
+
+    test('when there are two water clusters by themselves', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [Terrain.Empty, Terrain.Water, Terrain.Empty, Terrain.Water, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = ShoresideExpanse.score(map);
+      expect(score).toBe(6);
+    })
+
+    test('when there is a water cluster and a farm cluster, both by themselves', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [Terrain.Empty, Terrain.Water, Terrain.Empty, Terrain.Farm, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = ShoresideExpanse.score(map);
+      expect(score).toBe(6);
     })
   })
 })
