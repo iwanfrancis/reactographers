@@ -1,6 +1,84 @@
 import MapData from "../../classes/MapData";
-import { SentinelWood, ShieldGate, Wildholds } from "../../game-components/ScoringCards";
+import { GreatCity, SentinelWood, ShieldGate, Wildholds } from "../../game-components/ScoringCards";
 import { Terrain } from "../../game-components/Terrains";
+
+describe('great city', () => {
+  describe('gives no reputation stars', () => {
+    test('when there are no village spaces', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = GreatCity.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when the only village cluster is adjacent to a mountain', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Village, Terrain.Mountain, Terrain.Empty],
+          [Terrain.Village, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = GreatCity.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when multiple village clusters are adjacent to mountains', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Village],
+          [Terrain.Village, Terrain.Mountain, Terrain.Village],
+          [Terrain.Village, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = GreatCity.score(map);
+      expect(score).toBe(0);
+    })
+  })
+
+  describe('gives 1 reputation star per space in the cluster', () => {
+    test('when the only village cluster is not adjacent to a mountain', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Village,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Village, Terrain.Empty],
+          [Terrain.Empty, Terrain.Village, Terrain.Empty],
+        ]
+      )
+      const score = GreatCity.score(map);
+      expect(score).toBe(3);
+    })
+
+    test('when the largest village cluster is not adjacent to a mountain', () => {
+      const map = new MapData(
+        [
+          [Terrain.Village, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Village, Terrain.Empty, Terrain.Village],
+          [Terrain.Village, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = GreatCity.score(map);
+      expect(score).toBe(3);
+    })
+
+    test('when only the second largest village cluster is not adjacent to a mountain', () => {
+      const map = new MapData(
+        [
+          [Terrain.Village, Terrain.Empty,  Terrain.Village],
+          [Terrain.Village, Terrain.Empty, Terrain.Village],
+          [Terrain.Village, Terrain.Mountain, Terrain.Empty],
+        ]
+      )
+      const score = GreatCity.score(map);
+      expect(score).toBe(2);
+    })
+  })
+})
 
 describe('wildholds', () => {
   describe('gives no reputation stars', () => {

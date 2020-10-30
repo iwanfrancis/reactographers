@@ -1,6 +1,6 @@
-import { Cluster } from "cluster";
 import React from "react";
 import MapData from "../classes/MapData";
+import { Cluster } from "../models/Cluster";
 import GridPosition from "../models/GridPosition";
 import { shuffleArray } from "../utils/shuffle";
 import { Edict, EdictCode } from "./Edict";
@@ -63,6 +63,46 @@ export const CanalLake: ScoringCard = {
         if (requiredTerrainFound) reputation++;
       }
     })
+
+    return reputation;
+  }
+}
+
+export const GreatCity: ScoringCard = {
+  type: ScoringCardType.Villages,
+  name: 'Great City',
+  text: [
+    'Earn one reputation star for each village space in the largest cluster of village spaces that is not adjacent to a mountain space',
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 16,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+    
+    const sortedVillageClusters = mapData.getClusters(Terrain.Village).sort((a, b) => {
+      return b.gridPositions.length - a.gridPositions.length;
+    })
+
+    let validVillageClusters: Cluster[] = [];
+
+    sortedVillageClusters.forEach(cluster => {
+      let clusterAdjacentMountain = false;
+
+      cluster.gridPositions.forEach(gridPos => {
+        const adjacentSquares = mapData.getAdjacentSquares(gridPos);
+        if (adjacentSquares.some(square => square.terrain === Terrain.Mountain)) {
+          clusterAdjacentMountain = true;
+        }
+      })
+
+      if (!clusterAdjacentMountain) {
+        validVillageClusters.push(cluster);
+      }
+    })
+
+    if (validVillageClusters.length > 0) {
+      reputation += validVillageClusters[0].gridPositions.length;
+    }
 
     return reputation;
   }
@@ -206,7 +246,7 @@ export const ShoresideExpanse: ScoringCard = {
     allClusters.forEach(cluster => {
       const oppositeTerrain = cluster.terrain === Terrain.Farm ? Terrain.Water : Terrain.Farm
       let clusterWorthPoints = true;
-      
+
       cluster.gridPositions.forEach(gridPos => {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
         if (adjacentSquares.some(square => square.terrain === oppositeTerrain || square.terrain === Terrain.OutOfBounds)) {
@@ -305,6 +345,7 @@ export const ForestScoringCards = [
   Treetower
 ];
 export const VillageScoringCards = [
+  GreatCity
   ShieldGate,
   Wildholds
 ];
