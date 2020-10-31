@@ -11,11 +11,10 @@ interface ShapeDimensions {
   topLeftX: number;
   topLeftY: number;
   bottomRightX: number;
-  bottomRightY: number 
+  bottomRightY: number;
 }
 
 export default class CardShape extends React.PureComponent<Props> {
-
   findDimensions(shape: ShapeRotation): ShapeDimensions {
     let topLeftX = shape[0].length;
     let topLeftY = shape.length;
@@ -25,7 +24,7 @@ export default class CardShape extends React.PureComponent<Props> {
     for (let row = 0; row < shape[0].length; row++) {
       for (let column = 0; column < shape.length; column++) {
         if (shape[row][column] === 1) {
-          if (column > bottomRightX) bottomRightX = column; 
+          if (column > bottomRightX) bottomRightX = column;
           if (column < topLeftX) topLeftX = column;
           if (row > bottomRightY) bottomRightY = row;
           if (row < topLeftY) topLeftY = row;
@@ -33,7 +32,7 @@ export default class CardShape extends React.PureComponent<Props> {
       }
     }
 
-    return {topLeftX, topLeftY, bottomRightX, bottomRightY}
+    return { topLeftX, topLeftY, bottomRightX, bottomRightY };
   }
 
   render() {
@@ -44,11 +43,11 @@ export default class CardShape extends React.PureComponent<Props> {
     for (let row = dimensions.topLeftY; row <= dimensions.bottomRightY; row++) {
       const squareRow = [];
       for (let column = dimensions.topLeftX; column <= dimensions.bottomRightX; column++) {
-        const squareClass = shape[row][column] === 1 ? 
-          classNames(styles.gray, styles.square) : classNames(styles.transparent, styles.square)
-        squareRow.push(
-          <div key={`${row}:${column}`} className={squareClass}></div>
-        );
+        const squareClass =
+          shape[row][column] === 1
+            ? classNames(styles.gray, styles.square)
+            : classNames(styles.transparent, styles.square);
+        squareRow.push(<div key={`${row}:${column}`} className={squareClass}></div>);
       }
       squares.push(
         <div key={row} className={styles.row}>

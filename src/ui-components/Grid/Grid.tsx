@@ -1,8 +1,8 @@
-import React from 'react';
-import Square from '../Square/Square';
-import styles from './Grid.module.scss';
-import MapData from '../../classes/MapData';
-import GridPosition from '../../models/GridPosition';
+import React from "react";
+import Square from "../Square/Square";
+import styles from "./Grid.module.scss";
+import MapData from "../../classes/MapData";
+import GridPosition from "../../models/GridPosition";
 
 export interface Props {
   mapData: MapData;
@@ -20,19 +20,20 @@ export default class Grid extends React.PureComponent<Props> {
     for (let row = 0; row < mapData.rows; row++) {
       const squareRow = [];
       for (let column = 0; column < mapData.cols; column++) {
-        const gridPos = {row: row, col: column}
+        const gridPos = { row: row, col: column };
         let squareType = mapData.get(gridPos);
         let overlayType = overlay.get(gridPos);
         squareRow.push(
-          <Square 
-            key={`${column}:${row}`} 
-            gridPos={{row: row, col: column}}
+          <Square
+            key={`${column}:${row}`}
+            gridPos={{ row: row, col: column }}
             squareType={squareType}
             overlayType={overlayType}
             hasRuin={mapData.hasRuinAtPosition(gridPos)}
             onClick={onSquareClick}
             onSquareHoverOn={onSquareHoverOn}
-            onRotateShape={onRotateShape}/>
+            onRotateShape={onRotateShape}
+          />
         );
       }
       squares.push(

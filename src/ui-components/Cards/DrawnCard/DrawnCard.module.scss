@@ -1,28 +1,28 @@
 .card {
-    position: absolute;
-    width: 250px;
-    height: 320px;
-    border: 2px solid black;
-    border-radius: 3%;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
+  position: absolute;
+  width: 250px;
+  height: 320px;
+  border: 2px solid black;
+  border-radius: 3%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
 }
 
 .header {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 
-    .ruins-header {
-        width: 25px;
-        height: 25px;
-        border-radius: 100%;
-        background-color: lightgray;
-        border: 3px solid darkgray;
-        padding: 1px;
+  .ruins-header {
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    background-color: lightgray;
+    border: 3px solid darkgray;
+    padding: 1px;
 
-        svg path {
-            stroke: white;
-        }
+    svg path {
+      stroke: white;
     }
+  }
 }

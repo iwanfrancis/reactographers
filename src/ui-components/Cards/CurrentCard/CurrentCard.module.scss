@@ -1,149 +1,149 @@
 .card {
-    position: absolute;
-    width: 250px;
-    height: 320px;
-    border: 2px solid black;
-    border-radius: 3%;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
+  position: absolute;
+  width: 250px;
+  height: 320px;
+  border: 2px solid black;
+  border-radius: 3%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
 }
 
 .header {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 
-    .ruins-header {
-        width: 25px;
-        height: 25px;
-        border-radius: 100%;
-        background-color: lightgray;
-        border: 3px solid darkgray;
-        padding: 1px;
+  .ruins-header {
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    background-color: lightgray;
+    border: 3px solid darkgray;
+    padding: 1px;
 
-        svg path {
-            stroke: white;
-        }
+    svg path {
+      stroke: white;
     }
+  }
 }
 
 .body {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 
-    .title {
-        position: absolute;
-        background: white;
-        padding: 0px 5px;
-        margin: -.75rem;
-        font-size: 1.5rem;
-    }
+  .title {
+    position: absolute;
+    background: white;
+    padding: 0px 5px;
+    margin: -0.75rem;
+    font-size: 1.5rem;
+  }
 }
 
 .options {
-    height: 50%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border: 2px solid black;
+  padding: 5px;
+
+  .terrains {
     display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    border: 2px solid black;
-    padding: 5px;
+    height: 50%;
+    border-bottom: 1px solid black;
+    cursor: pointer;
 
-    .terrains {
-        display: flex;
-        height: 50%;
-        border-bottom: 1px solid black;
-        cursor: pointer;
+    .terrain {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1;
+      border: 3px solid transparent;
 
-        .terrain {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-            border: 3px solid transparent;
+      &:hover {
+        border: 3px solid lightgray;
+      }
 
-            &:hover {
-                border: 3px solid lightgray;
-            }
+      .terrain-icon {
+        width: 40px;
+        height: 40px;
+      }
 
-            .terrain-icon {
-                width: 40px;
-                height: 40px;
-            }
-
-            &.active {
-                border: 3px solid red;
-            }
-        }
+      &.active {
+        border: 3px solid red;
+      }
     }
+  }
 
-    .shapes {
-        display: flex;
-        cursor: pointer;
-        height: 50%;
+  .shapes {
+    display: flex;
+    cursor: pointer;
+    height: 50%;
 
-        .shape {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-grow: 1;
-            border: 3px solid transparent;
+    .shape {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-grow: 1;
+      border: 3px solid transparent;
 
-            &:hover {
-                border: 3px solid lightgray;
-            }
+      &:hover {
+        border: 3px solid lightgray;
+      }
 
-            &.active {
-                border: 3px solid red;
-            }
+      &.active {
+        border: 3px solid red;
+      }
 
-            .coin {
-                width: 25px;
-                height: 25px;
-                border-radius: 100%;
-                background-color: yellow;
-                border: 1px solid goldenrod;
-            }
-        }
+      .coin {
+        width: 25px;
+        height: 25px;
+        border-radius: 100%;
+        background-color: yellow;
+        border: 1px solid goldenrod;
+      }
     }
+  }
 
-    .ruins-large {
-        margin: auto;
-        width: 50%;
+  .ruins-large {
+    margin: auto;
+    width: 50%;
 
-        svg path {
-            stroke: gray;
-        }
+    svg path {
+      stroke: gray;
     }
+  }
 }
 
 .divider {
-    width: 1px;
-    background-color: black;
-    height: 100%;
+  width: 1px;
+  background-color: black;
+  height: 100%;
 }
 
 .forest {
-background-color: green;
+  background-color: green;
 }
 
 .village {
-background-color: red;
+  background-color: red;
 }
 
 .farm {
-background-color: yellow;
+  background-color: yellow;
 }
 
 .water {
-background: blue;
+  background: blue;
 }
 
 .monster {
-background-color: purple;
+  background-color: purple;
 }
 
 .mountain {
-background-color: black;
+  background-color: black;
 }

@@ -9,30 +9,28 @@ export interface Props {
 }
 
 export default class SeasonCard extends React.PureComponent<Props> {
-
   render() {
     const { season, isCurrentSeason } = this.props;
 
-    const cardClass = classNames(styles.card, isCurrentSeason ? styles.currentSeason : styles.notCurrentSeason);
+    const cardClass = classNames(
+      styles.card,
+      isCurrentSeason ? styles.currentSeason : styles.notCurrentSeason
+    );
 
     return (
       <div className={cardClass}>
-        <div className={styles.header}>
-          {season.length}
-        </div>
-        <div className={styles.body}>
-          {season.name}
-        </div>
+        <div className={styles.header}>{season.length}</div>
+        <div className={styles.body}>{season.name}</div>
         <div className={styles.edicts}>
-          {season.edicts.map(edict => {
+          {season.edicts.map((edict) => {
             return (
               <div key={edict} className={styles.edict}>
                 {edict}
               </div>
-            )
+            );
           })}
         </div>
       </div>
-    )
+    );
   }
 }
