@@ -30,6 +30,7 @@ export default class MapData {
       return this.grid[gridPos.row][gridPos.col];
     }
 
+    // Check if the grid has a ruin at a given position
     public hasRuinAtPosition(gridPos: GridPosition): boolean {
       return (this.ruins.some(ruinPos => {
         return ruinPos.row === gridPos.row && ruinPos.col === gridPos.col
@@ -53,12 +54,18 @@ export default class MapData {
     }
 
     // Given a shape and a grid position, check it can be legally placed
-    public moveIsLegal(shape: ShapeRotation, gridPos: GridPosition): boolean {
+    public moveIsLegal(shape: ShapeRotation, gridPos: GridPosition, ruinActive?: boolean): boolean {
+      let placedOnRuin = false;
+
       for (let shRow = 0; shRow < 4; shRow++) {
         for (let shCol = 0; shCol < 4; shCol++) {
           const rowOffset = (gridPos.row + shRow - 1);
           const colOffset = (gridPos.col + shCol - 1);
           if (shape[shRow][shCol])  {
+            if (this.hasRuinAtPosition({row: rowOffset, col: colOffset})) {
+              placedOnRuin = true;
+            }
+
             if ( !this.coordWithinBounds({row: rowOffset, col: colOffset})
               || this.grid[rowOffset][colOffset] !== Terrain.Empty
             ) {
@@ -68,7 +75,12 @@ export default class MapData {
           } 
         }
       }
-      return true
+
+      if (ruinActive && !placedOnRuin) {
+        return false;
+      }
+
+      return true;
     }
 
     // Given a grid position, return the terrain types of all adjacent squares.
@@ -138,6 +150,8 @@ export default class MapData {
       return clusters;
     }
 
+    // Check if are any newly surrounded mountains, and then add them to the surrounded
+    // mountains list
     public checkForNewSurroundedMountains(): number {
       let newSurroundedMountains: GridPosition[] = [];
 

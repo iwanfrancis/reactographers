@@ -106,7 +106,7 @@ export default function Game() {
     const newMapData = _.clone(currentMapData)
     
     if (currentTerrain && currentShape) {
-      if (newMapData.moveIsLegal(currentShape[currentRotation], gridPos)) {
+      if (newMapData.moveIsLegal(currentShape[currentRotation], gridPos, ruinActive)) {
         newMapData.addShape(currentTerrain, currentShape[currentRotation], gridPos)
 
         let newCoins = newMapData.checkForNewSurroundedMountains()
@@ -115,6 +115,7 @@ export default function Game() {
           newCoins++;
         }
 
+        setRuinActive(false);
         setCoins((coins + newCoins));
         setMapHistory(mapHistory.concat([newMapData]));
         setPhase(Phase.Check);
