@@ -102,7 +102,7 @@ export default class CurrentCard extends React.PureComponent<Props> {
             </div>
           </div>
           <div className={styles.options}>
-            <div className={styles['ruin-large']}></div>
+            <Ruin className={styles['ruins-large']}/>
           </div>
         </div>
       )
