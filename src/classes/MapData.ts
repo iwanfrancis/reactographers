@@ -61,7 +61,6 @@ export default class MapData {
           if (shape[shRow][shCol])  {
             if ( !this.coordWithinBounds({row: rowOffset, col: colOffset})
               || this.grid[rowOffset][colOffset] !== Terrain.Empty
-              || this.grid[rowOffset][colOffset] !== Terrain.Wastelands
             ) {
               console.error('Move is illegal')
               return false
