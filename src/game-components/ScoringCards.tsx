@@ -144,7 +144,7 @@ export const GreengoldPlains: ScoringCard = {
 
     villageClusters.forEach(cluster => {
       let uniqueAdjacentTerrains: Terrain[] = []
-      const illegalTerrains = [Terrain.Empty, Terrain.OutOfBounds, Terrain.Village];
+      const illegalTerrains = [Terrain.Empty, Terrain.OutOfBounds, Terrain.Village, Terrain.Wastelands];
 
       cluster.gridPositions.forEach(space => {
         const adjacentSquares = mapData.getAdjacentSquares(space);
