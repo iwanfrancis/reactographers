@@ -116,13 +116,6 @@ export default function Game() {
 
     if (timeInSeason >= currentSeason.length) {
       console.log(`End of ${currentSeason.name}`)
-      
-      const currentSeasonIndex = Seasons.indexOf(currentSeason);
-      const nextSeason = Seasons[currentSeasonIndex + 1];
-
-      console.log(`Beginning of ${nextSeason.name}`)
-      setCurrentSeason(nextSeason);
-
       setPhase(Phase.Score);
     } else {
       setPhase(Phase.Explore)
@@ -156,6 +149,11 @@ export default function Game() {
       setPhase(Phase.End);
     } else {
       exploreDeck.reset();
+      const currentSeasonIndex = Seasons.indexOf(currentSeason);
+      const nextSeason = Seasons[currentSeasonIndex + 1];
+
+      console.log(`Beginning of ${nextSeason.name}`)
+      setCurrentSeason(nextSeason);
       setPhase(Phase.Explore);
     }
   }
