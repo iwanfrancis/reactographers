@@ -1,5 +1,5 @@
 import MapData from "../../classes/MapData";
-import { GreatCity, SentinelWood, ShieldGate, Wildholds } from "../../game-components/ScoringCards";
+import { GreatCity, GreengoldPlains, SentinelWood, ShieldGate, Wildholds } from "../../game-components/ScoringCards";
 import { Terrain } from "../../game-components/Terrains";
 
 describe('great city', () => {
@@ -76,6 +76,122 @@ describe('great city', () => {
       )
       const score = GreatCity.score(map);
       expect(score).toBe(2);
+    })
+  })
+})
+
+describe('greengold plains', () => {
+  describe('gives no reputation stars', () => {
+    test('when a village cluster has no adjacent terrain', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Village, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = GreengoldPlains.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when a village cluster has one adjacent terrain type', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Forest,  Terrain.Empty],
+          [Terrain.Forest, Terrain.Village, Terrain.Forest],
+          [Terrain.Empty, Terrain.Forest, Terrain.Empty],
+        ]
+      )
+      const score = GreengoldPlains.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when a village cluster has two adjacent terrain types', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Forest,  Terrain.Empty],
+          [Terrain.Forest, Terrain.Village, Terrain.Farm],
+          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+        ]
+      )
+      const score = GreengoldPlains.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when a village cluster has two adjacent terrain types and an empty adjacent square', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Forest, Terrain.Village, Terrain.Farm],
+          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+        ]
+      )
+      const score = GreengoldPlains.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when a village cluster has two adjacent terrain types and is on the edge of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Forest, Terrain.Forest,  Terrain.Empty],
+          [Terrain.Village, Terrain.Village, Terrain.Farm],
+          [Terrain.Farm, Terrain.Farm, Terrain.Empty],
+        ]
+      )
+      const score = GreengoldPlains.score(map);
+      expect(score).toBe(0);
+    })
+  })
+
+  describe('gives three reputation stars', () => {
+    test('when a village cluster has three adjacent terrain types', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Water,  Terrain.Empty],
+          [Terrain.Forest, Terrain.Village, Terrain.Empty],
+          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+        ]
+      )
+      const score = GreengoldPlains.score(map);
+      expect(score).toBe(3);
+    })
+
+    test('when a village cluster has four adjacent terrain types', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Water,  Terrain.Empty],
+          [Terrain.Forest, Terrain.Village, Terrain.Monster],
+          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+        ]
+      )
+      const score = GreengoldPlains.score(map);
+      expect(score).toBe(3);
+    })
+
+    test('when one of two village clusters has three adjacent terrain types', () => {
+      const map = new MapData(
+        [
+          [Terrain.Farm, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Village, Terrain.Water, Terrain.Village],
+          [Terrain.Forest, Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = GreengoldPlains.score(map);
+      expect(score).toBe(3);
+    })
+  })
+
+  describe('gives six reputation stars', () => {
+    test('when a there are two village clusters with three adjacent terrain types', () => {
+      const map = new MapData(
+        [
+          [Terrain.Farm, Terrain.Empty,  Terrain.Farm],
+          [Terrain.Village, Terrain.Water, Terrain.Village],
+          [Terrain.Forest, Terrain.Empty, Terrain.Forest],
+        ]
+      )
+      const score = GreengoldPlains.score(map);
+      expect(score).toBe(6);
     })
   })
 })

@@ -129,6 +129,41 @@ export const Greenbough: ScoringCard = {
   }
 }
 
+export const GreengoldPlains: ScoringCard = {
+  type: ScoringCardType.Villages,
+  name: 'Greengold Plains',
+  text: [
+    'Earn three reputation stars for each cluster of village spaces that is adjacent to three or more different terrain types.',
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 21,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+
+    const villageClusters = mapData.getClusters(Terrain.Village)
+
+    villageClusters.forEach(cluster => {
+      let uniqueAdjacentTerrains: Terrain[] = []
+      const illegalTerrains = [Terrain.Empty, Terrain.OutOfBounds, Terrain.Village];
+
+      cluster.gridPositions.forEach(space => {
+        const adjacentSquares = mapData.getAdjacentSquares(space);
+        adjacentSquares.forEach(square => {
+          if (square.terrain && !illegalTerrains.includes(square.terrain) && !uniqueAdjacentTerrains.includes(square.terrain)) {
+            uniqueAdjacentTerrains.push(square.terrain);
+          }
+        })
+      })
+
+      if (uniqueAdjacentTerrains.length >= 3) {
+        reputation += 3;
+      }
+    })
+
+    return reputation;
+  }
+}
+
 export const TheCauldrons: ScoringCard = {
   type: ScoringCardType.Spacial,
   name: 'The Cauldrons',
@@ -408,6 +443,7 @@ export const ForestScoringCards = [
 ];
 export const VillageScoringCards = [
   GreatCity,
+  GreengoldPlains,
   ShieldGate,
   Wildholds
 ];
