@@ -12,4 +12,17 @@
 
 .header {
     font-size: 1.5rem;
+
+    .ruins-header {
+        width: 25px;
+        height: 25px;
+        border-radius: 100%;
+        background-color: lightgray;
+        border: 3px solid darkgray;
+        padding: 1px;
+
+        svg path {
+            stroke: white;
+        }
+    }
 }
