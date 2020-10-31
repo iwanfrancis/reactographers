@@ -1,10 +1,11 @@
 import React from 'react';
 import classNames from 'classnames'
 
-import { Card, ShapeCard, isShapeCard, Shape } from '../../../models/Card';
+import { Card, ShapeCard, isShapeCard, Shape, isRuinsCard, RuinsCard } from '../../../models/Card';
 import { Terrain } from '../../../game-components/Terrains';
 import styles from './CurrentCard.module.scss';
 import CardShape from '../CardShape/CardShape';
+import { ReactComponent as Ruin } from '../../../assets/sprites/ruin/ruin.svg';
 
 export interface Props {
   card: Card;
@@ -83,6 +84,25 @@ export default class CurrentCard extends React.PureComponent<Props> {
           <div className={styles.options}>
             {this.renderTerrainOptions(shapeCard.terrains)}
             {this.renderShapeOptions(shapeCard.shapes, shapeCard.coinIndex)}
+          </div>
+        </div>
+      )
+    }
+
+    if (isRuinsCard(card)) {
+      const ruinsCard = card as RuinsCard;
+      return (
+        <div className={styles.card} style={offsetStyle}>
+          <div className={styles.header}>
+            <Ruin className={styles['ruins-header']}/>
+          </div>
+          <div className={styles.body}>
+            <div className={styles.title}>
+              {ruinsCard.name}
+            </div>
+          </div>
+          <div className={styles.options}>
+            <div className={styles['ruin-large']}></div>
           </div>
         </div>
       )

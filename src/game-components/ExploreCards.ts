@@ -1,6 +1,20 @@
-import { ShapeCard } from "../models/Card";
+import { RuinsCard, ShapeCard } from "../models/Card";
 import { Terrain } from "./Terrains";
 
+// RUINS CARDS
+const OutpostRuins: RuinsCard = {
+    name: 'Outpost Ruins',
+    time: 0,
+    isRuin: true
+}
+
+const TempleRuins: RuinsCard = {
+    name: 'Temple Ruins',
+    time: 0,
+    isRuin: true
+}
+
+// TERRAIN CARDS
 const Farmland: ShapeCard = {
     name: 'Farmland',
     time: 1,
@@ -437,8 +451,10 @@ const ExploreCards = [
     Homestead,
     Marshlands,
     Orchard,
+    OutpostRuins,
     RiftLands,
-    TreetopVillage
+    TempleRuins,
+    TreetopVillage,
 ]
 
 export default ExploreCards;

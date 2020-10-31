@@ -8,6 +8,10 @@ export interface Card {
     time: number;
 }
 
+export interface RuinsCard extends Card {
+    isRuin: boolean;
+}
+
 export interface ShapeCard extends Card {
     terrains: Terrain[];
     shapes: Shape[]
@@ -15,9 +19,25 @@ export interface ShapeCard extends Card {
 }
 
 export function isCard(object: any): object is Card {
-    return 'name' in object;
+    return (
+        'name' in object && typeof(object.name) == 'string' &&
+        'time' in object && typeof(object.time) == 'number'
+    );
+}
+
+export function isRuinsCard(object: any): object is RuinsCard {
+    return (
+        'name' in object && typeof(object.name) == 'string' &&
+        'time' in object && typeof(object.time) == 'number' &&
+        'isRuin' in object && typeof(object.isRuin) == 'boolean'
+    );
 }
 
 export function isShapeCard(object: any): object is ShapeCard {
-    return 'name' in object;
+    console.log(typeof(object.terrains))
+    return (
+        'name' in object && typeof(object.name) == 'string' &&
+        'time' in object && typeof(object.time) == 'number' &&
+        'terrains' in object && 'shapes' in object
+    );
 }
