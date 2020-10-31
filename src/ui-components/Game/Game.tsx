@@ -29,8 +29,10 @@ export default function Game() {
   const [ruinActive, setRuinActive] = useState(false);
   const [reputation, setReputation] = useState(0);
   const [coins, setCoins] = useState(0);
-  const [phase, setPhase] = useState(Phase.Draw)
+  const [phase, setPhase] = useState(Phase.Explore)
   const [overlay, setOverlay] = useState(new MapData(new Array(NormalMap.rows).fill(null).map(() => new Array(NormalMap.cols).fill(null))));
+
+
 
   useEffect(() => {
     switch (phase) {
@@ -85,14 +87,11 @@ export default function Game() {
       let ruinsCardDrawn = true
 
       while (ruinsCardDrawn) {
-        console.log('ruin')
-
         await new Promise(r => setTimeout(r, 1000));
         nextCard = currentExploreDeck.draw();
         setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
-        
+
         if (!isRuinsCard(nextCard)) {
-          console.log('next card')
           ruinsCardDrawn = false;
         }
       } 

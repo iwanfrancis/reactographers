@@ -8,7 +8,6 @@ export default class ExploreDeck {
 
     constructor() {
         this.shuffle();
-        this.draw();
     }
 
     public shuffle(): void {
