@@ -1,5 +1,5 @@
 import MapData from "../../classes/MapData";
-import { CanalLake, MagesValley, ShoresideExpanse } from "../../game-components/ScoringCards";
+import { CanalLake, MagesValley, ShoresideExpanse, TheGoldenGranary } from "../../game-components/ScoringCards";
 import { Terrain } from "../../game-components/Terrains";
 
 describe('mages valley', () => {
@@ -322,6 +322,107 @@ describe('shoreside expanse', () => {
       )
       const score = ShoresideExpanse.score(map);
       expect(score).toBe(6);
+    })
+  })
+})
+
+describe('the golden granary', () => {
+  describe('gives no reputation stars', () => {
+    test('when a water space is not adjacent to a ruin', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Water, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ],
+        [{row: 0, col: 0}]
+      )
+      const score = TheGoldenGranary.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when a farm space is not on a ruin', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ],
+        [{row: 0, col: 0}]
+      )
+      const score = TheGoldenGranary.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when a water space is on a ruin', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Water, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ],
+        [{row: 1, col: 1}]
+      )
+      const score = TheGoldenGranary.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when a farm space is adjacent to a ruin', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ],
+        [{row: 1, col: 0}]
+      )
+      const score = TheGoldenGranary.score(map);
+      expect(score).toBe(0);
+    })
+  })
+
+  describe('gives one reputation star', () => {
+    test('when a water space is adjacent to a ruin', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Water, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ],
+        [{row: 0, col: 1}]
+      )
+      const score = TheGoldenGranary.score(map);
+      expect(score).toBe(1);
+    })
+  })
+
+  describe('gives three reputation stars', () => {
+    test('when a farm space is on a ruin', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ],
+        [{row: 1, col: 1}]
+      )
+      const score = TheGoldenGranary.score(map);
+      expect(score).toBe(3);
+    })
+  })
+
+  describe('gives four reputation stars', () => {
+    test('when a farm space is on a ruin and a water space is adjacent', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty, Terrain.Farm, Terrain.Water],
+          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+        ],
+        [{row: 1, col: 1}]
+      )
+      const score = TheGoldenGranary.score(map);
+      expect(score).toBe(4);
     })
   })
 })

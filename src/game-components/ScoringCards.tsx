@@ -152,6 +152,46 @@ export const TheCauldrons: ScoringCard = {
   }
 }
 
+export const TheGoldenGranary: ScoringCard = {
+  type: ScoringCardType.FarmAndSea,
+  name: 'The Golden Granary',
+  text: [
+    'Earn one reputation star for each water space adjacent to a ruins space.',
+    'Earn three reputation stars for each farm sapce on a ruins space'
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 20,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+    
+    mapData.scoreSquares((gridPos: GridPosition) => {
+
+      if (gridPos.terrain === Terrain.Farm) {
+        if (mapData.ruins.some(ruinPos => ruinPos.row === gridPos.row && ruinPos.col === gridPos.col)) {
+          reputation += 3;
+        }
+      }
+
+      if (gridPos.terrain === Terrain.Water) {
+        let adjacentRuinFound = false;
+        const adjacentSquares = mapData.getAdjacentSquares(gridPos);
+        
+        adjacentSquares.forEach(square => {
+          if (mapData.ruins.some(ruinPos => ruinPos.row === square.row && ruinPos.col === square.col)) {
+            adjacentRuinFound = true;
+          }
+        })
+
+        if (adjacentRuinFound) {
+          reputation += 1;
+        }
+      }
+    })
+    
+    return reputation;
+  }
+}
+
 export const Treetower: ScoringCard = {
   type: ScoringCardType.Forests,
   name: 'Treetower',
@@ -378,7 +418,8 @@ export const SpacialScoringCards = [
 export const FarmAndSeaScoringCards = [
   CanalLake,
   MagesValley,
-  ShoresideExpanse
+  ShoresideExpanse,
+  TheGoldenGranary
 ];
 
 export const drawEdicts = (): Edict[] => {
