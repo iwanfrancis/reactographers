@@ -164,6 +164,42 @@ export const GreengoldPlains: ScoringCard = {
   }
 }
 
+export const TheBrokenRoad: ScoringCard = {
+  type: ScoringCardType.Spacial,
+  name: 'The Broken Road',
+  text: [
+    'Earn three reputation starts for each complete diagonal line of filled spaces that touches the left and bottom edges of the map.'
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 24,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+    const grid = mapData.grid;
+
+    for (let row = 0; row < mapData.rows; row++) {
+      let lineBroken = false;
+      let currentRow = row;
+      let currentCol = 0;
+      const illegalTerrains = [Terrain.Empty, Terrain.OutOfBounds];
+
+      while (lineBroken === false && currentRow < mapData.rows) {
+        if (illegalTerrains.includes(grid[currentRow][currentCol])) {
+          lineBroken = true;
+          break;
+        }
+        currentRow++;
+        currentCol++;
+      }
+
+      if (!lineBroken) {
+        reputation += 3;
+      }
+    }
+    
+    return reputation;
+  }
+}
+
 export const TheCauldrons: ScoringCard = {
   type: ScoringCardType.Spacial,
   name: 'The Cauldrons',
@@ -449,6 +485,7 @@ export const VillageScoringCards = [
 ];
 export const SpacialScoringCards = [
   Borderlands,
+  TheBrokenRoad,
   TheCauldrons
 ];
 export const FarmAndSeaScoringCards = [

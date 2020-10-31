@@ -1,5 +1,5 @@
 import MapData from "../../classes/MapData";
-import { Borderlands, TheCauldrons } from "../../game-components/ScoringCards";
+import { Borderlands, TheBrokenRoad, TheCauldrons } from "../../game-components/ScoringCards";
 import { Terrain } from "../../game-components/Terrains";
 
 describe('borderlands', () => {
@@ -92,6 +92,98 @@ describe('borderlands', () => {
       )
       const score = Borderlands.score(map);
       expect(score).toBe(12);
+    })
+  })
+})
+
+describe('the broken road', () => {
+  describe('gives no reputation stars', () => {
+    test('when there are no complete diagonal lines', () => {
+      const map = new MapData(
+        [
+          [Terrain.Village, Terrain.Empty,   Terrain.Empty],
+          [Terrain.Monster,   Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty, Terrain.Farm],
+        ]
+      )
+      const score = TheBrokenRoad.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when there is a complete diagonal line which doesnt touch the left edge and bottom edge of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Village,   Terrain.Water],
+          [Terrain.Empty,   Terrain.Empty,  Terrain.Farm],
+          [Terrain.Empty,   Terrain.Empty, Terrain.Farm],
+        ]
+      )
+      const score = TheBrokenRoad.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when there is a complete diagonal line which touches the top and bottom of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Village,   Terrain.Empty, Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty,  Terrain.Village, Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty, Terrain.Farm, Terrain.Farm],
+        ]
+      )
+      const score = TheBrokenRoad.score(map);
+      expect(score).toBe(0);
+    })
+
+    test('when there is a complete diagonal line which touches the right and bottom of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,   Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty,  Terrain.Water],
+          [Terrain.Empty,   Terrain.Village, Terrain.Empty],
+        ]
+      )
+      const score = TheBrokenRoad.score(map);
+      expect(score).toBe(0);
+    })
+  })
+
+  describe('gives three reputation stars', () => {
+    test('when there are is a complete diagonal line touching the left and bottom of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Village, Terrain.Empty,   Terrain.Empty],
+          [Terrain.Empty,   Terrain.Farm,  Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty, Terrain.Farm],
+        ]
+      )
+      const score = TheBrokenRoad.score(map);
+      expect(score).toBe(3);
+    })
+
+    test('when the bottom left corner is filled', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,   Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty,  Terrain.Empty],
+          [Terrain.Farm,   Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = TheBrokenRoad.score(map);
+      expect(score).toBe(3);
+    })
+  })
+
+  describe('gives six reputation stars', () => {
+    test('when there are two complete diagonal lines touching the left and bottom of the map', () => {
+      const map = new MapData(
+        [
+          [Terrain.Village, Terrain.Empty,   Terrain.Empty],
+          [Terrain.Monster,   Terrain.Farm,  Terrain.Empty],
+          [Terrain.Empty,   Terrain.Village, Terrain.Farm],
+        ]
+      )
+      const score = TheBrokenRoad.score(map);
+      expect(score).toBe(6);
     })
   })
 })
