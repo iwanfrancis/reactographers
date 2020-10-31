@@ -1,5 +1,5 @@
 import MapData from "../../classes/MapData";
-import { Borderlands, TheBrokenRoad, TheCauldrons } from "../../game-components/ScoringCards";
+import { Borderlands, LostBarony, TheBrokenRoad, TheCauldrons } from "../../game-components/ScoringCards";
 import { Terrain } from "../../game-components/Terrains";
 
 describe('borderlands', () => {
@@ -92,6 +92,88 @@ describe('borderlands', () => {
       )
       const score = Borderlands.score(map);
       expect(score).toBe(12);
+    })
+  })
+})
+
+describe('lost barony', () => {
+  describe('gives no reputation stars', () => {
+    test('when there are no complete filled squares', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,   Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty,  Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = LostBarony.score(map);
+      expect(score).toBe(0);
+    })
+  })
+
+  describe('gives three reputation stars', () => {
+    test('when the biggest square is only one wide', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,   Terrain.Empty],
+          [Terrain.Empty,   Terrain.Water,  Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = LostBarony.score(map);
+      expect(score).toBe(3);
+    })
+
+    test('when there are two one wide squares', () => {
+      const map = new MapData(
+        [
+          [Terrain.Village, Terrain.Empty,   Terrain.Empty],
+          [Terrain.Empty,   Terrain.Water,  Terrain.Empty],
+          [Terrain.Empty,   Terrain.Empty, Terrain.Empty],
+        ]
+      )
+      const score = LostBarony.score(map);
+      expect(score).toBe(3);
+    })
+  })
+
+  describe('gives six reputation stars', () => {
+    test('when the biggest square is two wide', () => {
+      const map = new MapData(
+        [
+          [Terrain.Farm, Terrain.Empty,   Terrain.Empty],
+          [Terrain.Empty,   Terrain.Water,  Terrain.Village],
+          [Terrain.Empty,   Terrain.Water, Terrain.Monster],
+        ]
+      )
+      const score = LostBarony.score(map);
+      expect(score).toBe(6);
+    })
+
+    test('when a two wide square has extra attached terrains', () => {
+      const map = new MapData(
+        [
+          [Terrain.Empty, Terrain.Empty,   Terrain.Farm],
+          [Terrain.Empty,   Terrain.Water,  Terrain.Village],
+          [Terrain.Farm,   Terrain.Water, Terrain.Monster],
+        ]
+      )
+      const score = LostBarony.score(map);
+      expect(score).toBe(6);
+    })
+  })
+
+  describe('gives nine reputation stars', () => {
+    test('when the biggest square is three wide', () => {
+      const map = new MapData(
+        [
+          [Terrain.Farm, Terrain.Mountain,   Terrain.Water],
+          [Terrain.Village,   Terrain.Water,  Terrain.Village],
+          [Terrain.Monster,   Terrain.Water, Terrain.Monster],
+        ]
+      )
+      const score = LostBarony.score(map);
+      expect(score).toBe(9);
     })
   })
 })

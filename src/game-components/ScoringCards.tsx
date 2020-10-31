@@ -164,6 +164,62 @@ export const GreengoldPlains: ScoringCard = {
   }
 }
 
+export const LostBarony: ScoringCard = {
+  type: ScoringCardType.Spacial,
+  name: 'Lost Barony',
+  text: [
+    'Earn three reputation stars for each space along one edge of the largest square of filled spaces',
+  ],
+  diagram: <div></div>,
+  singlePlayerScore: 24,
+  score: (mapData: MapData) => {
+    let reputation = 0;
+    let biggestSquareWidth = 0;
+    const grid = mapData.grid;
+
+    mapData.scoreSquares((gridPos: GridPosition) => {
+      let currentSquareWidth = 0;
+      let stillSquare = true;
+      let startingRow, startingCol, currentRow, currentCol;
+      startingRow = currentRow = gridPos.row;
+      startingCol = currentCol = gridPos.col;
+
+      while (stillSquare && currentRow < mapData.rows && currentCol < mapData.cols) {
+        let allSpacesFilled = true;
+
+        for (let row = startingRow; row <= currentRow; row++) {
+          if (grid[row][currentCol] === Terrain.Empty) {
+            allSpacesFilled = false;
+          }
+        }
+
+        for (let col = startingCol; col <= currentCol; col++) {
+          if (grid[currentRow][col] === Terrain.Empty) {
+            allSpacesFilled = false;
+          }
+        }
+
+        if (!allSpacesFilled) {
+          stillSquare = false;
+        } else {
+          currentSquareWidth = currentCol - startingCol + 1;
+          currentRow++;
+          currentCol++;
+        }
+      }
+
+      if (currentSquareWidth > biggestSquareWidth) {
+        biggestSquareWidth = currentSquareWidth
+      }
+    })
+
+    reputation = biggestSquareWidth * 3;
+
+    return reputation;
+  }
+}
+
+
 export const TheBrokenRoad: ScoringCard = {
   type: ScoringCardType.Spacial,
   name: 'The Broken Road',
@@ -485,6 +541,7 @@ export const VillageScoringCards = [
 ];
 export const SpacialScoringCards = [
   Borderlands,
+  LostBarony,
   TheBrokenRoad,
   TheCauldrons
 ];

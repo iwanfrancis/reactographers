@@ -6,5 +6,6 @@ export enum Terrain {
     Monster = 'monster',
     Mountain = 'mountain',
     Empty = 'null',
+    Wastelands = 'wastelands',
     OutOfBounds = 'outofbounds'
 }
