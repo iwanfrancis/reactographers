@@ -34,7 +34,6 @@ export function isRuinsCard(object: any): object is RuinsCard {
 }
 
 export function isShapeCard(object: any): object is ShapeCard {
-    console.log(typeof(object.terrains))
     return (
         'name' in object && typeof(object.name) == 'string' &&
         'time' in object && typeof(object.time) == 'number' &&

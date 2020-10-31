@@ -1,6 +1,6 @@
 export enum Phase {
   Explore = 'explore',
-  Draw = 'drawn',
+  Draw = 'draw',
   Check = 'check',
   Score = 'score',
   End = 'end'

@@ -7,7 +7,7 @@ import MapData from '../../classes/MapData';
 import { Terrain } from '../../game-components/Terrains';
 import { NormalMap } from '../../game-components/Maps';
 import ExploreDeck from '../../classes/ExploreDeck';
-import { Shape } from '../../models/Card';
+import { isRuinsCard, isShapeCard, Shape } from '../../models/Card';
 import CurrentCard from '../Cards/CurrentCard/CurrentCard';
 import Seasons, { Season } from '../../game-components/Seasons';
 import SeasonCard from '../Cards/SeasonCard/SeasonCard';
@@ -18,28 +18,19 @@ import ScoreCard from '../Cards/ScoreCard/ScoreCard';
 import CoinTrack from '../Coins/CoinTrack';
 import { Phase } from '../../game-components/Phase';
 
-export interface State {
-  mapHistory: MapData[];
-  overlay: MapData;
-  exploreDeck: ExploreDeck;
-  currentSeason: Season;
-  currentTerrain: Terrain;
-  currentShape: Shape | null;
-  currentRotation: number;
-}
-
 export default function Game() {
   const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid, NormalMap.ruins)])
-  const [overlay, setOverlay] = useState(new MapData(new Array(NormalMap.rows).fill(null).map(() => new Array(NormalMap.cols).fill(null))));
-  const [exploreDeck] = useState(new ExploreDeck());
+  const [exploreDeckHistory, setExploreDeckHistory] = useState([new ExploreDeck()]);
   const [edicts] = useState(drawEdicts());
   const [currentSeason, setCurrentSeason] = useState<Season>(Seasons[0]);
   const [currentTerrain, setCurrentTerrain] = useState<Terrain>();
   const [currentShape, setCurrentShape] = useState<Shape>();
   const [currentRotation, setCurrentRotation] = useState(0);
+  const [ruinActive, setRuinActive] = useState(false);
   const [reputation, setReputation] = useState(0);
   const [coins, setCoins] = useState(0);
   const [phase, setPhase] = useState(Phase.Draw)
+  const [overlay, setOverlay] = useState(new MapData(new Array(NormalMap.rows).fill(null).map(() => new Array(NormalMap.cols).fill(null))));
 
   useEffect(() => {
     switch (phase) {
@@ -81,13 +72,38 @@ export default function Game() {
     }
   }
 
-  const explorePhase = () => {
-    exploreDeck.draw();
-    setPhase(Phase.Draw);
+  const explorePhase = async () => {
+    const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
+    let nextCard = currentExploreDeck.draw();
+
+    setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
+
+    if (isShapeCard(nextCard)) {
+      setPhase(Phase.Draw);
+    } else {
+      setRuinActive(true);
+      let ruinsCardDrawn = true
+
+      while (ruinsCardDrawn) {
+        console.log('ruin')
+
+        await new Promise(r => setTimeout(r, 1000));
+        nextCard = currentExploreDeck.draw();
+        setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
+        
+        if (!isRuinsCard(nextCard)) {
+          console.log('next card')
+          ruinsCardDrawn = false;
+        }
+      } 
+
+      setPhase(Phase.Draw);
+    }
   }
 
   const drawPhase = (gridPos: GridPosition) => {
     const currentMapData = mapHistory[mapHistory.length - 1];
+    const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
     const newMapData = _.clone(currentMapData)
     
     if (currentTerrain && currentShape) {
@@ -95,7 +111,7 @@ export default function Game() {
         newMapData.addShape(currentTerrain, currentShape[currentRotation], gridPos)
 
         let newCoins = newMapData.checkForNewSurroundedMountains()
-        if (exploreDeck.currentShapeHasCoin(currentShape)) {
+        if (currentExploreDeck.currentShapeHasCoin(currentShape)) {
           console.log('Shape had coin! +1 Coin')
           newCoins++;
         }
@@ -108,7 +124,8 @@ export default function Game() {
   }
 
   const checkPhase = () => {
-    const timeInSeason = exploreDeck.getTotalTime();
+    const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
+    const timeInSeason = currentExploreDeck.getTotalTime();
 
     setCurrentShape(undefined);
     setCurrentTerrain(undefined);
@@ -126,6 +143,7 @@ export default function Game() {
     console.log('Begin scoring phase')
 
     const currentMapData = mapHistory[mapHistory.length - 1];
+    const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
     let seasonScore = 0;
 
     edicts.forEach(edict => {
@@ -148,7 +166,9 @@ export default function Game() {
     if (currentSeasonIndex >= Seasons.length -1) {
       setPhase(Phase.End);
     } else {
-      exploreDeck.reset();
+      currentExploreDeck.reset();
+      setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
+
       const currentSeasonIndex = Seasons.indexOf(currentSeason);
       const nextSeason = Seasons[currentSeasonIndex + 1];
 
@@ -194,8 +214,9 @@ export default function Game() {
   }
 
   const renderExploreCards = () => {
-    const currentCard = exploreDeck.getCurrentCard();
-    const previousCards = exploreDeck.getPreviousCards();
+    const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
+    const currentCard = currentExploreDeck.getCurrentCard();
+    const previousCards = currentExploreDeck.getPreviousCards();
 
     return (
       <React.Fragment>
