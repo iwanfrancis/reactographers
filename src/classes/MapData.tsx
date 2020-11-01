@@ -1,4 +1,4 @@
-import { ShapeRotation } from "../models/Card";
+import { Shape, ShapeRotation } from "../models/Card";
 import { Terrain } from "../game-components/Terrains";
 import { DefaultMapSize } from "../game-components/Maps";
 import GridPosition from "../models/GridPosition";
@@ -84,6 +84,20 @@ export default class MapData {
     }
 
     return true;
+  }
+
+  // Given a shape, check that its possible to place. Pass a ruins argument to only check ruins spaces
+  public shapeIsPossible(shape: Shape, ruinActive?: boolean): boolean {
+    return shape.some((shapeRotation) => {
+      for (let row = 0; row < this.rows; row++) {
+        for (let col = 0; col < this.cols; col++) {
+          if (this.moveIsLegal(shapeRotation, { row: row, col: col }, ruinActive)) {
+            return true;
+          }
+        }
+      }
+      return false;
+    });
   }
 
   // Given a grid position, return the terrain types of all adjacent squares.
