@@ -17,6 +17,7 @@ import GridPosition from "../../models/GridPosition";
 import ScoreCard from "../Cards/ScoreCard/ScoreCard";
 import CoinTrack from "../Coins/CoinTrack";
 import { Phase } from "../../game-components/Phase";
+import { FallbackShape } from "../../constants/FallbackShape";
 
 export default function Game() {
   const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid, NormalMap.ruins)]);
@@ -102,6 +103,11 @@ export default function Game() {
       const possibleShapes = nextCard.shapes.filter((shape) => {
         return currentMapData.shapeIsPossible(shape, ruinsCardDrawn);
       });
+
+      if (possibleShapes.length == 0) {
+        setCurrentShape(FallbackShape);
+      }
+
       setPossibleShapes(possibleShapes);
     }
 
