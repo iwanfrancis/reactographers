@@ -81,6 +81,7 @@ export default function Game() {
     const currentMapData = mapHistory[mapHistory.length - 1];
     const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
     let ruinsCardDrawn = false;
+    let fallbackShapeEnabled = false;
     let nextCard = currentExploreDeck.draw();
 
     // If we get a ruins card, keep drawing until we get something else
@@ -105,6 +106,7 @@ export default function Game() {
       });
 
       if (possibleShapes.length == 0) {
+        fallbackShapeEnabled = true;
         setCurrentShape(FallbackShape);
       }
 
@@ -112,7 +114,7 @@ export default function Game() {
     }
 
     setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
-    setRuinActive(ruinsCardDrawn);
+    setRuinActive(ruinsCardDrawn && !fallbackShapeEnabled);
     setPhase(Phase.Draw);
   };
 
