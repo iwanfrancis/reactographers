@@ -1,3 +1,5 @@
+@import "../../../../assets/styles/terrains.module.scss";
+
 .corner {
   display: flex;
   flex-direction: column;
@@ -13,13 +15,15 @@
     .not-corner-square {
       flex-grow: 1;
       margin: 1px;
+      border-radius: 25%;
       background-color: darkgray;
     }
 
     .corner-square {
       margin: 1px;
       flex-grow: 1;
-      background-color: purple;
+      border-radius: 25%;
+      background-color: $monster-color;
     }
   }
 }
