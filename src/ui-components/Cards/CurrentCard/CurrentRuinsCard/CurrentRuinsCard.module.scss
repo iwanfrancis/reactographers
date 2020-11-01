@@ -1,0 +1,23 @@
+@import "../CurrentCard.module.scss";
+
+.ruins-header {
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  background-color: lightgray;
+  border: 3px solid darkgray;
+  padding: 1px;
+
+  svg path {
+    stroke: white;
+  }
+}
+
+.ruins-large {
+  margin: auto;
+  width: 50%;
+
+  svg path {
+    stroke: gray;
+  }
+}

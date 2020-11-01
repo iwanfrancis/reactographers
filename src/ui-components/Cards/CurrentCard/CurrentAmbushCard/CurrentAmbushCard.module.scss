@@ -1,0 +1,39 @@
+@import "../CurrentCard.module.scss";
+
+.ambush-info {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  .ambush-direction {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 1;
+
+    .ambush-direction-square {
+      width: 40px;
+      height: 40px;
+      background-color: purple;
+    }
+
+    .ambush-direction-svg {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      margin: auto;
+
+      svg path {
+        stroke: darkgray;
+      }
+    }
+  }
+
+  .shape {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 1;
+  }
+}
