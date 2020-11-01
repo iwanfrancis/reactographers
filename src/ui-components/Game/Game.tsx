@@ -7,7 +7,7 @@ import MapData from "../../classes/MapData";
 import { Terrain } from "../../game-components/Terrains";
 import { NormalMap } from "../../game-components/Maps";
 import ExploreDeck from "../../classes/ExploreDeck";
-import { isRuinsCard, isShapeCard, Shape } from "../../models/Card";
+import { isRuinsCard, isShapeCard, Shape, ShapeCard } from "../../models/Card";
 import CurrentCard from "../Cards/CurrentCard/CurrentCard";
 import Seasons, { Season } from "../../game-components/Seasons";
 import SeasonCard from "../Cards/SeasonCard/SeasonCard";
@@ -79,39 +79,35 @@ export default function Game() {
   const explorePhase = async () => {
     const currentMapData = mapHistory[mapHistory.length - 1];
     const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
+    let ruinsCardDrawn = false;
     let nextCard = currentExploreDeck.draw();
 
     setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
 
-    if (isShapeCard(nextCard)) {
-      const possibleShapes = nextCard.shapes.filter((shape) => {
-        return currentMapData.shapeIsPossible(shape);
-      });
-      setPossibleShapes(possibleShapes);
-      setPhase(Phase.Draw);
-    } else {
-      let ruinsCardDrawn = true;
+    if (isRuinsCard(nextCard)) {
+      ruinsCardDrawn = true;
+      let drawAnother = true;
 
-      while (ruinsCardDrawn) {
+      while (drawAnother) {
         await new Promise((r) => setTimeout(r, 1000));
         nextCard = currentExploreDeck.draw();
         setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
 
         if (!isRuinsCard(nextCard)) {
-          ruinsCardDrawn = false;
+          drawAnother = false;
         }
       }
-
-      if (isShapeCard(nextCard)) {
-        const possibleShapes = nextCard.shapes.filter((shape) => {
-          return currentMapData.shapeIsPossible(shape, true);
-        });
-        setPossibleShapes(possibleShapes);
-      }
-
-      setRuinActive(true);
-      setPhase(Phase.Draw);
     }
+
+    if (isShapeCard(nextCard)) {
+      const possibleShapes = nextCard.shapes.filter((shape) => {
+        return currentMapData.shapeIsPossible(shape, ruinsCardDrawn);
+      });
+      setPossibleShapes(possibleShapes);
+    }
+
+    setRuinActive(ruinsCardDrawn);
+    setPhase(Phase.Draw);
   };
 
   const drawPhase = (gridPos: GridPosition) => {
