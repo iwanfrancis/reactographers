@@ -82,6 +82,7 @@ export default function Game() {
     const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
     let ruinsCardDrawn = false;
     let nextCard = currentExploreDeck.draw();
+    setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
 
     // If we get a ruins card, keep drawing until we get something else
     if (isRuinsCard(nextCard)) {
@@ -91,6 +92,7 @@ export default function Game() {
       while (drawAnother) {
         await new Promise((r) => setTimeout(r, 1000));
         nextCard = currentExploreDeck.draw();
+        setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
 
         if (!isRuinsCard(nextCard)) {
           drawAnother = false;
@@ -111,7 +113,6 @@ export default function Game() {
       setPossibleShapes(possibleShapes);
     }
 
-    setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
     setRuinActive(ruinsCardDrawn);
     setPhase(Phase.Draw);
   };
