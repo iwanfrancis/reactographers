@@ -1,11 +1,24 @@
 import React from "react";
 import classNames from "classnames";
 
-import { Card, ShapeCard, isShapeCard, Shape, isRuinsCard, RuinsCard } from "../../../models/Card";
+import {
+  Card,
+  ShapeCard,
+  isShapeCard,
+  Shape,
+  isRuinsCard,
+  RuinsCard,
+  isAmbushCard,
+  AmbushCard,
+} from "../../../models/Card";
 import { Terrain } from "../../../game-components/Terrains";
 import styles from "./CurrentCard.module.scss";
 import CardShape from "../CardShape/CardShape";
 import { ReactComponent as Ruin } from "../../../assets/sprites/ruin/ruin.svg";
+import { ReactComponent as AmbushClockwise } from "../../../assets/sprites/ambush-clockwise/ambush-clockwise.svg";
+import { ReactComponent as AmbushAntiClockwise } from "../../../assets/sprites/ambush-anti-clockwise/ambush-anti-clockwise.svg";
+import { SoloAmbushDirection } from "../../../models/SoloAmbushDirection";
+import SoloAmbushCorner from "./SoloAmbushCorner/SoloAmbushCorner";
 
 export interface Props {
   card: Card;
@@ -114,6 +127,38 @@ export default class CurrentCard extends React.PureComponent<Props> {
           </div>
           <div className={styles.options}>
             <Ruin className={styles["ruins-large"]} />
+          </div>
+        </div>
+      );
+    }
+
+    if (isAmbushCard(card)) {
+      const ambushCard = card as AmbushCard;
+      return (
+        <div className={styles.card} style={offsetStyle}>
+          <div className={styles.header}>
+            <SoloAmbushCorner corner={ambushCard.soloAmbushCorner}></SoloAmbushCorner>
+          </div>
+          <div className={styles.body}>
+            <div className={styles.title}>{ambushCard.name}</div>
+          </div>
+          <div className={styles.options}>
+            <div className={styles["ambush-info"]}>
+              <div className={styles["ambush-direction"]}>
+                <div className={styles["ambush-direction-square"]}></div>
+                {ambushCard.soloAmbushDirection === SoloAmbushDirection.Clockwise ? (
+                  <AmbushClockwise className={styles["ambush-direction-svg"]}></AmbushClockwise>
+                ) : (
+                  <AmbushAntiClockwise
+                    className={styles["ambush-direction-svg"]}
+                  ></AmbushAntiClockwise>
+                )}
+              </div>
+              <div className={styles.divider}></div>
+              <div className={styles.shape}>
+                <CardShape shape={ambushCard.shape} terrain={Terrain.Monster} />
+              </div>
+            </div>
           </div>
         </div>
       );

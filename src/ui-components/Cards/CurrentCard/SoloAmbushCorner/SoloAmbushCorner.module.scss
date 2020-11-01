@@ -1,0 +1,25 @@
+.corner {
+  display: flex;
+  flex-direction: column;
+  width: 25px;
+  height: 25px;
+  float: right;
+
+  .row {
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+
+    .not-corner-square {
+      flex-grow: 1;
+      margin: 1px;
+      background-color: darkgray;
+    }
+
+    .corner-square {
+      margin: 1px;
+      flex-grow: 1;
+      background-color: purple;
+    }
+  }
+}

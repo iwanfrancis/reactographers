@@ -1,10 +1,12 @@
 import classNames from "classnames";
 import React from "react";
+import { Terrain } from "../../../game-components/Terrains";
 import { Shape, ShapeRotation } from "../../../models/Card";
 import styles from "./CardShape.module.scss";
 
 export interface Props {
   shape: Shape;
+  terrain?: Terrain;
 }
 
 interface ShapeDimensions {

@@ -54,6 +54,6 @@ export function isAmbushCard(object: any): object is AmbushCard {
         'name' in object && typeof(object.name) == 'string' &&
         'time' in object && typeof(object.time) == 'number' &&
         'shape' in object && 'soloAmbushDirection' in object &&
-        'soloAmbushConrer' in object
+        'soloAmbushCorner' in object
     );
 }

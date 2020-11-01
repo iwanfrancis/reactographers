@@ -81,6 +81,7 @@ export default function Game() {
     const currentMapData = mapHistory[mapHistory.length - 1];
     const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
     let ruinsCardDrawn = false;
+    let ambushCardDrawn = false;
     let nextCard = currentExploreDeck.draw();
     setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
 
