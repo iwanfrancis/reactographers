@@ -82,8 +82,7 @@ export default function Game() {
     let ruinsCardDrawn = false;
     let nextCard = currentExploreDeck.draw();
 
-    setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
-
+    // If we get a ruins card, keep drawing until we get something else
     if (isRuinsCard(nextCard)) {
       ruinsCardDrawn = true;
       let drawAnother = true;
@@ -91,7 +90,6 @@ export default function Game() {
       while (drawAnother) {
         await new Promise((r) => setTimeout(r, 1000));
         nextCard = currentExploreDeck.draw();
-        setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
 
         if (!isRuinsCard(nextCard)) {
           drawAnother = false;
@@ -99,6 +97,7 @@ export default function Game() {
       }
     }
 
+    // Once we have shape card, calculate whether or not it's shapes are possible
     if (isShapeCard(nextCard)) {
       const possibleShapes = nextCard.shapes.filter((shape) => {
         return currentMapData.shapeIsPossible(shape, ruinsCardDrawn);
@@ -106,6 +105,7 @@ export default function Game() {
       setPossibleShapes(possibleShapes);
     }
 
+    setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
     setRuinActive(ruinsCardDrawn);
     setPhase(Phase.Draw);
   };
