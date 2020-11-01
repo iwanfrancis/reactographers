@@ -12,6 +12,7 @@ export interface Props {
   currentTerrain: Terrain | undefined;
   currentShape: Shape | undefined;
   possibleShapes: Shape[];
+  ruinsActive: boolean;
   setCurrentTerrain: React.Dispatch<React.SetStateAction<Terrain | undefined>>;
   setCurrentShape: React.Dispatch<React.SetStateAction<Shape | undefined>>;
   offset: number;
@@ -19,7 +20,15 @@ export interface Props {
 
 export default class CurrentCard extends React.PureComponent<Props> {
   renderTerrainOptions(terrains: Terrain[]) {
-    const { currentTerrain, setCurrentTerrain = () => {} } = this.props;
+    const {
+      ruinsActive,
+      possibleShapes,
+      currentTerrain,
+      setCurrentTerrain = () => {},
+    } = this.props;
+    if (ruinsActive && possibleShapes.length === 0) {
+      terrains = [Terrain.Forest, Terrain.Village, Terrain.Farm, Terrain.Water, Terrain.Monster];
+    }
     return (
       <div className={styles.terrains}>
         {terrains.map((terrain, i) => {

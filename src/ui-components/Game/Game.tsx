@@ -81,7 +81,6 @@ export default function Game() {
     const currentMapData = mapHistory[mapHistory.length - 1];
     const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
     let ruinsCardDrawn = false;
-    let fallbackShapeEnabled = false;
     let nextCard = currentExploreDeck.draw();
 
     // If we get a ruins card, keep drawing until we get something else
@@ -106,7 +105,6 @@ export default function Game() {
       });
 
       if (possibleShapes.length == 0) {
-        fallbackShapeEnabled = true;
         setCurrentShape(FallbackShape);
       }
 
@@ -114,7 +112,7 @@ export default function Game() {
     }
 
     setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
-    setRuinActive(ruinsCardDrawn && !fallbackShapeEnabled);
+    setRuinActive(ruinsCardDrawn);
     setPhase(Phase.Draw);
   };
 
@@ -124,7 +122,13 @@ export default function Game() {
     const newMapData = _.clone(currentMapData);
 
     if (currentTerrain && currentShape) {
-      if (newMapData.moveIsLegal(currentShape[currentRotation], gridPos, ruinActive)) {
+      if (
+        newMapData.moveIsLegal(
+          currentShape[currentRotation],
+          gridPos,
+          ruinActive && currentShape !== FallbackShape
+        )
+      ) {
         newMapData.addShape(currentTerrain, currentShape[currentRotation], gridPos);
 
         let newCoins = newMapData.checkForNewSurroundedMountains();
@@ -248,6 +252,7 @@ export default function Game() {
             currentTerrain={currentTerrain}
             setCurrentTerrain={setCurrentTerrain}
             possibleShapes={possibleShapes}
+            ruinsActive={ruinActive}
             offset={previousCards.length * 50}
           />
         )}
