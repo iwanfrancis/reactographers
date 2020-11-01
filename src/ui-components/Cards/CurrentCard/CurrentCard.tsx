@@ -11,6 +11,7 @@ export interface Props {
   card: Card;
   currentTerrain: Terrain | undefined;
   currentShape: Shape | undefined;
+  possibleShapes: Shape[];
   setCurrentTerrain: React.Dispatch<React.SetStateAction<Terrain | undefined>>;
   setCurrentShape: React.Dispatch<React.SetStateAction<Shape | undefined>>;
   offset: number;
@@ -39,19 +40,28 @@ export default class CurrentCard extends React.PureComponent<Props> {
   }
 
   renderShapeOptions(shapes: Shape[], coinIndex = -1) {
-    const { currentShape, setCurrentShape = () => {} } = this.props;
+    const { possibleShapes, currentShape, setCurrentShape = () => {} } = this.props;
     return (
       <div className={styles.shapes}>
         {shapes.map((shape, i) => {
-          const active = shape === currentShape ? styles.active : undefined;
+          const active = shape === currentShape;
           const hasCoin = coinIndex === i;
-          const shapeContainerClass = classNames(active, styles.shape);
+          const possible = possibleShapes.includes(shape);
+          const shapeContainerClass = classNames(
+            active ? styles.active : undefined,
+            possible ? undefined : styles.impossible,
+            styles.shape
+          );
           return (
             <React.Fragment key={i}>
               {i > 0 && <div className={styles.divider}></div>}
-              <div className={shapeContainerClass} onClick={() => setCurrentShape(shape)}>
+              <div
+                className={shapeContainerClass}
+                onClick={possible ? () => setCurrentShape(shape) : undefined}
+              >
                 <CardShape shape={shape} />
                 {hasCoin && <div className={styles.coin}></div>}
+                {!possible && <div className={styles["impossible-overlay"]}></div>}
               </div>
             </React.Fragment>
           );

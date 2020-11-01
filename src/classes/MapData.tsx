@@ -72,7 +72,6 @@ export default class MapData {
             !this.coordWithinBounds({ row: rowOffset, col: colOffset }) ||
             this.grid[rowOffset][colOffset] !== Terrain.Empty
           ) {
-            console.error("Move is illegal");
             return false;
           }
         }
@@ -96,7 +95,6 @@ export default class MapData {
           }
         }
       }
-      return false;
     });
   }
 

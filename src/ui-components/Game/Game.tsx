@@ -26,6 +26,7 @@ export default function Game() {
   const [currentTerrain, setCurrentTerrain] = useState<Terrain>();
   const [currentShape, setCurrentShape] = useState<Shape>();
   const [currentRotation, setCurrentRotation] = useState(0);
+  const [possibleShapes, setPossibleShapes] = useState<Shape[]>([]);
   const [ruinActive, setRuinActive] = useState(false);
   const [reputation, setReputation] = useState(0);
   const [coins, setCoins] = useState(0);
@@ -76,15 +77,19 @@ export default function Game() {
   };
 
   const explorePhase = async () => {
+    const currentMapData = mapHistory[mapHistory.length - 1];
     const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
     let nextCard = currentExploreDeck.draw();
 
     setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
 
     if (isShapeCard(nextCard)) {
+      const possibleShapes = nextCard.shapes.filter((shape) => {
+        return currentMapData.shapeIsPossible(shape);
+      });
+      setPossibleShapes(possibleShapes);
       setPhase(Phase.Draw);
     } else {
-      setRuinActive(true);
       let ruinsCardDrawn = true;
 
       while (ruinsCardDrawn) {
@@ -97,6 +102,14 @@ export default function Game() {
         }
       }
 
+      if (isShapeCard(nextCard)) {
+        const possibleShapes = nextCard.shapes.filter((shape) => {
+          return currentMapData.shapeIsPossible(shape, true);
+        });
+        setPossibleShapes(possibleShapes);
+      }
+
+      setRuinActive(true);
       setPhase(Phase.Draw);
     }
   };
@@ -230,6 +243,7 @@ export default function Game() {
             setCurrentShape={setCurrentShape}
             currentTerrain={currentTerrain}
             setCurrentTerrain={setCurrentTerrain}
+            possibleShapes={possibleShapes}
             offset={previousCards.length * 50}
           />
         )}
