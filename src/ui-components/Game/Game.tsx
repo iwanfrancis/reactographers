@@ -205,6 +205,20 @@ export default function Game() {
     console.log(`${coins} coin${coins < 1 || coins > 1 ? "s" : ""}. +${coins} reputation`);
     seasonScore += coins;
 
+    let emptySpacesAdjacentMonsters = 0;
+    currentMapData.scoreSquares((gridPos: GridPosition) => {
+      if (gridPos.terrain === Terrain.Empty) {
+        const adjacentSquares = currentMapData.getAdjacentSquares(gridPos);
+        if (Object.values(adjacentSquares).some((square) => square.terrain === Terrain.Monster)) {
+          emptySpacesAdjacentMonsters++;
+        }
+      }
+    });
+    console.log(
+      `${emptySpacesAdjacentMonsters} empty spaces adjacent monsters. -${emptySpacesAdjacentMonsters} reputation`
+    );
+    seasonScore -= emptySpacesAdjacentMonsters;
+
     console.log(`Season score: ${seasonScore}`);
     console.log(`Total score: ${reputation + seasonScore}`);
     setReputation(reputation + seasonScore);
