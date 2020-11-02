@@ -62,7 +62,8 @@ export default class MapData {
     shape: ShapeRotation,
     startingCorner: SoloAmbushCorner,
     direction: SoloAmbushDirection,
-    setOverlay: React.Dispatch<React.SetStateAction<MapData>>
+    setOverlay: React.Dispatch<React.SetStateAction<MapData>>,
+    ruinActive: boolean
   ) {
     let monsterPlaced = false;
     await spiralTraverse(
@@ -70,7 +71,7 @@ export default class MapData {
       startingCorner,
       direction,
       async (gridPos: GridPosition): Promise<boolean> => {
-        if (this.moveIsLegal(shape, gridPos)) {
+        if (this.moveIsLegal(shape, gridPos, ruinActive, true)) {
           this.addShape(Terrain.Monster, shape, gridPos);
           monsterPlaced = true;
           setOverlay(new MapData());
@@ -85,7 +86,12 @@ export default class MapData {
   }
 
   // Given a shape and a grid position, check it can be legally placed
-  public moveIsLegal(shape: ShapeRotation, gridPos: GridPosition, ruinActive?: boolean): boolean {
+  public moveIsLegal(
+    shape: ShapeRotation,
+    gridPos: GridPosition,
+    ruinActive?: boolean,
+    ambushActive?: boolean
+  ): boolean {
     let placedOnRuin = false;
 
     for (let shRow = 0; shRow < 4; shRow++) {
@@ -107,7 +113,7 @@ export default class MapData {
       }
     }
 
-    if (ruinActive && !placedOnRuin) {
+    if (ruinActive && !placedOnRuin && !ambushActive) {
       return false;
     }
 

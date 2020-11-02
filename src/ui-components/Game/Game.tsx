@@ -142,7 +142,8 @@ export default function Game() {
         currentCard.shape[0],
         currentCard.soloAmbushCorner,
         currentCard.soloAmbushDirection,
-        setOverlay
+        setOverlay,
+        ruinActive
       );
     }
 
