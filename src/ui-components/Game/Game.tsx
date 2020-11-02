@@ -236,7 +236,7 @@ export default function Game() {
     if (currentSeasonIndex >= Seasons.length - 1) {
       setPhase(Phase.End);
     } else {
-      currentExploreDeck.reset();
+      currentExploreDeck.resetForNewMonth();
       setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
 
       const currentSeasonIndex = Seasons.indexOf(currentSeason);

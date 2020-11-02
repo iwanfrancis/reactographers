@@ -29,7 +29,7 @@ export default class ExploreDeck {
     }
   }
 
-  public reset(): void {
+  public resetForNewMonth(): void {
     this.drawnCards = this.drawnCards.filter((card) => !isAmbushCard(card));
     this.cards = this.cards.concat(this.drawnCards);
     this.drawnCards = [];
