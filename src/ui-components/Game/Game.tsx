@@ -18,6 +18,7 @@ import ScoreCard from "../Cards/ScoreCard/ScoreCard";
 import CoinTrack from "../Coins/CoinTrack";
 import { Phase } from "../../game-components/Phase";
 import { FallbackShape } from "../../constants/FallbackShape";
+import Score from "../../classes/Score";
 
 export default function Game() {
   const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid, NormalMap.ruins)]);
@@ -29,7 +30,7 @@ export default function Game() {
   const [currentRotation, setCurrentRotation] = useState(0);
   const [possibleShapes, setPossibleShapes] = useState<Shape[]>([]);
   const [ruinActive, setRuinActive] = useState(false);
-  const [reputation, setReputation] = useState(0);
+  const [score, setScore] = useState(new Score(Seasons, edicts));
   const [coins, setCoins] = useState(0);
   const [phase, setPhase] = useState(Phase.Explore);
   const [overlay, setOverlay] = useState(
@@ -55,7 +56,7 @@ export default function Game() {
         scoringPhase();
         break;
       case Phase.End:
-        console.log(`Game over! Final score: ${reputation}`);
+        console.log(`Game over! Final score: ${score.getTotalScore()}`);
     }
   }, [phase]);
 
@@ -200,37 +201,13 @@ export default function Game() {
 
     const currentMapData = mapHistory[mapHistory.length - 1];
     const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
-    let seasonScore = 0;
+    const newScore = _.clone(score);
 
-    edicts.forEach((edict) => {
-      if (currentSeason.edicts.includes(edict.code)) {
-        console.log(`Scoring edict ${edict.code} (${edict.scoringCard.name})`);
-        const score = edict.scoringCard.score(currentMapData);
-        console.log(`Got ${score} reputation points`);
-        seasonScore += score;
-      }
-    });
-
-    console.log(`${coins} coin${coins < 1 || coins > 1 ? "s" : ""}. +${coins} reputation`);
-    seasonScore += coins;
-
-    let emptySpacesAdjacentMonsters = 0;
-    currentMapData.scoreSquares((gridPos: GridPosition) => {
-      if (gridPos.terrain === Terrain.Empty) {
-        const adjacentSquares = currentMapData.getAdjacentSquares(gridPos);
-        if (Object.values(adjacentSquares).some((square) => square.terrain === Terrain.Monster)) {
-          emptySpacesAdjacentMonsters++;
-        }
-      }
-    });
-    console.log(
-      `${emptySpacesAdjacentMonsters} empty spaces adjacent monsters. -${emptySpacesAdjacentMonsters} reputation`
-    );
-    seasonScore -= emptySpacesAdjacentMonsters;
+    const seasonScore = newScore.scoreSeason(currentMapData, currentSeason, coins);
 
     console.log(`Season score: ${seasonScore}`);
-    console.log(`Total score: ${reputation + seasonScore}`);
-    setReputation(reputation + seasonScore);
+    console.log(`Total score: ${newScore.getTotalScore()}`);
+    setScore(newScore);
 
     const currentSeasonIndex = Seasons.indexOf(currentSeason);
     if (currentSeasonIndex >= Seasons.length - 1) {
