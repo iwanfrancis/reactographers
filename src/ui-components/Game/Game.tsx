@@ -7,7 +7,7 @@ import MapData from "../../classes/MapData";
 import { Terrain } from "../../game-components/Terrains";
 import { NormalMap } from "../../game-components/Maps";
 import ExploreDeck from "../../classes/ExploreDeck";
-import { isRuinsCard, isShapeCard, Shape, ShapeCard } from "../../models/Card";
+import { isAmbushCard, isRuinsCard, isShapeCard, Shape, ShapeCard } from "../../models/Card";
 import CurrentCard from "../Cards/CurrentCard/CurrentCard";
 import Seasons, { Season } from "../../game-components/Seasons";
 import SeasonCard from "../Cards/SeasonCard/SeasonCard";
@@ -42,6 +42,9 @@ export default function Game() {
     switch (phase) {
       case Phase.Explore:
         explorePhase();
+        break;
+      case Phase.Ambush:
+        ambushPhase();
         break;
       case Phase.Draw:
         break;
@@ -87,6 +90,7 @@ export default function Game() {
 
     // If we get a ruins card, keep drawing until we get something else
     if (isRuinsCard(nextCard)) {
+      setRuinActive(ruinsCardDrawn);
       ruinsCardDrawn = true;
       let drawAnother = true;
 
@@ -101,6 +105,10 @@ export default function Game() {
       }
     }
 
+    if (isAmbushCard(nextCard)) {
+      setPhase(Phase.Ambush);
+    }
+
     // Once we have shape card, calculate whether or not it's shapes are possible
     if (isShapeCard(nextCard)) {
       const possibleShapes = nextCard.shapes.filter((shape) => {
@@ -112,13 +120,27 @@ export default function Game() {
       }
 
       setPossibleShapes(possibleShapes);
+      setPhase(Phase.Draw);
     }
-
-    setRuinActive(ruinsCardDrawn);
-    setPhase(Phase.Draw);
   };
 
-  const drawPhase = (gridPos: GridPosition) => {
+  const ambushPhase = async () => {
+    const currentMapData = mapHistory[mapHistory.length - 1];
+    const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
+    const currentCard = currentExploreDeck.getCurrentCard();
+    if (isAmbushCard(currentCard)) {
+      await currentMapData.addMonster(
+        currentCard.shape[0],
+        currentCard.soloAmbushCorner,
+        currentCard.soloAmbushDirection,
+        setOverlay
+      );
+    }
+
+    setPhase(Phase.Check);
+  };
+
+  const drawShape = (gridPos: GridPosition) => {
     const currentMapData = mapHistory[mapHistory.length - 1];
     const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
     const newMapData = _.clone(currentMapData);
@@ -208,7 +230,7 @@ export default function Game() {
       <Grid
         mapData={currentMapData}
         overlay={overlay}
-        onSquareClick={drawPhase}
+        onSquareClick={drawShape}
         onSquareHoverOn={updateOverlay}
         onRotateShape={rotateShape}
       />

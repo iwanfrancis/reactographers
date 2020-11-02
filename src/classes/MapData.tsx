@@ -3,6 +3,9 @@ import { Terrain } from "../game-components/Terrains";
 import { DefaultMapSize } from "../game-components/Maps";
 import GridPosition from "../models/GridPosition";
 import { Cluster } from "../models/Cluster";
+import { SoloAmbushCorner } from "../models/SoloAmbushCorner";
+import { SoloAmbushDirection } from "../models/SoloAmbushDirection";
+import { spiralTraverse } from "../utils/spiral-traverse";
 
 export default class MapData {
   grid: Terrain[][];
@@ -53,6 +56,34 @@ export default class MapData {
       }
     }
     return this;
+  }
+
+  public async addMonster(
+    shape: ShapeRotation,
+    startingCorner: SoloAmbushCorner,
+    direction: SoloAmbushDirection,
+    setOverlay: React.Dispatch<React.SetStateAction<MapData>>
+  ) {
+    let monsterPlaced = false;
+    console.log("add monster");
+    await spiralTraverse(
+      this.grid,
+      startingCorner,
+      direction,
+      async (gridPos: GridPosition): Promise<boolean> => {
+        console.log(gridPos);
+        if (this.moveIsLegal(shape, gridPos)) {
+          this.addShape(Terrain.Monster, shape, gridPos);
+          monsterPlaced = true;
+          setOverlay(new MapData());
+        } else {
+          setOverlay(new MapData().addShape(Terrain.Monster, shape, gridPos));
+          await new Promise((r) => setTimeout(r, 10));
+        }
+
+        return Promise.resolve(monsterPlaced);
+      }
+    );
   }
 
   // Given a shape and a grid position, check it can be legally placed
