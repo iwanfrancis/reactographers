@@ -84,7 +84,6 @@ export default function Game() {
     const currentMapData = mapHistory[mapHistory.length - 1];
     const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
     let ruinsCardDrawn = false;
-    let ambushCardDrawn = false;
     let nextCard = currentExploreDeck.draw();
     setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
 
@@ -106,6 +105,15 @@ export default function Game() {
     }
 
     if (isAmbushCard(nextCard)) {
+      // Possible shapes don't have any effect for single player. This will come into play for mp
+      const shapeIsPossible = currentMapData.shapeIsPossible(nextCard.shape, ruinsCardDrawn);
+
+      if (!shapeIsPossible) {
+        setCurrentShape(FallbackShape);
+      } else {
+        setPossibleShapes([nextCard.shape]);
+      }
+
       await new Promise((r) => setTimeout(r, 2000));
       setPhase(Phase.Ambush);
     }
