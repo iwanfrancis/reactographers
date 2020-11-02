@@ -106,6 +106,7 @@ export default function Game() {
     }
 
     if (isAmbushCard(nextCard)) {
+      await new Promise((r) => setTimeout(r, 2000));
       setPhase(Phase.Ambush);
     }
 

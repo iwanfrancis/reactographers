@@ -65,20 +65,18 @@ export default class MapData {
     setOverlay: React.Dispatch<React.SetStateAction<MapData>>
   ) {
     let monsterPlaced = false;
-    console.log("add monster");
     await spiralTraverse(
       this.grid,
       startingCorner,
       direction,
       async (gridPos: GridPosition): Promise<boolean> => {
-        console.log(gridPos);
         if (this.moveIsLegal(shape, gridPos)) {
           this.addShape(Terrain.Monster, shape, gridPos);
           monsterPlaced = true;
           setOverlay(new MapData());
         } else {
           setOverlay(new MapData().addShape(Terrain.Monster, shape, gridPos));
-          await new Promise((r) => setTimeout(r, 10));
+          await new Promise((r) => setTimeout(r, 20));
         }
 
         return Promise.resolve(monsterPlaced);
