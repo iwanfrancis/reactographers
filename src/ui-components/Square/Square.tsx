@@ -14,6 +14,7 @@ export interface Props {
   overlayBorders?: SquareBorders;
   hasRuin?: boolean;
   ruinActive?: boolean;
+  moveValid?: boolean;
   onClick: (gridPos: GridPosition) => any;
   onSquareHoverOn: (gridPos: GridPosition) => any;
   onRotateShape: (gridPos: GridPosition) => any;
@@ -37,6 +38,7 @@ export default class Square extends React.PureComponent<Props> {
       overlayBorders,
       hasRuin,
       ruinActive,
+      moveValid,
       onSquareHoverOn = () => {},
     } = this.props;
     const squareCssClass = classNames(styles.square, squareType ? styles[squareType] : null);
@@ -46,7 +48,8 @@ export default class Square extends React.PureComponent<Props> {
       overlayType !== Terrain.Empty && overlayBorders?.top && styles["top-border"],
       overlayType !== Terrain.Empty && overlayBorders?.right && styles["right-border"],
       overlayType !== Terrain.Empty && overlayBorders?.bottom && styles["bottom-border"],
-      overlayType !== Terrain.Empty && overlayBorders?.left && styles["left-border"]
+      overlayType !== Terrain.Empty && overlayBorders?.left && styles["left-border"],
+      moveValid ? styles["valid-move"] : styles["invalid-move"]
     );
     const secondOverlayCssClass = classNames(
       styles["overlay"],

@@ -11,6 +11,7 @@ export interface Props {
   mapData: MapData;
   overlay: MapData;
   ruinActive: boolean;
+  currentMoveValid: boolean;
   onSquareClick: (gridPos: GridPosition) => any;
   onSquareHoverOn: (gridPos: GridPosition) => any;
   onRotateShape: (gridPos: GridPosition) => any;
@@ -31,6 +32,7 @@ export default class Grid extends React.PureComponent<Props> {
       mapData,
       overlay,
       ruinActive,
+      currentMoveValid,
       onSquareClick,
       onSquareHoverOn,
       onRotateShape,
@@ -53,6 +55,7 @@ export default class Grid extends React.PureComponent<Props> {
             onSquareHoverOn={onSquareHoverOn}
             onRotateShape={onRotateShape}
             ruinActive={ruinActive}
+            moveValid={currentMoveValid}
           />
         );
       }

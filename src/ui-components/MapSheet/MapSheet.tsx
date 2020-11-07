@@ -11,6 +11,7 @@ export interface MapSheetProps {
   mapData: MapData;
   overlay: MapData;
   ruinActive: boolean;
+  currentMoveValid: boolean;
   onSquareClick: (gridPos: GridPosition) => void;
   onSquareHoverOn: (gridPos: GridPosition) => void;
   onRotateShape: (gridPos: GridPosition) => void;
@@ -30,6 +31,7 @@ export default function MapSheet(props: MapSheetProps) {
           onSquareHoverOn={props.onSquareHoverOn}
           onRotateShape={props.onRotateShape}
           ruinActive={props.ruinActive}
+          currentMoveValid={props.currentMoveValid}
         />
       </div>
       <div className={styles["coin-track-container"]}>

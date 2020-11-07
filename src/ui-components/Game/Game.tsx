@@ -40,6 +40,7 @@ export default function Game() {
         .map(() => new Array(NormalMap.cols).fill(Terrain.Empty))
     )
   );
+  const [currentMoveValid, setCurrentMoveValid] = useState(false);
 
   useEffect(() => {
     switch (phase) {
@@ -63,6 +64,18 @@ export default function Game() {
 
   const updateOverlay = (gridPos: GridPosition) => {
     if (currentTerrain && currentShape) {
+      const currentMapData = mapHistory[mapHistory.length - 1];
+      if (
+        currentMapData.moveIsLegal(
+          currentShape[currentRotation],
+          gridPos,
+          ruinActive && currentShape !== FallbackShape
+        )
+      ) {
+        setCurrentMoveValid(true);
+      } else {
+        setCurrentMoveValid(false);
+      }
       setOverlay(new MapData().addShape(currentTerrain, currentShape[currentRotation], gridPos));
     }
   };
@@ -75,6 +88,19 @@ export default function Game() {
         newRotation = 0;
       } else {
         newRotation = currentRotation + 1;
+      }
+
+      const currentMapData = mapHistory[mapHistory.length - 1];
+      if (
+        currentMapData.moveIsLegal(
+          currentShape[currentRotation],
+          gridPos,
+          ruinActive && currentShape !== FallbackShape
+        )
+      ) {
+        setCurrentMoveValid(true);
+      } else {
+        setCurrentMoveValid(false);
       }
 
       setCurrentRotation(newRotation);
@@ -277,6 +303,7 @@ export default function Game() {
           mapData={mapHistory[mapHistory.length - 1]}
           overlay={overlay}
           ruinActive={ruinActive}
+          currentMoveValid={currentMoveValid}
           onSquareClick={drawShape}
           onSquareHoverOn={updateOverlay}
           onRotateShape={rotateShape}
