@@ -4,6 +4,8 @@ import styles from "./Grid.module.scss";
 import MapData from "../../classes/MapData";
 import GridPosition from "../../models/GridPosition";
 import classNames from "classnames";
+import { SquareBorders } from "../../models/SquareBorders";
+import { Terrain } from "../../game-components/Terrains";
 
 export interface Props {
   mapData: MapData;
@@ -15,6 +17,15 @@ export interface Props {
 }
 
 export default class Grid extends React.PureComponent<Props> {
+  calculateSquareBorders = (adjacentSquares: GridPosition[]): SquareBorders => {
+    return {
+      top: adjacentSquares[0].terrain === Terrain.Empty,
+      bottom: adjacentSquares[1].terrain === Terrain.Empty,
+      left: adjacentSquares[2].terrain === Terrain.Empty,
+      right: adjacentSquares[3].terrain === Terrain.Empty,
+    };
+  };
+
   render() {
     const {
       mapData,
@@ -30,14 +41,13 @@ export default class Grid extends React.PureComponent<Props> {
       const squareRow = [];
       for (let column = 0; column < mapData.cols; column++) {
         const gridPos = { row: row, col: column };
-        let squareType = mapData.get(gridPos);
-        let overlayType = overlay.get(gridPos);
         squareRow.push(
           <Square
             key={`${column}:${row}`}
             gridPos={{ row: row, col: column }}
-            squareType={squareType}
-            overlayType={overlayType}
+            squareType={mapData.get(gridPos)}
+            overlayType={overlay.get(gridPos)}
+            overlayBorders={this.calculateSquareBorders(overlay.getAdjacentSquares(gridPos))}
             hasRuin={mapData.hasRuinAtPosition(gridPos)}
             onClick={onSquareClick}
             onSquareHoverOn={onSquareHoverOn}

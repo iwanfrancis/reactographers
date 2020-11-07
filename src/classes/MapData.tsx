@@ -19,8 +19,8 @@ export default class MapData {
       this.grid = grid;
     } else {
       this.grid = new Array(DefaultMapSize.rows)
-        .fill(null)
-        .map(() => new Array(DefaultMapSize.cols).fill(null));
+        .fill(Terrain.Empty)
+        .map(() => new Array(DefaultMapSize.cols).fill(Terrain.Empty));
     }
 
     if (ruins) {

@@ -35,7 +35,9 @@ export default function Game() {
   const [phase, setPhase] = useState(Phase.Explore);
   const [overlay, setOverlay] = useState(
     new MapData(
-      new Array(NormalMap.rows).fill(null).map(() => new Array(NormalMap.cols).fill(null))
+      new Array(NormalMap.rows)
+        .fill(Terrain.Empty)
+        .map(() => new Array(NormalMap.cols).fill(Terrain.Empty))
     )
   );
 
