@@ -1,6 +1,7 @@
+@import "../../assets/styles/colours.scss";
+
 .square {
-  background: #fff;
-  border: 1px solid #999;
+  border: 1px dashed $map-sheet-brown-stroke;
   float: left;
   height: 40px;
   width: 40px;
@@ -21,8 +22,8 @@
   height: 40px;
   width: 40px;
 
-  svg path {
-    stroke: lightgray;
+  path {
+    stroke: $map-sheet-brown-stroke;
   }
 }
 

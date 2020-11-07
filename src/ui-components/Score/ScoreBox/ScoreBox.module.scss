@@ -1,3 +1,5 @@
+@import "../../../assets/styles/colours.scss";
+
 .score-box {
   margin-left: 10px;
   margin-right: 10px;
@@ -28,13 +30,13 @@
     .score-cell {
       width: 25px;
       height: 20px;
-      border: 1px solid black;
+      border: 1px solid $map-sheet-black-stroke;
       text-align: center;
     }
 
     .total-score {
       width: 25px;
-      border: 1px solid black;
+      border: 1px solid $map-sheet-black-stroke;
       text-align: center;
     }
   }
