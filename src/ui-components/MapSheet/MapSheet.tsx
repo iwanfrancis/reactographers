@@ -10,6 +10,7 @@ import styles from "./MapSheet.module.scss";
 export interface MapSheetProps {
   mapData: MapData;
   overlay: MapData;
+  ruinActive: boolean;
   onSquareClick: (gridPos: GridPosition) => void;
   onSquareHoverOn: (gridPos: GridPosition) => void;
   onRotateShape: (gridPos: GridPosition) => void;
@@ -28,6 +29,7 @@ export default function MapSheet(props: MapSheetProps) {
           onSquareClick={props.onSquareClick}
           onSquareHoverOn={props.onSquareHoverOn}
           onRotateShape={props.onRotateShape}
+          ruinActive={props.ruinActive}
         />
       </div>
       <div className={styles["coin-track-container"]}>

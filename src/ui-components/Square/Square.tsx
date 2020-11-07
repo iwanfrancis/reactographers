@@ -11,6 +11,7 @@ export interface Props {
   squareType?: Terrain;
   overlayType?: Terrain;
   hasRuin?: boolean;
+  ruinActive?: boolean;
   onClick: (gridPos: GridPosition) => any;
   onSquareHoverOn: (gridPos: GridPosition) => any;
   onRotateShape: (gridPos: GridPosition) => any;
@@ -27,9 +28,20 @@ export default class Square extends React.PureComponent<Props> {
   }
 
   render() {
-    const { gridPos, squareType, overlayType, hasRuin, onSquareHoverOn = () => {} } = this.props;
+    const {
+      gridPos,
+      squareType,
+      overlayType,
+      hasRuin,
+      ruinActive,
+      onSquareHoverOn = () => {},
+    } = this.props;
     const squareCssClass = classNames(styles.square, squareType ? styles[squareType] : null);
     const overlayCssClass = classNames(styles.overlay, overlayType ? styles[overlayType] : null);
+    const secondOverlayCssClass = classNames(
+      styles["overlay"],
+      hasRuin && ruinActive ? styles["ruin-highlight"] : undefined
+    );
 
     return (
       <div
@@ -38,8 +50,9 @@ export default class Square extends React.PureComponent<Props> {
         onContextMenu={(e: any) => e.preventDefault()}
         onMouseDown={(e: any) => this.handleClick(this, e, gridPos)}
       >
-        {hasRuin && <Ruin className={styles.ruin} />}
+        {hasRuin && <Ruin className={classNames(styles.ruin)} />}
         <div className={overlayCssClass}></div>
+        <div className={secondOverlayCssClass}></div>
       </div>
     );
   }

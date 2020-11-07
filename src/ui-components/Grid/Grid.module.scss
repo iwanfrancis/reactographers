@@ -31,6 +31,7 @@
 
     .horizontal-border {
       border-top: 1px solid $map-sheet-black-stroke;
+      border-bottom: 1px solid $map-sheet-black-stroke;
       width: 41px;
       height: 3px;
       float: left;
@@ -45,6 +46,11 @@
       width: 3px;
       height: 3px;
       border: 1px solid $map-sheet-black-stroke;
+    }
+
+    .letter {
+      float: left;
+      color: $map-sheet-brown-stroke;
     }
   }
 }

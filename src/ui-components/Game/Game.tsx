@@ -274,6 +274,7 @@ export default function Game() {
         <MapSheet
           mapData={mapHistory[mapHistory.length - 1]}
           overlay={overlay}
+          ruinActive={ruinActive}
           onSquareClick={drawShape}
           onSquareHoverOn={updateOverlay}
           onRotateShape={rotateShape}

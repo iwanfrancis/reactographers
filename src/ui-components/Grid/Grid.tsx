@@ -8,6 +8,7 @@ import classNames from "classnames";
 export interface Props {
   mapData: MapData;
   overlay: MapData;
+  ruinActive: boolean;
   onSquareClick: (gridPos: GridPosition) => any;
   onSquareHoverOn: (gridPos: GridPosition) => any;
   onRotateShape: (gridPos: GridPosition) => any;
@@ -15,7 +16,14 @@ export interface Props {
 
 export default class Grid extends React.PureComponent<Props> {
   render() {
-    const { mapData, overlay, onSquareClick, onSquareHoverOn, onRotateShape } = this.props;
+    const {
+      mapData,
+      overlay,
+      ruinActive,
+      onSquareClick,
+      onSquareHoverOn,
+      onRotateShape,
+    } = this.props;
     const squares = [];
 
     for (let row = 0; row < mapData.rows; row++) {
@@ -34,6 +42,7 @@ export default class Grid extends React.PureComponent<Props> {
             onClick={onSquareClick}
             onSquareHoverOn={onSquareHoverOn}
             onRotateShape={onRotateShape}
+            ruinActive={ruinActive}
           />
         );
       }
