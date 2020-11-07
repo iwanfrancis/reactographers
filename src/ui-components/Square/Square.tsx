@@ -40,7 +40,7 @@ export default class Square extends React.PureComponent<Props> {
     const overlayCssClass = classNames(styles.overlay, overlayType ? styles[overlayType] : null);
     const secondOverlayCssClass = classNames(
       styles["overlay"],
-      hasRuin && ruinActive ? styles["ruin-highlight"] : undefined
+      hasRuin && ruinActive && squareType === Terrain.Empty ? styles["ruin-highlight"] : undefined
     );
 
     return (
