@@ -17,6 +17,7 @@ export interface SeasonScore {
 
 export default class Score {
   seasonScores: SeasonScore[];
+  gameFinished: boolean = false;
 
   constructor(seasons: Season[], edicts: Edict[]) {
     seasons.forEach((season) => {
@@ -81,14 +82,18 @@ export default class Score {
     return seasonScore.totalScore;
   }
 
-  public getTotalScore() {
-    return Object.values(this.seasonScores).reduce((acc, seasonScore) => {
-      const score = seasonScore.totalScore;
-      if (score) {
-        return acc + score;
-      } else {
-        return acc + 0;
-      }
-    }, 0);
+  public getFinalScore() {
+    if (!this.gameFinished) {
+      return undefined;
+    } else {
+      return Object.values(this.seasonScores).reduce((acc, seasonScore) => {
+        const score = seasonScore.totalScore;
+        if (score) {
+          return acc + score;
+        } else {
+          return acc + 0;
+        }
+      }, 0);
+    }
   }
 }

@@ -5,16 +5,23 @@ import styles from "./ScoreTrack.module.scss";
 
 export interface ScoreTrackProps {
   seasonScores: SeasonScore[];
+  totalScore: number | undefined;
 }
 
 export default function ScoreTrack(props: ScoreTrackProps) {
-  const { seasonScores } = props;
+  const { seasonScores, totalScore } = props;
 
   return (
     <div className={styles["score-track"]}>
-      {seasonScores.map((seasonScore) => (
-        <ScoreBox {...seasonScore} />
-      ))}
+      {seasonScores.map((seasonScore, i) => {
+        return (
+          <React.Fragment>
+            <ScoreBox {...seasonScore} />
+            {i < seasonScores.length - 1 && "+"}
+          </React.Fragment>
+        );
+      })}
+      = <div className={styles["final-score-shield"]}>100</div>
     </div>
   );
 }

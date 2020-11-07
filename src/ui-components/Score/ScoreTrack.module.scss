@@ -1,4 +1,18 @@
 .score-track {
   display: flex;
   flex-direction: row;
+  align-items: center;
+
+  .final-score-shield {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border: 1px solid black;
+  }
 }

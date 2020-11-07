@@ -57,7 +57,6 @@ export default function Game() {
         scoringPhase();
         break;
       case Phase.End:
-        console.log(`Game over! Final score: ${score.getTotalScore()}`);
     }
   }, [phase]);
 
@@ -169,7 +168,6 @@ export default function Game() {
 
         let newCoins = newMapData.checkForNewSurroundedMountains();
         if (currentExploreDeck.currentShapeHasCoin(currentShape)) {
-          console.log("Shape had coin! +1 Coin");
           newCoins++;
         }
 
@@ -190,7 +188,6 @@ export default function Game() {
     setCurrentRotation(0);
 
     if (timeInSeason >= currentSeason.length) {
-      console.log(`End of ${currentSeason.name}`);
       setPhase(Phase.Score);
     } else {
       setPhase(Phase.Explore);
@@ -198,8 +195,6 @@ export default function Game() {
   };
 
   const scoringPhase = () => {
-    console.log("Begin scoring phase");
-
     const currentMapData = mapHistory[mapHistory.length - 1];
     const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
     const newScore = _.clone(score);
@@ -211,6 +206,8 @@ export default function Game() {
     const currentSeasonIndex = Seasons.indexOf(currentSeason);
     if (currentSeasonIndex >= Seasons.length - 1) {
       setPhase(Phase.End);
+      newScore.gameFinished = true;
+      setScore(newScore);
     } else {
       currentExploreDeck.resetForNewMonth();
       setExploreDeckHistory(exploreDeckHistory.concat(currentExploreDeck));
@@ -218,7 +215,6 @@ export default function Game() {
       const currentSeasonIndex = Seasons.indexOf(currentSeason);
       const nextSeason = Seasons[currentSeasonIndex + 1];
 
-      console.log(`Beginning of ${nextSeason.name}`);
       setCurrentSeason(nextSeason);
       setPhase(Phase.Explore);
     }
@@ -294,7 +290,7 @@ export default function Game() {
           <CoinTrack coins={coins}></CoinTrack>
         </div>
         <div className={styles["score-track-container"]}>
-          <ScoreTrack seasonScores={score.seasonScores} />
+          <ScoreTrack seasonScores={score.seasonScores} totalScore={score.getFinalScore()} />
         </div>
       </div>
       <div className={styles["right-section"]}>
