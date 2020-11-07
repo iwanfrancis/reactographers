@@ -58,7 +58,7 @@ export default class Score {
       if (gridPos.terrain === Terrain.Empty) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
         if (Object.values(adjacentSquares).some((square) => square.terrain === Terrain.Monster)) {
-          monsterScore++;
+          monsterScore--;
         }
       }
     });

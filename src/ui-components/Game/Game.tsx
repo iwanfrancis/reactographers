@@ -19,6 +19,7 @@ import CoinTrack from "../Coins/CoinTrack";
 import { Phase } from "../../game-components/Phase";
 import { FallbackShape } from "../../constants/FallbackShape";
 import Score from "../../classes/Score";
+import ScoreTrack from "../Score/ScoreTrack";
 
 export default function Game() {
   const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid, NormalMap.ruins)]);
@@ -90,7 +91,7 @@ export default function Game() {
 
     // If we get a ruins card, keep drawing until we get something else
     if (isRuinsCard(nextCard)) {
-      setRuinActive(ruinsCardDrawn);
+      setRuinActive(true);
       ruinsCardDrawn = true;
       let drawAnother = true;
 
@@ -205,8 +206,6 @@ export default function Game() {
 
     const seasonScore = newScore.scoreSeason(currentMapData, currentSeason, coins);
 
-    console.log(`Season score: ${seasonScore}`);
-    console.log(`Total score: ${newScore.getTotalScore()}`);
     setScore(newScore);
 
     const currentSeasonIndex = Seasons.indexOf(currentSeason);
@@ -293,6 +292,9 @@ export default function Game() {
         <div className={styles["map-container"]}>{renderGrid()}</div>
         <div className={styles["coin-track-container"]}>
           <CoinTrack coins={coins}></CoinTrack>
+        </div>
+        <div className={styles["score-track-container"]}>
+          <ScoreTrack seasonScores={score.seasonScores} />
         </div>
       </div>
       <div className={styles["right-section"]}>

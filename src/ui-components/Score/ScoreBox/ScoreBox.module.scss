@@ -1,0 +1,41 @@
+.score-box {
+  margin-left: 10px;
+  margin-right: 10px;
+  border-spacing: 0px;
+
+  tr:first-child td:first-child {
+    border-top-left-radius: 10px;
+    border-right: 0px;
+  }
+
+  tr:first-child td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-left: 0px;
+  }
+
+  tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+    border-right: 0px;
+    border-top: 0px;
+  }
+
+  tr:last-child td:last-child {
+    border-top: 0px;
+  }
+
+  .score-box-row {
+    .score-cell {
+      width: 25px;
+      height: 20px;
+      border: 1px solid black;
+      text-align: center;
+    }
+
+    .total-score {
+      width: 25px;
+      border: 1px solid black;
+      text-align: center;
+    }
+  }
+}
