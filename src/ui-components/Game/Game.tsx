@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 
-import Grid from "../Grid/Grid";
 import styles from "./Game.module.scss";
 import MapData from "../../classes/MapData";
 import { Terrain } from "../../game-components/Terrains";
@@ -15,11 +14,11 @@ import DrawnCard from "../Cards/DrawnCard/DrawnCard";
 import { drawEdicts } from "../../game-components/ScoringCards";
 import GridPosition from "../../models/GridPosition";
 import ScoreCard from "../Cards/ScoreCard/ScoreCard";
-import CoinTrack from "../Coins/CoinTrack";
 import { Phase } from "../../game-components/Phase";
 import { FallbackShape } from "../../constants/FallbackShape";
 import Score from "../../classes/Score";
-import ScoreTrack from "../Score/ScoreTrack";
+
+import MapSheet from "../MapSheet/MapSheet";
 
 export default function Game() {
   const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid, NormalMap.ruins)]);
@@ -220,19 +219,6 @@ export default function Game() {
     }
   };
 
-  const renderGrid = () => {
-    const currentMapData = mapHistory[mapHistory.length - 1];
-    return (
-      <Grid
-        mapData={currentMapData}
-        overlay={overlay}
-        onSquareClick={drawShape}
-        onSquareHoverOn={updateOverlay}
-        onRotateShape={rotateShape}
-      />
-    );
-  };
-
   const renderSeasons = () => {
     return Seasons.map((season) => {
       return (
@@ -284,17 +270,20 @@ export default function Game() {
     <div className={styles["game-wrapper"]}>
       <div className={styles["left-section"]}></div>
       <div className={styles["middle-section"]}>
-        <div className={styles["edict-container"]}>{renderEdicts()}</div>
-        <div className={styles["map-container"]}>{renderGrid()}</div>
-        <div className={styles["coin-track-container"]}>
-          <CoinTrack coins={coins}></CoinTrack>
-        </div>
-        <div className={styles["score-track-container"]}>
-          <ScoreTrack seasonScores={score.seasonScores} totalScore={score.getFinalScore()} />
-        </div>
+        <MapSheet
+          mapData={mapHistory[mapHistory.length - 1]}
+          overlay={overlay}
+          onSquareClick={drawShape}
+          onSquareHoverOn={updateOverlay}
+          onRotateShape={rotateShape}
+          coins={coins}
+          seasonScores={score.seasonScores}
+          finalScore={score.getFinalScore()}
+        />
       </div>
       <div className={styles["right-section"]}>
-        <div className={styles["seasons-container"]}>{renderSeasons()}</div>
+        <div className={styles["edict-container"]}>{renderEdicts()}</div>
+        {/* <div className={styles["seasons-container"]}>{renderSeasons()}</div> */}
         <div className={styles["explore-deck-container"]}>{renderExploreCards()}</div>
       </div>
     </div>

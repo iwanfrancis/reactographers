@@ -9,20 +9,6 @@
     align-items: center;
     flex-grow: 1;
     flex-direction: column;
-
-    .edict-container {
-      display: flex;
-      flex-direction: row;
-      padding: 50px 0px;
-    }
-
-    .coin-track-container {
-      margin-top: 10px;
-    }
-
-    .score-track-container {
-      margin-top: 10px;
-    }
   }
 
   .right-section {
@@ -30,6 +16,12 @@
     flex-grow: 1;
     align-items: center;
     flex-direction: column;
+
+    .edict-container {
+      display: flex;
+      flex-direction: row;
+      padding: 50px 0px;
+    }
 
     .seasons-container {
       display: flex;

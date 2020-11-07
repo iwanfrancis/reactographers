@@ -1,0 +1,15 @@
+.game-sheet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 10px 20px 10px;
+  border: 3px solid black;
+
+  .coin-track-container {
+    margin-top: 10px;
+  }
+
+  .score-track-container {
+    margin-top: 10px;
+  }
+}
