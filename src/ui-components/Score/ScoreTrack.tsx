@@ -21,7 +21,7 @@ export default function ScoreTrack(props: ScoreTrackProps) {
           </React.Fragment>
         );
       })}
-      = <div className={styles["final-score-shield"]}>100</div>
+      = <div className={styles["final-score-shield"]}>{totalScore}</div>
     </div>
   );
 }
