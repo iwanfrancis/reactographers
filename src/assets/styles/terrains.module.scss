@@ -7,24 +7,30 @@ $mountain-color: black;
 
 .forest {
   background-color: $forest-color;
+  border-radius: 3px;
 }
 
 .village {
   background-color: $village-color;
+  border-radius: 3px;
 }
 
 .farm {
-  background-color: $farm-color;
+  background-image: url("../sprites/farm/farm.svg");
+  border-radius: 3px;
 }
 
 .water {
   background: $water-color;
+  border-radius: 3px;
 }
 
 .monster {
   background-color: $monster-color;
+  border-radius: 3px;
 }
 
 .mountain {
   background-color: $mountain-color;
+  border-radius: 3px;
 }
