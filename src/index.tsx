@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import "../src/assets/styles/global.scss";
 import Game from "./ui-components/Game/Game";
 import * as serviceWorker from "./serviceWorker";
 
