@@ -3,6 +3,7 @@ import Square from "../Square/Square";
 import styles from "./Grid.module.scss";
 import MapData from "../../classes/MapData";
 import GridPosition from "../../models/GridPosition";
+import classNames from "classnames";
 
 export interface Props {
   mapData: MapData;
@@ -36,13 +37,42 @@ export default class Grid extends React.PureComponent<Props> {
           />
         );
       }
+      const leftBorderClasses = classNames(
+        styles.left,
+        styles["vertical-border"],
+        row % 2 === 0 ? styles.solid : undefined
+      );
+      const rightBorderClasses = classNames(
+        styles.right,
+        styles["vertical-border"],
+        row % 2 === 0 ? styles.solid : undefined
+      );
       squares.push(
         <div key={row} className={styles.row}>
+          <div className={leftBorderClasses}></div>
           {squareRow}
+          <div className={rightBorderClasses}></div>
         </div>
       );
     }
 
-    return <div>{squares}</div>;
+    const horizontalBorder = [];
+    horizontalBorder.push(<div className={styles["border-corner"]}></div>);
+    for (let column = 0; column < mapData.cols; column++) {
+      const horizontalBorderClasses = classNames(
+        styles["horizontal-border"],
+        column % 2 === 0 ? styles.solid : undefined
+      );
+      horizontalBorder.push(<div className={horizontalBorderClasses}></div>);
+    }
+    horizontalBorder.push(<div className={styles["border-corner"]}></div>);
+
+    return (
+      <div className={styles.grid}>
+        <div className={styles.row}>{horizontalBorder}</div>
+        {squares}
+        <div className={styles.row}>{horizontalBorder}</div>
+      </div>
+    );
   }
 }

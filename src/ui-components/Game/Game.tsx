@@ -6,7 +6,7 @@ import MapData from "../../classes/MapData";
 import { Terrain } from "../../game-components/Terrains";
 import { NormalMap } from "../../game-components/Maps";
 import ExploreDeck from "../../classes/ExploreDeck";
-import { isAmbushCard, isRuinsCard, isShapeCard, Shape, ShapeCard } from "../../models/Card";
+import { isAmbushCard, isRuinsCard, isShapeCard, Shape } from "../../models/Card";
 import CurrentCard from "../Cards/CurrentCard/CurrentCard";
 import Seasons, { Season } from "../../game-components/Seasons";
 import SeasonCard from "../Cards/SeasonCard/SeasonCard";
@@ -173,6 +173,7 @@ export default function Game() {
         setRuinActive(false);
         setCoins(coins + newCoins);
         setMapHistory(mapHistory.concat([newMapData]));
+        setOverlay(new MapData());
         setPhase(Phase.Check);
       }
     }

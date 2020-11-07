@@ -1,5 +1,50 @@
-.row {
-  clear: both;
-  content: "";
-  display: table;
+@import "../../assets/styles/colours.scss";
+
+.grid {
+  .row {
+    clear: both;
+    content: "";
+    display: table;
+
+    div:nth-of-type(2) {
+      border-left: 0;
+    }
+
+    .vertical-border {
+      border-left: 1px solid $map-sheet-black-stroke;
+      border-right: 1px solid $map-sheet-black-stroke;
+      width: 3px;
+      height: 40px;
+
+      &.left {
+        float: left;
+      }
+
+      &.right {
+        float: right;
+      }
+
+      &.solid {
+        background-color: $map-sheet-black-stroke;
+      }
+    }
+
+    .horizontal-border {
+      border-top: 1px solid $map-sheet-black-stroke;
+      width: 41px;
+      height: 3px;
+      float: left;
+
+      &.solid {
+        background-color: $map-sheet-black-stroke;
+      }
+    }
+
+    .border-corner {
+      float: left;
+      width: 3px;
+      height: 3px;
+      border: 1px solid $map-sheet-black-stroke;
+    }
+  }
 }
