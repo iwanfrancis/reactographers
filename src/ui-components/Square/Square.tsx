@@ -41,7 +41,11 @@ export default class Square extends React.PureComponent<Props> {
       moveValid,
       onSquareHoverOn = () => {},
     } = this.props;
-    const squareCssClass = classNames(styles.square, squareType ? styles[squareType] : null);
+    const squareCssClass = classNames(
+      styles.square,
+      squareType && !hasRuin ? styles[squareType] : null,
+      squareType && hasRuin ? styles[`${squareType}-color`] : null
+    );
     const overlayCssClass = classNames(
       styles.overlay,
       overlayType ? styles[`${overlayType}-color`] : null,
