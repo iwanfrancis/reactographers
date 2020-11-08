@@ -55,6 +55,11 @@
   &.invalid-move {
     border-color: red;
   }
+
+  &.highlight-overlay {
+    opacity: 1;
+    border-color: white !important;
+  }
 }
 
 .ruin {

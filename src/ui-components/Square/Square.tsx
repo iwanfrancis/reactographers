@@ -51,7 +51,7 @@ export default class Square extends React.PureComponent<Props> {
     );
     const overlayCssClass = classNames(
       styles.overlay,
-      overlayType ? styles[`${overlayType}-color`] : null,
+      overlayType ? styles[`${overlayType}-overlay`] : null,
       overlayType !== SquareType.Empty && overlayBorders?.top && styles["top-border"],
       overlayType !== SquareType.Empty && overlayBorders?.right && styles["right-border"],
       overlayType !== SquareType.Empty && overlayBorders?.bottom && styles["bottom-border"],

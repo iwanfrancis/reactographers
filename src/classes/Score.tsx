@@ -44,15 +44,20 @@ export default class Score {
     });
   }
 
-  public scoreSeason(mapData: MapData, season: Season, coins: number) {
+  public async scoreSeason(
+    mapData: MapData,
+    season: Season,
+    coins: number,
+    setOverlay: React.Dispatch<React.SetStateAction<MapData>>
+  ) {
     let seasonScore = this.seasonScores.find((seasonScore) => seasonScore.season === season);
 
     if (!seasonScore) {
       throw new Error("Couldn\t find season score for that season");
     }
 
-    seasonScore.edictOneScore = seasonScore.edictOne.scoringCard.score(mapData);
-    seasonScore.edictTwoScore = seasonScore.edictTwo.scoringCard.score(mapData);
+    seasonScore.edictOneScore = await seasonScore.edictOne.scoringCard.score(mapData, setOverlay);
+    seasonScore.edictTwoScore = await seasonScore.edictTwo.scoringCard.score(mapData, setOverlay);
     seasonScore.coinScore = coins;
     let monsterScore = 0;
     mapData.scoreSquares((gridPos: GridPosition) => {

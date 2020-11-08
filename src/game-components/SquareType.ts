@@ -7,5 +7,7 @@ export enum SquareType {
     Mountain = 'mountain',
     Empty = 'empty',
     Wastelands = 'wastelands',
-    OutOfBounds = 'outofbounds'
+    OutOfBounds = 'outofbounds',
+    Hightlight = 'highlight',
+    ReputationStar = 'reputation-star'
 }

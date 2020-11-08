@@ -5,30 +5,6 @@ $water-color: #03588e;
 $monster-color: #5d1d75;
 $mountain-color: #2a1007;
 
-.forest-color {
-  background-color: $forest-color;
-}
-
-.village-color {
-  background-color: $village-color;
-}
-
-.farm-color {
-  background-color: $farm-color;
-}
-
-.water-color {
-  background-color: $water-color;
-}
-
-.monster-color {
-  background-color: $monster-color;
-}
-
-.mountain-color {
-  background-color: $mountain-color;
-}
-
 .forest {
   background-image: url("../sprites/forest/forest.svg");
   border-radius: 3px;
@@ -63,4 +39,52 @@ $mountain-color: #2a1007;
   background-image: url("../sprites/mountain/mountain-no-coin.svg");
   border-radius: 3px;
   transition: background-image 0.5s linear;
+}
+
+.forest-color {
+  background-color: $forest-color;
+}
+
+.village-color {
+  background-color: $village-color;
+}
+
+.farm-color {
+  background-color: $farm-color;
+}
+
+.water-color {
+  background-color: $water-color;
+}
+
+.monster-color {
+  background-color: $monster-color;
+}
+
+.mountain-color {
+  background-color: $mountain-color;
+}
+
+.forest-overlay {
+  background-color: $forest-color;
+}
+
+.village-overlay {
+  background-color: $village-color;
+}
+
+.farm-overlay {
+  background-color: $farm-color;
+}
+
+.water-overlay {
+  background-color: $water-color;
+}
+
+.monster-overlay {
+  background-color: $monster-color;
+}
+
+.mountain-overlay {
+  background-color: $mountain-color;
 }

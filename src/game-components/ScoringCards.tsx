@@ -1,9 +1,10 @@
 import React from "react";
-import MapData from "../classes/MapData";
+import MapData, { Overlay } from "../classes/MapData";
 import { Cluster } from "../models/Cluster";
 import GridPosition from "../models/GridPosition";
 import { shuffleArray } from "../utils/shuffle";
 import { Edict, EdictCode } from "./Edict";
+import { NormalMap } from "./Maps";
 import { SquareType } from "./SquareType";
 
 export enum ScoringCardType {
@@ -19,7 +20,10 @@ export interface ScoringCard {
   text: string[];
   diagram: JSX.Element;
   singlePlayerScore: number;
-  score: (mapData: MapData) => number;
+  score: (
+    mapData: MapData,
+    setOverlay: React.Dispatch<React.SetStateAction<MapData>>
+  ) => Promise<number>;
 }
 
 export const Borderlands: ScoringCard = {
@@ -28,7 +32,7 @@ export const Borderlands: ScoringCard = {
   text: ["Earn six reputation stars for each complete row or complete column of filled spaces"],
   diagram: <div></div>,
   singlePlayerScore: 24,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
 
     mapData.scoreRowsAndCols((rowOrCol: SquareType[]) => {
@@ -50,7 +54,7 @@ export const CanalLake: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 24,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
 
     mapData.scoreSquares((gridPos: GridPosition) => {
@@ -77,7 +81,7 @@ export const GreatCity: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 16,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
 
     const sortedVillageClusters = mapData.getClusters(SquareType.Village).sort((a, b) => {
@@ -117,7 +121,7 @@ export const Greenbough: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 22,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
 
     mapData.scoreRowsAndCols((rowOrCol: SquareType[]) => {
@@ -138,7 +142,7 @@ export const GreengoldPlains: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 21,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
 
     const villageClusters = mapData.getClusters(SquareType.Village);
@@ -182,7 +186,7 @@ export const LostBarony: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 24,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
     let biggestSquareWidth = 0;
     const grid = mapData.grid;
@@ -237,7 +241,7 @@ export const TheBrokenRoad: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 24,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
     const grid = mapData.grid;
 
@@ -274,7 +278,7 @@ export const TheCauldrons: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 20,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
     mapData.scoreSquares((gridPos: GridPosition) => {
       if (gridPos.terrain === SquareType.Empty) {
@@ -299,7 +303,7 @@ export const TheGoldenGranary: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 20,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
 
     mapData.scoreSquares((gridPos: GridPosition) => {
@@ -346,7 +350,7 @@ export const Treetower: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 17,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
     mapData.scoreSquares((gridPos: GridPosition) => {
       if (gridPos.terrain === SquareType.Forest) {
@@ -371,7 +375,7 @@ export const MagesValley: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 22,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
     mapData.scoreSquares((gridPos: GridPosition) => {
       if (gridPos.terrain === SquareType.Water || gridPos.terrain === SquareType.Farm) {
@@ -398,7 +402,7 @@ export const SentinelWood: ScoringCard = {
   text: ["Earn one reputation star for each forest space adjacent to the edge of the map."],
   diagram: <div></div>,
   singlePlayerScore: 25,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
     mapData.scoreSquares((gridPos: GridPosition) => {
       if (gridPos.terrain === SquareType.Forest) {
@@ -422,7 +426,7 @@ export const ShieldGate: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 20,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
     const clusters = mapData.getClusters(SquareType.Village);
     if (clusters.length > 1) {
@@ -446,7 +450,7 @@ export const ShoresideExpanse: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 27,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
 
     const farmClusters = mapData.getClusters(SquareType.Farm);
@@ -487,7 +491,7 @@ export const StonesideForest: ScoringCard = {
   ],
   diagram: <div></div>,
   singlePlayerScore: 18,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
 
     mapData.scoreSquares((startingGridPos: GridPosition) => {
@@ -544,22 +548,26 @@ export const Wildholds: ScoringCard = {
   text: ["Earn eight reputation stars for each cluster of six or more village spaces."],
   diagram: <div></div>,
   singlePlayerScore: 16,
-  score: (mapData: MapData) => {
+  score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
 
     const clusters = mapData.getClusters(SquareType.Village);
-    clusters.forEach((cluster) => {
+    for (const cluster of clusters) {
       if (cluster.gridPositions.length >= 6) {
+        setOverlay(new Overlay().addGridPositions(SquareType.Hightlight, cluster.gridPositions));
+        await new Promise((r) => setTimeout(r, 2000));
+        console.log("timeout done");
         reputation = reputation + 8;
       }
-    });
-
+    }
+    console.log(reputation);
     return reputation;
   },
 };
 
 export const ForestScoringCards = [Greenbough, SentinelWood, StonesideForest, Treetower];
-export const VillageScoringCards = [GreatCity, GreengoldPlains, ShieldGate, Wildholds];
+// export const VillageScoringCards = [GreatCity, GreengoldPlains, ShieldGate, Wildholds];
+export const VillageScoringCards = [ShieldGate, Wildholds];
 export const SpacialScoringCards = [Borderlands, LostBarony, TheBrokenRoad, TheCauldrons];
 export const FarmAndSeaScoringCards = [CanalLake, MagesValley, ShoresideExpanse, TheGoldenGranary];
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import _ from "lodash";
 
 import styles from "./Game.module.scss";
-import MapData from "../../classes/MapData";
+import MapData, { Overlay } from "../../classes/MapData";
 import { SquareType } from "../../game-components/SquareType";
 import { NormalMap } from "../../game-components/Maps";
 import ExploreDeck from "../../classes/ExploreDeck";
@@ -37,13 +37,7 @@ export default function Game() {
   const [score, setScore] = useState(new Score(Seasons, edicts));
   const [coins, setCoins] = useState(0);
   const [phase, setPhase] = useState(Phase.Explore);
-  const [overlay, setOverlay] = useState(
-    new MapData(
-      new Array(NormalMap.rows)
-        .fill(SquareType.Empty)
-        .map(() => new Array(NormalMap.cols).fill(SquareType.Empty))
-    )
-  );
+  const [overlay, setOverlay] = useState(new Overlay());
   const [currentMoveValid, setCurrentMoveValid] = useState(false);
 
   const playerIndex = 0;
@@ -82,7 +76,7 @@ export default function Game() {
       } else {
         setCurrentMoveValid(false);
       }
-      setOverlay(new MapData().addShape(currentTerrain, currentShape[currentRotation], gridPos));
+      setOverlay(new Overlay().addShape(currentTerrain, currentShape[currentRotation], gridPos));
     }
   };
 
@@ -110,7 +104,7 @@ export default function Game() {
       }
 
       setCurrentRotation(newRotation);
-      setOverlay(new MapData().addShape(currentTerrain, currentShape[newRotation], gridPos));
+      setOverlay(new Overlay().addShape(currentTerrain, currentShape[newRotation], gridPos));
     }
   };
 
@@ -207,7 +201,7 @@ export default function Game() {
         setRuinActive(false);
         setCoins(coins + newCoins);
         setMapHistory(mapHistory.concat([newMapData]));
-        setOverlay(new MapData());
+        setOverlay(new Overlay());
         setPhase(Phase.Check);
       }
     }
@@ -228,12 +222,17 @@ export default function Game() {
     }
   };
 
-  const scoringPhase = () => {
+  const scoringPhase = async () => {
     const currentMapData = mapHistory[mapHistory.length - 1];
     const currentExploreDeck = exploreDeckHistory[exploreDeckHistory.length - 1];
     const newScore = _.clone(score);
 
-    const seasonScore = newScore.scoreSeason(currentMapData, currentSeason, coins);
+    const seasonScore = await newScore.scoreSeason(
+      currentMapData,
+      currentSeason,
+      coins,
+      setOverlay
+    );
 
     setScore(newScore);
 

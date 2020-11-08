@@ -1,6 +1,6 @@
 import { Shape, ShapeRotation } from "../models/Card";
 import { SquareType } from "../game-components/SquareType";
-import { DefaultMapSize } from "../game-components/Maps";
+import { DefaultMapSize, NormalMap } from "../game-components/Maps";
 import GridPosition from "../models/GridPosition";
 import { Cluster } from "../models/Cluster";
 import { SoloAmbushCorner } from "../models/SoloAmbushCorner";
@@ -58,6 +58,22 @@ export default class MapData {
     return this;
   }
 
+  // Maps a single grid position and terrain to the grid.
+  public addGridPosition(terrain: SquareType, gridPos: GridPosition): MapData {
+    if (this.coordWithinBounds({ row: gridPos.row, col: gridPos.col })) {
+      this.grid[gridPos.row][gridPos.col] = terrain;
+    }
+    return this;
+  }
+
+  // Maps a list of grid positions and terrain to the grid.
+  public addGridPositions(terrain: SquareType, gridPositions: GridPosition[]): MapData {
+    gridPositions.forEach((gridPos) => {
+      this.addGridPosition(terrain, gridPos);
+    });
+    return this;
+  }
+
   public async addMonster(
     shape: ShapeRotation,
     startingCorner: SoloAmbushCorner,
@@ -74,9 +90,9 @@ export default class MapData {
         if (this.moveIsLegal(shape, gridPos, ruinActive, true)) {
           this.addShape(SquareType.Monster, shape, gridPos);
           monsterPlaced = true;
-          setOverlay(new MapData());
+          setOverlay(new Overlay());
         } else {
-          setOverlay(new MapData().addShape(SquareType.Monster, shape, gridPos));
+          setOverlay(new Overlay().addShape(SquareType.Monster, shape, gridPos));
           await new Promise((r) => setTimeout(r, 20));
         }
 
@@ -272,5 +288,17 @@ export default class MapData {
       return false;
     }
     return true;
+  }
+}
+
+export class Overlay extends MapData {
+  constructor(grid?: SquareType[][]) {
+    if (grid) super(grid);
+    else
+      super(
+        new Array(NormalMap.rows)
+          .fill(SquareType.Empty)
+          .map(() => new Array(NormalMap.cols).fill(SquareType.Empty))
+      );
   }
 }
