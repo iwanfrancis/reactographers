@@ -3,7 +3,7 @@ $village-color: #72200a;
 $farm-color: #9e6f31;
 $water-color: #03588e;
 $monster-color: #5d1d75;
-$mountain-color: black;
+$mountain-color: #2a1007;
 
 .forest-color {
   background-color: $forest-color;
@@ -55,6 +55,6 @@ $mountain-color: black;
 }
 
 .mountain {
-  background-color: $mountain-color;
+  background-image: url("../sprites/mountain/mountain.svg");
   border-radius: 3px;
 }
