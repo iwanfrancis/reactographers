@@ -10,15 +10,16 @@ export interface CoinProps {
 export default function CoinTrack(props: CoinProps) {
   const playerCoins = props.coins;
   const totalPossibleCoins = 14;
-  const emptyCoinClass = classNames(styles.empty, styles.coin);
-  const filledCoinClass = classNames(styles.filled, styles.coin);
 
   return (
     <div className={styles.track}>
       {_.times(totalPossibleCoins, (i) => {
-        if (i + 1 <= playerCoins) {
-          return <div key={`coin ${i}`} className={filledCoinClass}></div>;
-        } else return <div key={`coin ${i}`} className={emptyCoinClass}></div>;
+        const coinClass = classNames(
+          styles.coin,
+          styles.empty,
+          i + 1 <= playerCoins && styles.filled
+        );
+        return <div key={`coin ${i}`} className={coinClass}></div>;
       })}
     </div>
   );

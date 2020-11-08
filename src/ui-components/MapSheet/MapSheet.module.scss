@@ -5,6 +5,9 @@
   padding: 100px 10px 20px 10px;
   border: 3px solid black;
   background-color: #fffdf0;
+  -webkit-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.59);
+  -moz-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.59);
+  box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.59);
 
   .coin-track-container {
     margin-top: 10px;
