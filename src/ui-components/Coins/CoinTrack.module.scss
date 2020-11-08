@@ -8,7 +8,7 @@
     width: 15px;
     height: 15px;
     border-radius: 100%;
-    margin: 3px 4px;
+    margin: 3px 6px;
   }
 
   .empty {
@@ -20,5 +20,23 @@
     padding: 1px;
     background-image: url("../../assets/sprites/coin/coin.svg");
     transition: background-image 0.5s linear;
+    animation-name: shine;
+    animation-duration: 2s;
+    animation-iteration-count: 3;
+    animation-timing-function: ease-in-out;
+  }
+}
+
+@keyframes shine {
+  0% {
+    box-shadow: 0 0 5px 0 rgba(233, 197, 53, 0.7);
+  }
+
+  50% {
+    box-shadow: 0 0 5px 5px rgba(233, 197, 53, 0.7);
+  }
+
+  100% {
+    box-shadow: 0 0 5px 0 rgba(233, 197, 53, 0.7);
   }
 }

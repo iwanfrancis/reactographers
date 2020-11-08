@@ -216,7 +216,6 @@ export default class MapData {
         ) {
           const adjacentSquares = this.getAdjacentSquares(gridPos);
           if (Object.values(adjacentSquares).every((square) => square.terrain !== Terrain.Empty)) {
-            console.log(`Mountain at ${gridPos.row},${gridPos.col} surrounded! +1 Coin`);
             newSurroundedMountains.push(gridPos);
           }
         }
