@@ -1,6 +1,6 @@
 import MapData from "../../classes/MapData";
 import { GreatCity, GreengoldPlains, SentinelWood, ShieldGate, Wildholds } from "../../game-components/ScoringCards";
-import { SquareType } from "../../game-components/Terrains";
+import { SquareType } from "../../game-components/SquareType";
 
 describe('great city', () => {
   describe('gives no reputation stars', () => {

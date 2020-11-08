@@ -1,6 +1,6 @@
 import MapData from "../../classes/MapData";
 import { CanalLake, MagesValley, ShoresideExpanse, TheGoldenGranary } from "../../game-components/ScoringCards";
-import { SquareType } from "../../game-components/Terrains";
+import { SquareType } from "../../game-components/SquareType";
 
 describe('mages valley', () => {
   describe('gives no reputation stars', () => {

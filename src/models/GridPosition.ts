@@ -1,4 +1,4 @@
-import { SquareType } from "../game-components/Terrains";
+import { SquareType } from "../game-components/SquareType";
 
 export default interface GridPosition {
   row: number;

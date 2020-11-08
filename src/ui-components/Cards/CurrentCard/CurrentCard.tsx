@@ -10,7 +10,7 @@ import {
   isAmbushCard,
   AmbushCard,
 } from "../../../models/Card";
-import { SquareType } from "../../../game-components/Terrains";
+import { SquareType } from "../../../game-components/SquareType";
 import CurrentAmbushCard from "./CurrentAmbushCard/CurrentAmbushCard";
 import CurrentRuinsCard from "./CurrentRuinsCard/CurrentRuinsCard";
 import CurrentShapeCard from "./CurrentShapeCard/CurrentShapeCard";

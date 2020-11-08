@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 
 import styles from "./Square.module.scss";
-import { SquareType } from "../../game-components/Terrains";
+import { SquareType } from "../../game-components/SquareType";
 import GridPosition from "../../models/GridPosition";
 import { ReactComponent as Ruin } from "../../assets/sprites/ruin/ruin.svg";
 import { SquareBorders } from "../../models/SquareBorders";

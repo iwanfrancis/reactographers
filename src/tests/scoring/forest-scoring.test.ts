@@ -1,6 +1,6 @@
 import MapData from "../../classes/MapData";
 import { Greenbough, MagesValley, SentinelWood, StonesideForest, TheCauldrons, Treetower, Wildholds } from "../../game-components/ScoringCards";
-import { SquareType } from "../../game-components/Terrains";
+import { SquareType } from "../../game-components/SquareType";
 
 describe('greenbough', () => {
   describe('gives no reputation stars', () => {

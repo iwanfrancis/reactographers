@@ -1,5 +1,5 @@
 import React from "react";
-import { SquareType } from "../../../../game-components/Terrains";
+import { SquareType } from "../../../../game-components/SquareType";
 import { AmbushCard } from "../../../../models/Card";
 import { SoloAmbushDirection } from "../../../../models/SoloAmbushDirection";
 import SoloAmbushCorner from "./SoloAmbushCorner/SoloAmbushCorner";

@@ -4,7 +4,7 @@ import { Cluster } from "../models/Cluster";
 import GridPosition from "../models/GridPosition";
 import { shuffleArray } from "../utils/shuffle";
 import { Edict, EdictCode } from "./Edict";
-import { SquareType } from "./Terrains";
+import { SquareType } from "./SquareType";
 
 export enum ScoringCardType {
   Forests = "Forests",

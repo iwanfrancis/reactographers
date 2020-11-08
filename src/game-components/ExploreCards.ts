@@ -1,5 +1,5 @@
 import { RuinsCard, ShapeCard } from "../models/Card";
-import { SquareType } from "./Terrains";
+import { SquareType } from "./SquareType";
 
 // RUINS CARDS
 const OutpostRuins: RuinsCard = {

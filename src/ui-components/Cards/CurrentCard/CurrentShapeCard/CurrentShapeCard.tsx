@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { SquareType } from "../../../../game-components/Terrains";
+import { SquareType } from "../../../../game-components/SquareType";
 import { ShapeCard, Shape } from "../../../../models/Card";
 import CardShape from "../../CardShape/CardShape";
 import styles from "./CurrentShapeCard.module.scss";

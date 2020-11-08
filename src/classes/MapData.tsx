@@ -1,5 +1,5 @@
 import { Shape, ShapeRotation } from "../models/Card";
-import { SquareType } from "../game-components/Terrains";
+import { SquareType } from "../game-components/SquareType";
 import { DefaultMapSize } from "../game-components/Maps";
 import GridPosition from "../models/GridPosition";
 import { Cluster } from "../models/Cluster";

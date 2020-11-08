@@ -1,5 +1,5 @@
 import GridPosition from "../models/GridPosition";
-import { SquareType } from "./Terrains";
+import { SquareType } from "./SquareType";
 
 export interface Map {
     grid: SquareType[][];

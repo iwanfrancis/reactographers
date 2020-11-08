@@ -1,4 +1,4 @@
-import { SquareType } from "../game-components/Terrains";
+import { SquareType } from "../game-components/SquareType";
 import { SoloAmbushCorner } from "./SoloAmbushCorner";
 import { SoloAmbushDirection } from "./SoloAmbushDirection";
 

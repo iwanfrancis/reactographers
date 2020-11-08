@@ -3,7 +3,7 @@ import _ from "lodash";
 
 import styles from "./Game.module.scss";
 import MapData from "../../classes/MapData";
-import { SquareType } from "../../game-components/Terrains";
+import { SquareType } from "../../game-components/SquareType";
 import { NormalMap } from "../../game-components/Maps";
 import ExploreDeck from "../../classes/ExploreDeck";
 import { isAmbushCard, isRuinsCard, isShapeCard, Shape } from "../../models/Card";

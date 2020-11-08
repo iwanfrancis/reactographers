@@ -5,7 +5,7 @@ import MapData from "../../../classes/MapData";
 import GridPosition from "../../../models/GridPosition";
 import classNames from "classnames";
 import { SquareBorders } from "../../../models/SquareBorders";
-import { SquareType } from "../../../game-components/Terrains";
+import { SquareType } from "../../../game-components/SquareType";
 
 export interface Props {
   mapData: MapData;

@@ -1,6 +1,6 @@
 import { Edict } from "../game-components/Edict";
 import { Season } from "../game-components/Seasons";
-import { SquareType } from "../game-components/Terrains";
+import { SquareType } from "../game-components/SquareType";
 import GridPosition from "../models/GridPosition";
 import MapData from "./MapData";
 
