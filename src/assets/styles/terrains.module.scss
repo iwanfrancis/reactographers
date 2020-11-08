@@ -1,9 +1,33 @@
-$forest-color: green;
-$village-color: red;
-$farm-color: gold;
-$water-color: darkblue;
-$monster-color: purple;
+$forest-color: #136d31;
+$village-color: #72200a;
+$farm-color: #9e6f31;
+$water-color: #03588e;
+$monster-color: #5d1d75;
 $mountain-color: black;
+
+.forest-color {
+  background-color: $forest-color;
+}
+
+.village-color {
+  background-color: $village-color;
+}
+
+.farm-color {
+  background-color: $farm-color;
+}
+
+.water-color {
+  background-color: $water-color;
+}
+
+.monster-color {
+  background-color: $monster-color;
+}
+
+.mountain-color {
+  background-color: $mountain-color;
+}
 
 .forest {
   background-image: url("../sprites/forest/forest.svg");
