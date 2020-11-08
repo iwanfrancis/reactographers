@@ -3,11 +3,14 @@ import MapData from "../../classes/MapData";
 import { SeasonScore } from "../../classes/Score";
 import GridPosition from "../../models/GridPosition";
 import CoinTrack from "../Coins/CoinTrack";
-import Grid from "../Grid/Grid";
+import Grid from "./Grid/Grid";
 import ScoreTrack from "../Score/ScoreTrack";
 import styles from "./MapSheet.module.scss";
+import { Cartographer } from "../../models/Cartographer";
+import CartographerDetails from "./CartographerDetails/CartographerDetails";
 
 export interface MapSheetProps {
+  cartographer: Cartographer;
   mapData: MapData;
   overlay: MapData;
   ruinActive: boolean;
@@ -23,6 +26,9 @@ export interface MapSheetProps {
 export default function MapSheet(props: MapSheetProps) {
   return (
     <div className={styles["game-sheet"]}>
+      <div className={styles["cartographer-details-container"]}>
+        <CartographerDetails {...props.cartographer} />
+      </div>
       <div className={styles["map-container"]}>
         <Grid
           mapData={props.mapData}

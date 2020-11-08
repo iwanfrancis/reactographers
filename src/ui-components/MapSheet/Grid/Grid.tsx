@@ -1,11 +1,11 @@
 import React from "react";
-import Square from "../Square/Square";
+import Square from "../../Square/Square";
 import styles from "./Grid.module.scss";
-import MapData from "../../classes/MapData";
-import GridPosition from "../../models/GridPosition";
+import MapData from "../../../classes/MapData";
+import GridPosition from "../../../models/GridPosition";
 import classNames from "classnames";
-import { SquareBorders } from "../../models/SquareBorders";
-import { Terrain } from "../../game-components/Terrains";
+import { SquareBorders } from "../../../models/SquareBorders";
+import { Terrain } from "../../../game-components/Terrains";
 
 export interface Props {
   mapData: MapData;

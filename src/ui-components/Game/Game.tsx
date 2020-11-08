@@ -19,8 +19,12 @@ import { FallbackShape } from "../../constants/FallbackShape";
 import Score from "../../classes/Score";
 
 import MapSheet from "../MapSheet/MapSheet";
+import { Cartographer } from "../../models/Cartographer";
 
 export default function Game() {
+  const [cartographers, setCartographers] = useState<Cartographer[]>([
+    { name: "Iwan", title: "King", kingdom: "Swagville" },
+  ]);
   const [mapHistory, setMapHistory] = useState([new MapData(NormalMap.grid, NormalMap.ruins)]);
   const [exploreDeckHistory, setExploreDeckHistory] = useState([new ExploreDeck()]);
   const [edicts] = useState(drawEdicts());
@@ -41,6 +45,8 @@ export default function Game() {
     )
   );
   const [currentMoveValid, setCurrentMoveValid] = useState(false);
+
+  const playerIndex = 0;
 
   useEffect(() => {
     switch (phase) {
@@ -300,6 +306,7 @@ export default function Game() {
       <div className={styles["left-section"]}></div>
       <div className={styles["middle-section"]}>
         <MapSheet
+          cartographer={cartographers[playerIndex]}
           mapData={mapHistory[mapHistory.length - 1]}
           overlay={overlay}
           ruinActive={ruinActive}

@@ -1,0 +1,27 @@
+@import "../../../assets/styles/colours.scss";
+
+.cartographer-details {
+  width: 100%;
+  padding: 0px 25px 15px 25px;
+
+  .name-and-title {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.1rem;
+
+    .name,
+    .title {
+      color: grey;
+      border-bottom: 1px solid $map-sheet-brown-stroke;
+    }
+
+    .name {
+      margin-bottom: 5px;
+    }
+
+    .title {
+      width: 80%;
+    }
+  }
+}
