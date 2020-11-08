@@ -58,3 +58,9 @@ $mountain-color: #2a1007;
   background-image: url("../sprites/mountain/mountain.svg");
   border-radius: 3px;
 }
+
+.mountain-no-coin {
+  background-image: url("../sprites/mountain/mountain-no-coin.svg");
+  border-radius: 3px;
+  transition: background-image 0.5s linear;
+}

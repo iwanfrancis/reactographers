@@ -27,6 +27,12 @@ export default class Grid extends React.PureComponent<Props> {
     };
   };
 
+  isSquareASurroundedMountain = (mapData: MapData, gridPos: GridPosition) => {
+    return mapData.surroundedMountains.some(
+      (mountain) => mountain.row === gridPos.row && mountain.col === gridPos.col
+    );
+  };
+
   render() {
     const {
       mapData,
@@ -43,11 +49,18 @@ export default class Grid extends React.PureComponent<Props> {
       const squareRow = [];
       for (let column = 0; column < mapData.cols; column++) {
         const gridPos = { row: row, col: column };
+        const squareType = mapData.get(gridPos);
+        let surroundedMountain = false;
+
+        if (squareType === Terrain.Mountain) {
+          surroundedMountain = this.isSquareASurroundedMountain(mapData, gridPos);
+        }
+
         squareRow.push(
           <Square
             key={`${column}:${row}`}
             gridPos={{ row: row, col: column }}
-            squareType={mapData.get(gridPos)}
+            squareType={squareType}
             overlayType={overlay.get(gridPos)}
             overlayBorders={this.calculateSquareBorders(overlay.getAdjacentSquares(gridPos))}
             hasRuin={mapData.hasRuinAtPosition(gridPos)}
@@ -56,6 +69,7 @@ export default class Grid extends React.PureComponent<Props> {
             onRotateShape={onRotateShape}
             ruinActive={ruinActive}
             moveValid={currentMoveValid}
+            surroundedMountain={surroundedMountain}
           />
         );
       }

@@ -15,6 +15,7 @@ export interface Props {
   hasRuin?: boolean;
   ruinActive?: boolean;
   moveValid?: boolean;
+  surroundedMountain?: boolean;
   onClick: (gridPos: GridPosition) => any;
   onSquareHoverOn: (gridPos: GridPosition) => any;
   onRotateShape: (gridPos: GridPosition) => any;
@@ -39,12 +40,14 @@ export default class Square extends React.PureComponent<Props> {
       hasRuin,
       ruinActive,
       moveValid,
+      surroundedMountain,
       onSquareHoverOn = () => {},
     } = this.props;
     const squareCssClass = classNames(
       styles.square,
-      squareType && !hasRuin ? styles[squareType] : null,
-      squareType && hasRuin ? styles[`${squareType}-color`] : null
+      squareType && !hasRuin && styles[squareType],
+      surroundedMountain && styles["mountain-no-coin"],
+      squareType && hasRuin && styles[`${squareType}-color`]
     );
     const overlayCssClass = classNames(
       styles.overlay,
