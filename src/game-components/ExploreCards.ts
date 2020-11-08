@@ -1,5 +1,5 @@
 import { RuinsCard, ShapeCard } from "../models/Card";
-import { Terrain } from "./Terrains";
+import { SquareType } from "./Terrains";
 
 // RUINS CARDS
 const OutpostRuins: RuinsCard = {
@@ -18,7 +18,7 @@ const TempleRuins: RuinsCard = {
 const Farmland: ShapeCard = {
     name: 'Farmland',
     time: 1,
-    terrains: [Terrain.Farm],
+    terrains: [SquareType.Farm],
     coinIndex: 0,
     shapes: [
         [
@@ -62,7 +62,7 @@ const Farmland: ShapeCard = {
 const FishingVillage: ShapeCard = {
     name: 'Fishing Village',
     time: 2,
-    terrains: [Terrain.Village, Terrain.Water],
+    terrains: [SquareType.Village, SquareType.Water],
     shapes: [
         [
             [
@@ -84,7 +84,7 @@ const FishingVillage: ShapeCard = {
 const ForgottenForest: ShapeCard = {
     name: 'Forgotten Forest',
     time: 1,
-    terrains: [Terrain.Forest],
+    terrains: [SquareType.Forest],
     coinIndex: 0,
     shapes: [
         [
@@ -145,7 +145,7 @@ const ForgottenForest: ShapeCard = {
 const GreatRiver: ShapeCard = {
     name: 'Great River',
     time: 1,
-    terrains: [Terrain.Water],
+    terrains: [SquareType.Water],
     coinIndex: 0,
     shapes: [
         [
@@ -194,7 +194,7 @@ const GreatRiver: ShapeCard = {
 const Hamlet: ShapeCard = {
     name: 'Hamlet',
     time: 1,
-    terrains: [Terrain.Village],
+    terrains: [SquareType.Village],
     coinIndex: 0,
     shapes: [
         [
@@ -257,7 +257,7 @@ const Hamlet: ShapeCard = {
 const HinterlandStream: ShapeCard = {
     name: 'Hinterland Stream',
     time: 2,
-    terrains: [Terrain.Farm, Terrain.Water],
+    terrains: [SquareType.Farm, SquareType.Water],
     shapes: [
         [
             [
@@ -291,7 +291,7 @@ const HinterlandStream: ShapeCard = {
 const Homestead: ShapeCard = {
     name: 'Homestead',
     time: 2,
-    terrains: [Terrain.Village, Terrain.Farm],
+    terrains: [SquareType.Village, SquareType.Farm],
     shapes: [
         [
             [
@@ -325,7 +325,7 @@ const Homestead: ShapeCard = {
 const Marshlands: ShapeCard = {
     name: 'Marshlands',
     time: 2,
-    terrains: [Terrain.Forest, Terrain.Water],
+    terrains: [SquareType.Forest, SquareType.Water],
     shapes: [
         [
             [
@@ -359,7 +359,7 @@ const Marshlands: ShapeCard = {
 const Orchard: ShapeCard = {
     name: 'Orchard',
     time: 2,
-    terrains: [Terrain.Forest, Terrain.Farm],
+    terrains: [SquareType.Forest, SquareType.Farm],
     shapes: [
         [
             [
@@ -393,7 +393,7 @@ const Orchard: ShapeCard = {
 const RiftLands: ShapeCard = {
     name: 'Rift Lands',
     time: 0,
-    terrains: [Terrain.Forest, Terrain.Village, Terrain.Farm, Terrain.Water, Terrain.Monster],
+    terrains: [SquareType.Forest, SquareType.Village, SquareType.Farm, SquareType.Water, SquareType.Monster],
     shapes: [
         [
             [
@@ -409,7 +409,7 @@ const RiftLands: ShapeCard = {
 const TreetopVillage: ShapeCard = {
     name: 'Treetop Village',
     time: 2,
-    terrains: [Terrain.Forest, Terrain.Village],
+    terrains: [SquareType.Forest, SquareType.Village],
     shapes: [
         [
             [

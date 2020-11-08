@@ -1,5 +1,5 @@
 import React from "react";
-import { Terrain } from "../../../../game-components/Terrains";
+import { SquareType } from "../../../../game-components/Terrains";
 import { AmbushCard } from "../../../../models/Card";
 import { SoloAmbushDirection } from "../../../../models/SoloAmbushDirection";
 import SoloAmbushCorner from "./SoloAmbushCorner/SoloAmbushCorner";
@@ -36,7 +36,7 @@ export default function CurrentAmbushCard(props: CurrentAmbushCardProps) {
           </div>
           <div className={styles.divider}></div>
           <div className={styles.shape}>
-            <CardShape shape={ambushCard.shape} terrain={Terrain.Monster} />
+            <CardShape shape={ambushCard.shape} terrain={SquareType.Monster} />
           </div>
         </div>
       </div>

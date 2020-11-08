@@ -10,18 +10,18 @@ import {
   isAmbushCard,
   AmbushCard,
 } from "../../../models/Card";
-import { Terrain } from "../../../game-components/Terrains";
+import { SquareType } from "../../../game-components/Terrains";
 import CurrentAmbushCard from "./CurrentAmbushCard/CurrentAmbushCard";
 import CurrentRuinsCard from "./CurrentRuinsCard/CurrentRuinsCard";
 import CurrentShapeCard from "./CurrentShapeCard/CurrentShapeCard";
 
 export interface Props {
   card: Card;
-  currentTerrain: Terrain | undefined;
+  currentTerrain: SquareType | undefined;
   currentShape: Shape | undefined;
   possibleShapes: Shape[];
   ruinsActive: boolean;
-  setCurrentTerrain: React.Dispatch<React.SetStateAction<Terrain | undefined>>;
+  setCurrentTerrain: React.Dispatch<React.SetStateAction<SquareType | undefined>>;
   setCurrentShape: React.Dispatch<React.SetStateAction<Shape | undefined>>;
   offset: number;
 }

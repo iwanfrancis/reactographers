@@ -1,7 +1,7 @@
 import GridPosition from "./GridPosition";
-import { Terrain } from "../game-components/Terrains";
+import { SquareType } from "../game-components/Terrains";
 
 export interface Cluster {
-  terrain: Terrain;
+  terrain: SquareType;
   gridPositions: GridPosition[];
 }

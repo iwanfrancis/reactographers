@@ -4,7 +4,7 @@ import { Cluster } from "../models/Cluster";
 import GridPosition from "../models/GridPosition";
 import { shuffleArray } from "../utils/shuffle";
 import { Edict, EdictCode } from "./Edict";
-import { Terrain } from "./Terrains";
+import { SquareType } from "./Terrains";
 
 export enum ScoringCardType {
   Forests = "Forests",
@@ -31,8 +31,8 @@ export const Borderlands: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
 
-    mapData.scoreRowsAndCols((rowOrCol: Terrain[]) => {
-      if (rowOrCol.every((terrain) => terrain !== Terrain.Empty)) {
+    mapData.scoreRowsAndCols((rowOrCol: SquareType[]) => {
+      if (rowOrCol.every((terrain) => terrain !== SquareType.Empty)) {
         reputation += 6;
       }
     });
@@ -54,10 +54,10 @@ export const CanalLake: ScoringCard = {
     let reputation = 0;
 
     mapData.scoreSquares((gridPos: GridPosition) => {
-      if (gridPos.terrain === Terrain.Water || gridPos.terrain === Terrain.Farm) {
+      if (gridPos.terrain === SquareType.Water || gridPos.terrain === SquareType.Farm) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
         const requiredAdjacentTerrain =
-          gridPos.terrain === Terrain.Water ? Terrain.Farm : Terrain.Water;
+          gridPos.terrain === SquareType.Water ? SquareType.Farm : SquareType.Water;
         const requiredTerrainFound = Object.values(adjacentSquares).some(
           (square) => square.terrain === requiredAdjacentTerrain
         );
@@ -80,7 +80,7 @@ export const GreatCity: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
 
-    const sortedVillageClusters = mapData.getClusters(Terrain.Village).sort((a, b) => {
+    const sortedVillageClusters = mapData.getClusters(SquareType.Village).sort((a, b) => {
       return b.gridPositions.length - a.gridPositions.length;
     });
 
@@ -91,7 +91,7 @@ export const GreatCity: ScoringCard = {
 
       cluster.gridPositions.forEach((gridPos) => {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
-        if (adjacentSquares.some((square) => square.terrain === Terrain.Mountain)) {
+        if (adjacentSquares.some((square) => square.terrain === SquareType.Mountain)) {
           clusterAdjacentMountain = true;
         }
       });
@@ -120,8 +120,8 @@ export const Greenbough: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
 
-    mapData.scoreRowsAndCols((rowOrCol: Terrain[]) => {
-      if (rowOrCol.some((terrain) => terrain === Terrain.Forest)) {
+    mapData.scoreRowsAndCols((rowOrCol: SquareType[]) => {
+      if (rowOrCol.some((terrain) => terrain === SquareType.Forest)) {
         reputation += 1;
       }
     });
@@ -141,15 +141,15 @@ export const GreengoldPlains: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
 
-    const villageClusters = mapData.getClusters(Terrain.Village);
+    const villageClusters = mapData.getClusters(SquareType.Village);
 
     villageClusters.forEach((cluster) => {
-      let uniqueAdjacentTerrains: Terrain[] = [];
+      let uniqueAdjacentTerrains: SquareType[] = [];
       const illegalTerrains = [
-        Terrain.Empty,
-        Terrain.OutOfBounds,
-        Terrain.Village,
-        Terrain.Wastelands,
+        SquareType.Empty,
+        SquareType.OutOfBounds,
+        SquareType.Village,
+        SquareType.Wastelands,
       ];
 
       cluster.gridPositions.forEach((space) => {
@@ -198,13 +198,13 @@ export const LostBarony: ScoringCard = {
         let allSpacesFilled = true;
 
         for (let row = startingRow; row <= currentRow; row++) {
-          if (grid[row][currentCol] === Terrain.Empty) {
+          if (grid[row][currentCol] === SquareType.Empty) {
             allSpacesFilled = false;
           }
         }
 
         for (let col = startingCol; col <= currentCol; col++) {
-          if (grid[currentRow][col] === Terrain.Empty) {
+          if (grid[currentRow][col] === SquareType.Empty) {
             allSpacesFilled = false;
           }
         }
@@ -245,7 +245,7 @@ export const TheBrokenRoad: ScoringCard = {
       let lineBroken = false;
       let currentRow = row;
       let currentCol = 0;
-      const illegalTerrains = [Terrain.Empty, Terrain.OutOfBounds];
+      const illegalTerrains = [SquareType.Empty, SquareType.OutOfBounds];
 
       while (lineBroken === false && currentRow < mapData.rows) {
         if (illegalTerrains.includes(grid[currentRow][currentCol])) {
@@ -277,10 +277,10 @@ export const TheCauldrons: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
     mapData.scoreSquares((gridPos: GridPosition) => {
-      if (gridPos.terrain === Terrain.Empty) {
+      if (gridPos.terrain === SquareType.Empty) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
         const adjacentSquaresFilled = Object.values(adjacentSquares).every(
-          (square) => square.terrain !== Terrain.Empty
+          (square) => square.terrain !== SquareType.Empty
         );
         if (adjacentSquaresFilled) reputation++;
       }
@@ -303,7 +303,7 @@ export const TheGoldenGranary: ScoringCard = {
     let reputation = 0;
 
     mapData.scoreSquares((gridPos: GridPosition) => {
-      if (gridPos.terrain === Terrain.Farm) {
+      if (gridPos.terrain === SquareType.Farm) {
         if (
           mapData.ruins.some(
             (ruinPos) => ruinPos.row === gridPos.row && ruinPos.col === gridPos.col
@@ -313,7 +313,7 @@ export const TheGoldenGranary: ScoringCard = {
         }
       }
 
-      if (gridPos.terrain === Terrain.Water) {
+      if (gridPos.terrain === SquareType.Water) {
         let adjacentRuinFound = false;
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
 
@@ -349,10 +349,10 @@ export const Treetower: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
     mapData.scoreSquares((gridPos: GridPosition) => {
-      if (gridPos.terrain === Terrain.Forest) {
+      if (gridPos.terrain === SquareType.Forest) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
         const adjacentSquaresFilled = Object.values(adjacentSquares).every(
-          (square) => square.terrain !== Terrain.Empty
+          (square) => square.terrain !== SquareType.Empty
         );
         if (adjacentSquaresFilled) reputation++;
       }
@@ -374,12 +374,14 @@ export const MagesValley: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
     mapData.scoreSquares((gridPos: GridPosition) => {
-      if (gridPos.terrain === Terrain.Water || gridPos.terrain === Terrain.Farm) {
+      if (gridPos.terrain === SquareType.Water || gridPos.terrain === SquareType.Farm) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
-        if (Object.values(adjacentSquares).some((square) => square.terrain === Terrain.Mountain)) {
-          if (gridPos.terrain === Terrain.Water) {
+        if (
+          Object.values(adjacentSquares).some((square) => square.terrain === SquareType.Mountain)
+        ) {
+          if (gridPos.terrain === SquareType.Water) {
             reputation = reputation + 2;
-          } else if (gridPos.terrain === Terrain.Farm) {
+          } else if (gridPos.terrain === SquareType.Farm) {
             reputation = reputation + 1;
           }
         }
@@ -399,10 +401,10 @@ export const SentinelWood: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
     mapData.scoreSquares((gridPos: GridPosition) => {
-      if (gridPos.terrain === Terrain.Forest) {
+      if (gridPos.terrain === SquareType.Forest) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
         const forestWorthPoint = Object.values(adjacentSquares).some(
-          (square) => square.terrain === Terrain.OutOfBounds
+          (square) => square.terrain === SquareType.OutOfBounds
         );
         if (forestWorthPoint) reputation++;
       }
@@ -422,7 +424,7 @@ export const ShieldGate: ScoringCard = {
   singlePlayerScore: 20,
   score: (mapData: MapData) => {
     let reputation = 0;
-    const clusters = mapData.getClusters(Terrain.Village);
+    const clusters = mapData.getClusters(SquareType.Village);
     if (clusters.length > 1) {
       const sortedClusters = clusters.sort((a, b) => {
         return b.gridPositions.length - a.gridPositions.length;
@@ -447,19 +449,21 @@ export const ShoresideExpanse: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
 
-    const farmClusters = mapData.getClusters(Terrain.Farm);
-    const waterClusters = mapData.getClusters(Terrain.Water);
+    const farmClusters = mapData.getClusters(SquareType.Farm);
+    const waterClusters = mapData.getClusters(SquareType.Water);
     const allClusters = [...farmClusters, ...waterClusters];
 
     allClusters.forEach((cluster) => {
-      const oppositeTerrain = cluster.terrain === Terrain.Farm ? Terrain.Water : Terrain.Farm;
+      const oppositeTerrain =
+        cluster.terrain === SquareType.Farm ? SquareType.Water : SquareType.Farm;
       let clusterWorthPoints = true;
 
       cluster.gridPositions.forEach((gridPos) => {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
         if (
           adjacentSquares.some(
-            (square) => square.terrain === oppositeTerrain || square.terrain === Terrain.OutOfBounds
+            (square) =>
+              square.terrain === oppositeTerrain || square.terrain === SquareType.OutOfBounds
           )
         ) {
           clusterWorthPoints = false;
@@ -487,7 +491,7 @@ export const StonesideForest: ScoringCard = {
     let reputation = 0;
 
     mapData.scoreSquares((startingGridPos: GridPosition) => {
-      if (startingGridPos.terrain === Terrain.Mountain) {
+      if (startingGridPos.terrain === SquareType.Mountain) {
         let connectedMountainFound = false;
         let connectedForestSpaces: GridPosition[] = [];
 
@@ -501,12 +505,12 @@ export const StonesideForest: ScoringCard = {
           }
           if (!connectedMountainFound) {
             if (
-              gridPos.terrain === Terrain.Mountain &&
+              gridPos.terrain === SquareType.Mountain &&
               gridPos.row !== startingGridPos.row &&
               gridPos.col !== startingGridPos.col
             ) {
               connectedMountainFound = true;
-            } else if (gridPos.terrain === Terrain.Forest) {
+            } else if (gridPos.terrain === SquareType.Forest) {
               const alreadyFound = connectedForestSpaces.some((forestGridPos) => {
                 return forestGridPos.row === gridPos.row && forestGridPos.col === gridPos.col;
               });
@@ -543,7 +547,7 @@ export const Wildholds: ScoringCard = {
   score: (mapData: MapData) => {
     let reputation = 0;
 
-    const clusters = mapData.getClusters(Terrain.Village);
+    const clusters = mapData.getClusters(SquareType.Village);
     clusters.forEach((cluster) => {
       if (cluster.gridPositions.length >= 6) {
         reputation = reputation + 8;

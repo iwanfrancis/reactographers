@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { Terrain } from "../../../../game-components/Terrains";
+import { SquareType } from "../../../../game-components/Terrains";
 import { ShapeCard, Shape } from "../../../../models/Card";
 import CardShape from "../../CardShape/CardShape";
 import styles from "./CurrentShapeCard.module.scss";
@@ -10,9 +10,9 @@ export interface CurrentShapeCardProps {
   offsetStyle: any;
   ruinsActive: boolean;
   possibleShapes: Shape[];
-  currentTerrain: Terrain | undefined;
+  currentTerrain: SquareType | undefined;
   currentShape: Shape | undefined;
-  setCurrentTerrain: React.Dispatch<React.SetStateAction<Terrain | undefined>>;
+  setCurrentTerrain: React.Dispatch<React.SetStateAction<SquareType | undefined>>;
   setCurrentShape: React.Dispatch<React.SetStateAction<Shape | undefined>>;
 }
 
@@ -28,9 +28,15 @@ export default function CurrentShapeCard(props: CurrentShapeCardProps) {
     setCurrentTerrain,
   } = props;
 
-  const renderTerrainOptions = (terrains: Terrain[]) => {
+  const renderTerrainOptions = (terrains: SquareType[]) => {
     if (ruinsActive && possibleShapes.length === 0) {
-      terrains = [Terrain.Forest, Terrain.Village, Terrain.Farm, Terrain.Water, Terrain.Monster];
+      terrains = [
+        SquareType.Forest,
+        SquareType.Village,
+        SquareType.Farm,
+        SquareType.Water,
+        SquareType.Monster,
+      ];
     }
     return (
       <div className={styles.terrains}>

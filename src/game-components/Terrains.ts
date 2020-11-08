@@ -1,4 +1,4 @@
-export enum Terrain {
+export enum SquareType {
     Forest = 'forest',
     Village = 'village',
     Farm = 'farm',

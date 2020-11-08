@@ -1,8 +1,8 @@
 import GridPosition from "../models/GridPosition";
-import { Terrain } from "./Terrains";
+import { SquareType } from "./Terrains";
 
 export interface Map {
-    grid: Terrain[][];
+    grid: SquareType[][];
     ruins: GridPosition[];
     rows: number;
     cols: number
@@ -15,17 +15,17 @@ export const DefaultMapSize = {
 
 export const NormalMap = {
     grid: [
-        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
-        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Mountain, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
-        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Mountain, Terrain.Empty, Terrain.Empty],
-        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
-        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
-        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Mountain, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
-        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
-        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
-        [Terrain.Empty, Terrain.Empty, Terrain.Mountain, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty],
-        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Mountain, Terrain.Empty, Terrain.Empty, Terrain.Empty],
-        [Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty, Terrain.Empty]
+        [SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty],
+        [SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Mountain, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty],
+        [SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Mountain, SquareType.Empty, SquareType.Empty],
+        [SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty],
+        [SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty],
+        [SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Mountain, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty],
+        [SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty],
+        [SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty],
+        [SquareType.Empty, SquareType.Empty, SquareType.Mountain, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty],
+        [SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Mountain, SquareType.Empty, SquareType.Empty, SquareType.Empty],
+        [SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty, SquareType.Empty]
     ],
     ruins: [
         {row: 1, col: 5},

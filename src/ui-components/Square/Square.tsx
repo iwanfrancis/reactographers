@@ -2,15 +2,15 @@ import React from "react";
 import classNames from "classnames";
 
 import styles from "./Square.module.scss";
-import { Terrain } from "../../game-components/Terrains";
+import { SquareType } from "../../game-components/Terrains";
 import GridPosition from "../../models/GridPosition";
 import { ReactComponent as Ruin } from "../../assets/sprites/ruin/ruin.svg";
 import { SquareBorders } from "../../models/SquareBorders";
 
 export interface Props {
   gridPos: GridPosition;
-  squareType?: Terrain;
-  overlayType?: Terrain;
+  squareType?: SquareType;
+  overlayType?: SquareType;
   overlayBorders?: SquareBorders;
   hasRuin?: boolean;
   ruinActive?: boolean;
@@ -52,15 +52,17 @@ export default class Square extends React.PureComponent<Props> {
     const overlayCssClass = classNames(
       styles.overlay,
       overlayType ? styles[`${overlayType}-color`] : null,
-      overlayType !== Terrain.Empty && overlayBorders?.top && styles["top-border"],
-      overlayType !== Terrain.Empty && overlayBorders?.right && styles["right-border"],
-      overlayType !== Terrain.Empty && overlayBorders?.bottom && styles["bottom-border"],
-      overlayType !== Terrain.Empty && overlayBorders?.left && styles["left-border"],
+      overlayType !== SquareType.Empty && overlayBorders?.top && styles["top-border"],
+      overlayType !== SquareType.Empty && overlayBorders?.right && styles["right-border"],
+      overlayType !== SquareType.Empty && overlayBorders?.bottom && styles["bottom-border"],
+      overlayType !== SquareType.Empty && overlayBorders?.left && styles["left-border"],
       moveValid ? styles["valid-move"] : styles["invalid-move"]
     );
     const secondOverlayCssClass = classNames(
       styles["overlay"],
-      hasRuin && ruinActive && squareType === Terrain.Empty ? styles["ruin-highlight"] : undefined
+      hasRuin && ruinActive && squareType === SquareType.Empty
+        ? styles["ruin-highlight"]
+        : undefined
     );
 
     return (

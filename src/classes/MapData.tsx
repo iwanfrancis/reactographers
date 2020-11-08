@@ -1,5 +1,5 @@
 import { Shape, ShapeRotation } from "../models/Card";
-import { Terrain } from "../game-components/Terrains";
+import { SquareType } from "../game-components/Terrains";
 import { DefaultMapSize } from "../game-components/Maps";
 import GridPosition from "../models/GridPosition";
 import { Cluster } from "../models/Cluster";
@@ -8,19 +8,19 @@ import { SoloAmbushDirection } from "../models/SoloAmbushDirection";
 import { spiralTraverse } from "../utils/spiral-traverse";
 
 export default class MapData {
-  grid: Terrain[][];
+  grid: SquareType[][];
   ruins: GridPosition[] = [];
   surroundedMountains: GridPosition[] = [];
   rows: number;
   cols: number;
 
-  constructor(grid?: Terrain[][], ruins?: GridPosition[]) {
+  constructor(grid?: SquareType[][], ruins?: GridPosition[]) {
     if (grid) {
       this.grid = grid;
     } else {
       this.grid = new Array(DefaultMapSize.rows)
-        .fill(Terrain.Empty)
-        .map(() => new Array(DefaultMapSize.cols).fill(Terrain.Empty));
+        .fill(SquareType.Empty)
+        .map(() => new Array(DefaultMapSize.cols).fill(SquareType.Empty));
     }
 
     if (ruins) {
@@ -43,7 +43,7 @@ export default class MapData {
   }
 
   // Maps a shape and terrain to the grid. Puts shape[1][1] on the click location
-  public addShape(terrain: Terrain, shape: ShapeRotation, gridPos: GridPosition): MapData {
+  public addShape(terrain: SquareType, shape: ShapeRotation, gridPos: GridPosition): MapData {
     for (let shRow = 0; shRow < 4; shRow++) {
       for (let shCol = 0; shCol < 4; shCol++) {
         if (shape[shRow][shCol]) {
@@ -72,11 +72,11 @@ export default class MapData {
       direction,
       async (gridPos: GridPosition): Promise<boolean> => {
         if (this.moveIsLegal(shape, gridPos, ruinActive, true)) {
-          this.addShape(Terrain.Monster, shape, gridPos);
+          this.addShape(SquareType.Monster, shape, gridPos);
           monsterPlaced = true;
           setOverlay(new MapData());
         } else {
-          setOverlay(new MapData().addShape(Terrain.Monster, shape, gridPos));
+          setOverlay(new MapData().addShape(SquareType.Monster, shape, gridPos));
           await new Promise((r) => setTimeout(r, 20));
         }
 
@@ -105,7 +105,7 @@ export default class MapData {
 
           if (
             !this.coordWithinBounds({ row: rowOffset, col: colOffset }) ||
-            this.grid[rowOffset][colOffset] !== Terrain.Empty
+            this.grid[rowOffset][colOffset] !== SquareType.Empty
           ) {
             return false;
           }
@@ -146,22 +146,22 @@ export default class MapData {
 
     upGridPos.terrain = this.coordWithinBounds(upGridPos)
       ? this.get(upGridPos)
-      : Terrain.OutOfBounds;
+      : SquareType.OutOfBounds;
     downGridPos.terrain = this.coordWithinBounds(downGridPos)
       ? this.get(downGridPos)
-      : Terrain.OutOfBounds;
+      : SquareType.OutOfBounds;
     leftGridPos.terrain = this.coordWithinBounds(leftGridPos)
       ? this.get(leftGridPos)
-      : Terrain.OutOfBounds;
+      : SquareType.OutOfBounds;
     rightGridPos.terrain = this.coordWithinBounds(rightGridPos)
       ? this.get(rightGridPos)
-      : Terrain.OutOfBounds;
+      : SquareType.OutOfBounds;
 
     return [upGridPos, downGridPos, leftGridPos, rightGridPos];
   }
 
   // Given a terrain type, return an array of all clusters of that type on the grid
-  public getClusters(terrain: Terrain): Cluster[] {
+  public getClusters(terrain: SquareType): Cluster[] {
     let clusters: Cluster[] = [];
 
     for (let row = 0; row < this.rows; row++) {
@@ -209,14 +209,16 @@ export default class MapData {
     let newSurroundedMountains: GridPosition[] = [];
 
     this.scoreSquares((gridPos) => {
-      if (gridPos.terrain === Terrain.Mountain) {
+      if (gridPos.terrain === SquareType.Mountain) {
         if (
           this.surroundedMountains.every(
             (mountain) => !(mountain.row === gridPos.row && mountain.col === gridPos.col)
           )
         ) {
           const adjacentSquares = this.getAdjacentSquares(gridPos);
-          if (Object.values(adjacentSquares).every((square) => square.terrain !== Terrain.Empty)) {
+          if (
+            Object.values(adjacentSquares).every((square) => square.terrain !== SquareType.Empty)
+          ) {
             newSurroundedMountains.push(gridPos);
           }
         }
@@ -239,14 +241,14 @@ export default class MapData {
   }
 
   // Given a scoring function, apply it to each row in the grid
-  public scoreRows(scoringFunction: (row: Terrain[]) => void): void {
+  public scoreRows(scoringFunction: (row: SquareType[]) => void): void {
     this.grid.forEach((row) => {
       scoringFunction(row);
     });
   }
 
   // Given a scoring function, apply it to each col in the grid
-  public scoreCols(scoringFunction: (col: Terrain[]) => void): void {
+  public scoreCols(scoringFunction: (col: SquareType[]) => void): void {
     for (let colNum = 0; colNum < this.cols; colNum++) {
       const col = this.grid.map((row) => row[colNum]);
       scoringFunction(col);
@@ -254,7 +256,7 @@ export default class MapData {
   }
 
   // Given a scoring function, apply it to each row and col in the grid
-  public scoreRowsAndCols(scoringFunction: (rowOrCol: Terrain[]) => void): void {
+  public scoreRowsAndCols(scoringFunction: (rowOrCol: SquareType[]) => void): void {
     this.scoreRows(scoringFunction);
     this.scoreCols(scoringFunction);
   }

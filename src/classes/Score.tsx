@@ -1,6 +1,6 @@
 import { Edict } from "../game-components/Edict";
 import { Season } from "../game-components/Seasons";
-import { Terrain } from "../game-components/Terrains";
+import { SquareType } from "../game-components/Terrains";
 import GridPosition from "../models/GridPosition";
 import MapData from "./MapData";
 
@@ -56,9 +56,11 @@ export default class Score {
     seasonScore.coinScore = coins;
     let monsterScore = 0;
     mapData.scoreSquares((gridPos: GridPosition) => {
-      if (gridPos.terrain === Terrain.Empty) {
+      if (gridPos.terrain === SquareType.Empty) {
         const adjacentSquares = mapData.getAdjacentSquares(gridPos);
-        if (Object.values(adjacentSquares).some((square) => square.terrain === Terrain.Monster)) {
+        if (
+          Object.values(adjacentSquares).some((square) => square.terrain === SquareType.Monster)
+        ) {
           monsterScore--;
         }
       }

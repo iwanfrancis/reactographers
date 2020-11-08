@@ -1,4 +1,4 @@
-import { Terrain } from "../game-components/Terrains";
+import { SquareType } from "../game-components/Terrains";
 import { SoloAmbushCorner } from "./SoloAmbushCorner";
 import { SoloAmbushDirection } from "./SoloAmbushDirection";
 
@@ -15,7 +15,7 @@ export interface RuinsCard extends Card {
 }
 
 export interface ShapeCard extends Card {
-    terrains: Terrain[];
+    terrains: SquareType[];
     shapes: Shape[]
     coinIndex?: number // index of shape with coin (only ever one per card)
 }

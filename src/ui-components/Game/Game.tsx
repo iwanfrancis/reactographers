@@ -3,7 +3,7 @@ import _ from "lodash";
 
 import styles from "./Game.module.scss";
 import MapData from "../../classes/MapData";
-import { Terrain } from "../../game-components/Terrains";
+import { SquareType } from "../../game-components/Terrains";
 import { NormalMap } from "../../game-components/Maps";
 import ExploreDeck from "../../classes/ExploreDeck";
 import { isAmbushCard, isRuinsCard, isShapeCard, Shape } from "../../models/Card";
@@ -29,7 +29,7 @@ export default function Game() {
   const [exploreDeckHistory, setExploreDeckHistory] = useState([new ExploreDeck()]);
   const [edicts] = useState(drawEdicts());
   const [currentSeason, setCurrentSeason] = useState<Season>(Seasons[0]);
-  const [currentTerrain, setCurrentTerrain] = useState<Terrain>();
+  const [currentTerrain, setCurrentTerrain] = useState<SquareType>();
   const [currentShape, setCurrentShape] = useState<Shape>();
   const [currentRotation, setCurrentRotation] = useState(0);
   const [possibleShapes, setPossibleShapes] = useState<Shape[]>([]);
@@ -40,8 +40,8 @@ export default function Game() {
   const [overlay, setOverlay] = useState(
     new MapData(
       new Array(NormalMap.rows)
-        .fill(Terrain.Empty)
-        .map(() => new Array(NormalMap.cols).fill(Terrain.Empty))
+        .fill(SquareType.Empty)
+        .map(() => new Array(NormalMap.cols).fill(SquareType.Empty))
     )
   );
   const [currentMoveValid, setCurrentMoveValid] = useState(false);

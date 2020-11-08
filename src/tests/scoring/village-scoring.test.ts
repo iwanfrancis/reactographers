@@ -1,15 +1,15 @@
 import MapData from "../../classes/MapData";
 import { GreatCity, GreengoldPlains, SentinelWood, ShieldGate, Wildholds } from "../../game-components/ScoringCards";
-import { Terrain } from "../../game-components/Terrains";
+import { SquareType } from "../../game-components/Terrains";
 
 describe('great city', () => {
   describe('gives no reputation stars', () => {
     test('when there are no village spaces', () => {
       const map = new MapData(
         [
-          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
-          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
-          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [SquareType.Empty, SquareType.Empty,  SquareType.Empty],
+          [SquareType.Empty, SquareType.Empty, SquareType.Empty],
+          [SquareType.Empty, SquareType.Empty, SquareType.Empty],
         ]
       )
       const score = GreatCity.score(map);
@@ -19,9 +19,9 @@ describe('great city', () => {
     test('when the only village cluster is adjacent to a mountain', () => {
       const map = new MapData(
         [
-          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
-          [Terrain.Village, Terrain.Mountain, Terrain.Empty],
-          [Terrain.Village, Terrain.Empty, Terrain.Empty],
+          [SquareType.Empty, SquareType.Empty,  SquareType.Empty],
+          [SquareType.Village, SquareType.Mountain, SquareType.Empty],
+          [SquareType.Village, SquareType.Empty, SquareType.Empty],
         ]
       )
       const score = GreatCity.score(map);
@@ -31,9 +31,9 @@ describe('great city', () => {
     test('when multiple village clusters are adjacent to mountains', () => {
       const map = new MapData(
         [
-          [Terrain.Empty, Terrain.Empty,  Terrain.Village],
-          [Terrain.Village, Terrain.Mountain, Terrain.Village],
-          [Terrain.Village, Terrain.Empty, Terrain.Empty],
+          [SquareType.Empty, SquareType.Empty,  SquareType.Village],
+          [SquareType.Village, SquareType.Mountain, SquareType.Village],
+          [SquareType.Village, SquareType.Empty, SquareType.Empty],
         ]
       )
       const score = GreatCity.score(map);
@@ -45,9 +45,9 @@ describe('great city', () => {
     test('when the only village cluster is not adjacent to a mountain', () => {
       const map = new MapData(
         [
-          [Terrain.Empty, Terrain.Village,  Terrain.Empty],
-          [Terrain.Empty, Terrain.Village, Terrain.Empty],
-          [Terrain.Empty, Terrain.Village, Terrain.Empty],
+          [SquareType.Empty, SquareType.Village,  SquareType.Empty],
+          [SquareType.Empty, SquareType.Village, SquareType.Empty],
+          [SquareType.Empty, SquareType.Village, SquareType.Empty],
         ]
       )
       const score = GreatCity.score(map);
@@ -57,9 +57,9 @@ describe('great city', () => {
     test('when the largest village cluster is not adjacent to a mountain', () => {
       const map = new MapData(
         [
-          [Terrain.Village, Terrain.Empty,  Terrain.Empty],
-          [Terrain.Village, Terrain.Empty, Terrain.Village],
-          [Terrain.Village, Terrain.Empty, Terrain.Empty],
+          [SquareType.Village, SquareType.Empty,  SquareType.Empty],
+          [SquareType.Village, SquareType.Empty, SquareType.Village],
+          [SquareType.Village, SquareType.Empty, SquareType.Empty],
         ]
       )
       const score = GreatCity.score(map);
@@ -69,9 +69,9 @@ describe('great city', () => {
     test('when only the second largest village cluster is not adjacent to a mountain', () => {
       const map = new MapData(
         [
-          [Terrain.Village, Terrain.Empty,  Terrain.Village],
-          [Terrain.Village, Terrain.Empty, Terrain.Village],
-          [Terrain.Village, Terrain.Mountain, Terrain.Empty],
+          [SquareType.Village, SquareType.Empty,  SquareType.Village],
+          [SquareType.Village, SquareType.Empty, SquareType.Village],
+          [SquareType.Village, SquareType.Mountain, SquareType.Empty],
         ]
       )
       const score = GreatCity.score(map);
@@ -85,9 +85,9 @@ describe('greengold plains', () => {
     test('when a village cluster has no adjacent terrain', () => {
       const map = new MapData(
         [
-          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
-          [Terrain.Empty, Terrain.Village, Terrain.Empty],
-          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [SquareType.Empty, SquareType.Empty,  SquareType.Empty],
+          [SquareType.Empty, SquareType.Village, SquareType.Empty],
+          [SquareType.Empty, SquareType.Empty, SquareType.Empty],
         ]
       )
       const score = GreengoldPlains.score(map);
@@ -97,9 +97,9 @@ describe('greengold plains', () => {
     test('when a village cluster has one adjacent terrain type', () => {
       const map = new MapData(
         [
-          [Terrain.Empty, Terrain.Forest,  Terrain.Empty],
-          [Terrain.Forest, Terrain.Village, Terrain.Forest],
-          [Terrain.Empty, Terrain.Forest, Terrain.Empty],
+          [SquareType.Empty, SquareType.Forest,  SquareType.Empty],
+          [SquareType.Forest, SquareType.Village, SquareType.Forest],
+          [SquareType.Empty, SquareType.Forest, SquareType.Empty],
         ]
       )
       const score = GreengoldPlains.score(map);
@@ -109,9 +109,9 @@ describe('greengold plains', () => {
     test('when a village cluster has two adjacent terrain types', () => {
       const map = new MapData(
         [
-          [Terrain.Empty, Terrain.Forest,  Terrain.Empty],
-          [Terrain.Forest, Terrain.Village, Terrain.Farm],
-          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+          [SquareType.Empty, SquareType.Forest,  SquareType.Empty],
+          [SquareType.Forest, SquareType.Village, SquareType.Farm],
+          [SquareType.Empty, SquareType.Farm, SquareType.Empty],
         ]
       )
       const score = GreengoldPlains.score(map);
@@ -121,9 +121,9 @@ describe('greengold plains', () => {
     test('when a village cluster has two adjacent terrain types and an empty adjacent square', () => {
       const map = new MapData(
         [
-          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
-          [Terrain.Forest, Terrain.Village, Terrain.Farm],
-          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+          [SquareType.Empty, SquareType.Empty,  SquareType.Empty],
+          [SquareType.Forest, SquareType.Village, SquareType.Farm],
+          [SquareType.Empty, SquareType.Farm, SquareType.Empty],
         ]
       )
       const score = GreengoldPlains.score(map);
@@ -133,9 +133,9 @@ describe('greengold plains', () => {
     test('when a village cluster has two adjacent terrain types and is on the edge of the map', () => {
       const map = new MapData(
         [
-          [Terrain.Forest, Terrain.Forest,  Terrain.Empty],
-          [Terrain.Village, Terrain.Village, Terrain.Farm],
-          [Terrain.Farm, Terrain.Farm, Terrain.Empty],
+          [SquareType.Forest, SquareType.Forest,  SquareType.Empty],
+          [SquareType.Village, SquareType.Village, SquareType.Farm],
+          [SquareType.Farm, SquareType.Farm, SquareType.Empty],
         ]
       )
       const score = GreengoldPlains.score(map);
@@ -147,9 +147,9 @@ describe('greengold plains', () => {
     test('when a village cluster has three adjacent terrain types', () => {
       const map = new MapData(
         [
-          [Terrain.Empty, Terrain.Water,  Terrain.Empty],
-          [Terrain.Forest, Terrain.Village, Terrain.Empty],
-          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+          [SquareType.Empty, SquareType.Water,  SquareType.Empty],
+          [SquareType.Forest, SquareType.Village, SquareType.Empty],
+          [SquareType.Empty, SquareType.Farm, SquareType.Empty],
         ]
       )
       const score = GreengoldPlains.score(map);
@@ -159,9 +159,9 @@ describe('greengold plains', () => {
     test('when a village cluster has four adjacent terrain types', () => {
       const map = new MapData(
         [
-          [Terrain.Empty, Terrain.Water,  Terrain.Empty],
-          [Terrain.Forest, Terrain.Village, Terrain.Monster],
-          [Terrain.Empty, Terrain.Farm, Terrain.Empty],
+          [SquareType.Empty, SquareType.Water,  SquareType.Empty],
+          [SquareType.Forest, SquareType.Village, SquareType.Monster],
+          [SquareType.Empty, SquareType.Farm, SquareType.Empty],
         ]
       )
       const score = GreengoldPlains.score(map);
@@ -171,9 +171,9 @@ describe('greengold plains', () => {
     test('when one of two village clusters has three adjacent terrain types', () => {
       const map = new MapData(
         [
-          [Terrain.Farm, Terrain.Empty,  Terrain.Empty],
-          [Terrain.Village, Terrain.Water, Terrain.Village],
-          [Terrain.Forest, Terrain.Empty, Terrain.Empty],
+          [SquareType.Farm, SquareType.Empty,  SquareType.Empty],
+          [SquareType.Village, SquareType.Water, SquareType.Village],
+          [SquareType.Forest, SquareType.Empty, SquareType.Empty],
         ]
       )
       const score = GreengoldPlains.score(map);
@@ -185,9 +185,9 @@ describe('greengold plains', () => {
     test('when a there are two village clusters with three adjacent terrain types', () => {
       const map = new MapData(
         [
-          [Terrain.Farm, Terrain.Empty,  Terrain.Farm],
-          [Terrain.Village, Terrain.Water, Terrain.Village],
-          [Terrain.Forest, Terrain.Empty, Terrain.Forest],
+          [SquareType.Farm, SquareType.Empty,  SquareType.Farm],
+          [SquareType.Village, SquareType.Water, SquareType.Village],
+          [SquareType.Forest, SquareType.Empty, SquareType.Forest],
         ]
       )
       const score = GreengoldPlains.score(map);
@@ -201,9 +201,9 @@ describe('wildholds', () => {
     test('when the grid is empty', () => {
       const map = new MapData(
         [
-          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
-          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
-          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [SquareType.Empty, SquareType.Empty,  SquareType.Empty],
+          [SquareType.Empty, SquareType.Empty, SquareType.Empty],
+          [SquareType.Empty, SquareType.Empty, SquareType.Empty],
         ]
       )
       const score = SentinelWood.score(map);
@@ -213,9 +213,9 @@ describe('wildholds', () => {
     test('when there is a cluster of six water spaces', () => {
       const map = new MapData(
         [
-          [Terrain.Water, Terrain.Water,  Terrain.Empty],
-          [Terrain.Water, Terrain.Water, Terrain.Empty],
-          [Terrain.Water, Terrain.Water, Terrain.Empty],
+          [SquareType.Water, SquareType.Water,  SquareType.Empty],
+          [SquareType.Water, SquareType.Water, SquareType.Empty],
+          [SquareType.Water, SquareType.Water, SquareType.Empty],
         ]
       )
       const score = Wildholds.score(map);
@@ -225,9 +225,9 @@ describe('wildholds', () => {
     test('when there is a cluster of five village spaces', () => {
       const map = new MapData(
         [
-          [Terrain.Village, Terrain.Village,  Terrain.Empty],
-          [Terrain.Village, Terrain.Village, Terrain.Empty],
-          [Terrain.Village, Terrain.Empty, Terrain.Empty],
+          [SquareType.Village, SquareType.Village,  SquareType.Empty],
+          [SquareType.Village, SquareType.Village, SquareType.Empty],
+          [SquareType.Village, SquareType.Empty, SquareType.Empty],
         ]
       )
       const score = Wildholds.score(map);
@@ -237,9 +237,9 @@ describe('wildholds', () => {
     test('when there are two village clusters less than six spaces', () => {
       const map = new MapData(
         [
-          [Terrain.Village, Terrain.Village,  Terrain.Empty],
-          [Terrain.Village, Terrain.Empty, Terrain.Village],
-          [Terrain.Village, Terrain.Empty, Terrain.Village],
+          [SquareType.Village, SquareType.Village,  SquareType.Empty],
+          [SquareType.Village, SquareType.Empty, SquareType.Village],
+          [SquareType.Village, SquareType.Empty, SquareType.Village],
         ]
       )
       const score = Wildholds.score(map);
@@ -251,9 +251,9 @@ describe('wildholds', () => {
     test('when there is a cluster of six village spaces', () => {
       const map = new MapData(
         [
-          [Terrain.Village, Terrain.Village,  Terrain.Empty],
-          [Terrain.Village, Terrain.Village, Terrain.Empty],
-          [Terrain.Village, Terrain.Village, Terrain.Empty],
+          [SquareType.Village, SquareType.Village,  SquareType.Empty],
+          [SquareType.Village, SquareType.Village, SquareType.Empty],
+          [SquareType.Village, SquareType.Village, SquareType.Empty],
         ]
       )
       const score = Wildholds.score(map);
@@ -263,9 +263,9 @@ describe('wildholds', () => {
     test('when there is a cluster of nine village spaces', () => {
       const map = new MapData(
         [
-          [Terrain.Village, Terrain.Village,  Terrain.Village],
-          [Terrain.Village, Terrain.Village, Terrain.Village],
-          [Terrain.Village, Terrain.Village, Terrain.Village],
+          [SquareType.Village, SquareType.Village,  SquareType.Village],
+          [SquareType.Village, SquareType.Village, SquareType.Village],
+          [SquareType.Village, SquareType.Village, SquareType.Village],
         ]
       )
       const score = Wildholds.score(map);
@@ -277,9 +277,9 @@ describe('wildholds', () => {
     test('when there are two village clusters over six spaces', () => {
       const map = new MapData(
         [
-          [Terrain.Village, Terrain.Village,  Terrain.Empty, Terrain.Village, Terrain.Village],
-          [Terrain.Village, Terrain.Village, Terrain.Empty, Terrain.Village, Terrain.Village],
-          [Terrain.Village, Terrain.Village, Terrain.Empty, Terrain.Village, Terrain.Village],
+          [SquareType.Village, SquareType.Village,  SquareType.Empty, SquareType.Village, SquareType.Village],
+          [SquareType.Village, SquareType.Village, SquareType.Empty, SquareType.Village, SquareType.Village],
+          [SquareType.Village, SquareType.Village, SquareType.Empty, SquareType.Village, SquareType.Village],
         ]
       )
       const score = Wildholds.score(map);
@@ -293,9 +293,9 @@ describe('shieldgate', () => {
     test('when the grid is empty', () => {
       const map = new MapData(
         [
-          [Terrain.Empty, Terrain.Empty,  Terrain.Empty],
-          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
-          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [SquareType.Empty, SquareType.Empty,  SquareType.Empty],
+          [SquareType.Empty, SquareType.Empty, SquareType.Empty],
+          [SquareType.Empty, SquareType.Empty, SquareType.Empty],
         ]
       )
       const score = ShieldGate.score(map);
@@ -305,9 +305,9 @@ describe('shieldgate', () => {
     test('when there are two none village clusters', () => {
       const map = new MapData(
         [
-          [Terrain.Farm, Terrain.Farm,  Terrain.Empty],
-          [Terrain.Farm, Terrain.Empty, Terrain.Empty],
-          [Terrain.Empty, Terrain.Empty, Terrain.Farm],
+          [SquareType.Farm, SquareType.Farm,  SquareType.Empty],
+          [SquareType.Farm, SquareType.Empty, SquareType.Empty],
+          [SquareType.Empty, SquareType.Empty, SquareType.Farm],
         ]
       )
       const score = ShieldGate.score(map);
@@ -317,9 +317,9 @@ describe('shieldgate', () => {
     test('when there is only one cluster of villages', () => {
       const map = new MapData(
         [
-          [Terrain.Village, Terrain.Village,  Terrain.Empty],
-          [Terrain.Village, Terrain.Empty, Terrain.Empty],
-          [Terrain.Empty, Terrain.Empty, Terrain.Empty],
+          [SquareType.Village, SquareType.Village,  SquareType.Empty],
+          [SquareType.Village, SquareType.Empty, SquareType.Empty],
+          [SquareType.Empty, SquareType.Empty, SquareType.Empty],
         ]
       )
       const score = ShieldGate.score(map);
@@ -331,9 +331,9 @@ describe('shieldgate', () => {
     test('when the second biggest village cluster has one space', () => {
       const map = new MapData(
         [
-          [Terrain.Village, Terrain.Village,  Terrain.Empty],
-          [Terrain.Village, Terrain.Empty, Terrain.Empty],
-          [Terrain.Empty, Terrain.Empty, Terrain.Village],
+          [SquareType.Village, SquareType.Village,  SquareType.Empty],
+          [SquareType.Village, SquareType.Empty, SquareType.Empty],
+          [SquareType.Empty, SquareType.Empty, SquareType.Village],
         ]
       )
       const score = ShieldGate.score(map);
@@ -343,9 +343,9 @@ describe('shieldgate', () => {
     test('when the second and third biggest village clusters both have one space', () => {
       const map = new MapData(
         [
-          [Terrain.Village, Terrain.Empty,  Terrain.Village],
-          [Terrain.Village, Terrain.Empty, Terrain.Empty],
-          [Terrain.Empty, Terrain.Empty, Terrain.Village],
+          [SquareType.Village, SquareType.Empty,  SquareType.Village],
+          [SquareType.Village, SquareType.Empty, SquareType.Empty],
+          [SquareType.Empty, SquareType.Empty, SquareType.Village],
         ]
       )
       const score = ShieldGate.score(map);
@@ -357,9 +357,9 @@ describe('shieldgate', () => {
     test('when the second biggest village cluster has two spaces', () => {
       const map = new MapData(
         [
-          [Terrain.Village, Terrain.Village,  Terrain.Empty],
-          [Terrain.Village, Terrain.Empty, Terrain.Empty],
-          [Terrain.Empty, Terrain.Village, Terrain.Village],
+          [SquareType.Village, SquareType.Village,  SquareType.Empty],
+          [SquareType.Village, SquareType.Empty, SquareType.Empty],
+          [SquareType.Empty, SquareType.Village, SquareType.Village],
         ]
       )
       const score = ShieldGate.score(map);
@@ -369,9 +369,9 @@ describe('shieldgate', () => {
     test('when the second biggest village cluster has two spaces and the third biggest has one space', () => {
       const map = new MapData(
         [
-          [Terrain.Village, Terrain.Empty,  Terrain.Village],
-          [Terrain.Village, Terrain.Empty, Terrain.Village],
-          [Terrain.Empty, Terrain.Village, Terrain.Empty],
+          [SquareType.Village, SquareType.Empty,  SquareType.Village],
+          [SquareType.Village, SquareType.Empty, SquareType.Village],
+          [SquareType.Empty, SquareType.Village, SquareType.Empty],
         ]
       )
       const score = ShieldGate.score(map);

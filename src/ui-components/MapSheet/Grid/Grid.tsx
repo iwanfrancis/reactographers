@@ -5,7 +5,7 @@ import MapData from "../../../classes/MapData";
 import GridPosition from "../../../models/GridPosition";
 import classNames from "classnames";
 import { SquareBorders } from "../../../models/SquareBorders";
-import { Terrain } from "../../../game-components/Terrains";
+import { SquareType } from "../../../game-components/Terrains";
 
 export interface Props {
   mapData: MapData;
@@ -20,10 +20,10 @@ export interface Props {
 export default class Grid extends React.PureComponent<Props> {
   calculateSquareBorders = (adjacentSquares: GridPosition[]): SquareBorders => {
     return {
-      top: adjacentSquares[0].terrain === Terrain.Empty,
-      bottom: adjacentSquares[1].terrain === Terrain.Empty,
-      left: adjacentSquares[2].terrain === Terrain.Empty,
-      right: adjacentSquares[3].terrain === Terrain.Empty,
+      top: adjacentSquares[0].terrain === SquareType.Empty,
+      bottom: adjacentSquares[1].terrain === SquareType.Empty,
+      left: adjacentSquares[2].terrain === SquareType.Empty,
+      right: adjacentSquares[3].terrain === SquareType.Empty,
     };
   };
 
@@ -52,7 +52,7 @@ export default class Grid extends React.PureComponent<Props> {
         const squareType = mapData.get(gridPos);
         let surroundedMountain = false;
 
-        if (squareType === Terrain.Mountain) {
+        if (squareType === SquareType.Mountain) {
           surroundedMountain = this.isSquareASurroundedMountain(mapData, gridPos);
         }
 
