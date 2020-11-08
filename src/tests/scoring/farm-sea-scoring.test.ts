@@ -12,7 +12,7 @@ describe('mages valley', () => {
           [SquareType.Empty, SquareType.Empty, SquareType.Empty],
         ]
       )
-      const score = MagesValley.score(map);
+      const score = MagesValley.score(map,());
       expect(score).toBe(0);
     })
 

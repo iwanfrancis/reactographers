@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 import MapData, { Overlay } from "../classes/MapData";
 import { Cluster } from "../models/Cluster";
@@ -551,23 +552,26 @@ export const Wildholds: ScoringCard = {
   score: async (mapData: MapData, setOverlay: React.Dispatch<React.SetStateAction<MapData>>) => {
     let reputation = 0;
 
+    let overlay = new Overlay();
+
     const clusters = mapData.getClusters(SquareType.Village);
     for (const cluster of clusters) {
       if (cluster.gridPositions.length >= 6) {
-        setOverlay(new Overlay().addGridPositions(SquareType.Hightlight, cluster.gridPositions));
-        await new Promise((r) => setTimeout(r, 2000));
-        console.log("timeout done");
+        overlay.addGridPositions(SquareType.Hightlight, cluster.gridPositions);
+        setOverlay(_.clone(overlay));
+        await new Promise((r) => setTimeout(r, 3000));
         reputation = reputation + 8;
       }
     }
-    console.log(reputation);
+
+    await new Promise((r) => setTimeout(r, 1000));
+    setOverlay(new Overlay());
     return reputation;
   },
 };
 
 export const ForestScoringCards = [Greenbough, SentinelWood, StonesideForest, Treetower];
-// export const VillageScoringCards = [GreatCity, GreengoldPlains, ShieldGate, Wildholds];
-export const VillageScoringCards = [ShieldGate, Wildholds];
+export const VillageScoringCards = [GreatCity, GreengoldPlains, ShieldGate, Wildholds];
 export const SpacialScoringCards = [Borderlands, LostBarony, TheBrokenRoad, TheCauldrons];
 export const FarmAndSeaScoringCards = [CanalLake, MagesValley, ShoresideExpanse, TheGoldenGranary];
 

@@ -48,6 +48,7 @@ export default class Score {
     mapData: MapData,
     season: Season,
     coins: number,
+    setScore: React.Dispatch<React.SetStateAction<Score>>,
     setOverlay: React.Dispatch<React.SetStateAction<MapData>>
   ) {
     let seasonScore = this.seasonScores.find((seasonScore) => seasonScore.season === season);
@@ -57,8 +58,14 @@ export default class Score {
     }
 
     seasonScore.edictOneScore = await seasonScore.edictOne.scoringCard.score(mapData, setOverlay);
+    setScore(this);
+
     seasonScore.edictTwoScore = await seasonScore.edictTwo.scoringCard.score(mapData, setOverlay);
+    setScore(this);
+
     seasonScore.coinScore = coins;
+    setScore(this);
+
     let monsterScore = 0;
     mapData.scoreSquares((gridPos: GridPosition) => {
       if (gridPos.terrain === SquareType.Empty) {
@@ -71,11 +78,15 @@ export default class Score {
       }
     });
     seasonScore.monsterScore = monsterScore;
+    setScore(this);
+    await new Promise((r) => setTimeout(r, 1000));
+
     seasonScore.totalScore =
       seasonScore.edictOneScore +
       seasonScore.edictTwoScore +
       seasonScore.coinScore +
       seasonScore.monsterScore;
+    setScore(this);
     return seasonScore;
   }
 

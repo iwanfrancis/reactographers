@@ -231,10 +231,9 @@ export default function Game() {
       currentMapData,
       currentSeason,
       coins,
+      setScore,
       setOverlay
     );
-
-    setScore(newScore);
 
     const currentSeasonIndex = Seasons.indexOf(currentSeason);
     if (currentSeasonIndex >= Seasons.length - 1) {
