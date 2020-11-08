@@ -41,6 +41,30 @@
         color: $map-sheet-brown-stroke;
         opacity: 0.6;
       }
+
+      .coin-background {
+        position: absolute;
+        margin-top: -8px;
+        margin-left: 5px;
+        height: 15px;
+        width: 15px;
+        background-image: url("../../../assets/sprites/coin/coin.svg");
+        opacity: 0.2;
+      }
+
+      .monster-background {
+        position: absolute;
+        margin-top: -8px;
+        margin-left: -8px;
+        height: 16px;
+        width: 16px;
+        background-image: url("../../../assets/sprites/monster/monster-outline.svg");
+        opacity: 0.5;
+
+        path {
+          stroke: $map-sheet-brown-stroke;
+        }
+      }
     }
 
     .total-score {

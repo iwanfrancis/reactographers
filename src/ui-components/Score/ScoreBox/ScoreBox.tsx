@@ -1,6 +1,7 @@
 import React from "react";
 import { Edict } from "../../../game-components/Edict";
 import styles from "./ScoreBox.module.scss";
+import { ReactComponent as MonsterBackground } from "../../../assets/sprites/monster/monster-outline.svg";
 
 export interface ScoreBoxProps {
   edictOne: Edict;
@@ -28,18 +29,38 @@ export default function ScoreBox(props: ScoreBoxProps) {
       <tbody>
         <tr className={styles["score-box-row"]}>
           <td className={styles["score-cell"]}>
-            {edictOneScore || <div className={styles["edict-background"]}>{edictOne.code}</div>}
+            {edictOneScore !== undefined ? (
+              edictOneScore
+            ) : (
+              <div className={styles["edict-background"]}>{edictOne.code}</div>
+            )}
           </td>
           <td className={styles["score-cell"]}>
-            {edictTwoScore || <div className={styles["edict-background"]}>{edictTwo.code}</div>}
+            {edictTwoScore !== undefined ? (
+              edictTwoScore
+            ) : (
+              <div className={styles["edict-background"]}>{edictTwo.code}</div>
+            )}
           </td>
           <td rowSpan={2} className={styles["total-score"]}>
             {totalScore}
           </td>
         </tr>
         <tr className={styles["score-box-row"]}>
-          <td className={styles["score-cell"]}>{coinScore}</td>
-          <td className={styles["score-cell"]}>{monsterScore}</td>
+          <td className={styles["score-cell"]}>
+            {coinScore !== undefined ? (
+              coinScore
+            ) : (
+              <div className={styles["coin-background"]}></div>
+            )}
+          </td>
+          <td className={styles["score-cell"]}>
+            {monsterScore !== undefined ? (
+              monsterScore
+            ) : (
+              <MonsterBackground className={styles["monster-background"]} />
+            )}
+          </td>
         </tr>
       </tbody>
     </table>
