@@ -130,6 +130,7 @@ export default class MapData {
           }
         }
       }
+      return false;
     });
   }
 

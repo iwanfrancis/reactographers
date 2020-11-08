@@ -1,5 +1,4 @@
 import React from "react";
-import classNames from "classnames";
 
 import {
   Card,
@@ -12,8 +11,6 @@ import {
   AmbushCard,
 } from "../../../models/Card";
 import { Terrain } from "../../../game-components/Terrains";
-import styles from "./CurrentCard.module.scss";
-import CardShape from "../CardShape/CardShape";
 import CurrentAmbushCard from "./CurrentAmbushCard/CurrentAmbushCard";
 import CurrentRuinsCard from "./CurrentRuinsCard/CurrentRuinsCard";
 import CurrentShapeCard from "./CurrentShapeCard/CurrentShapeCard";

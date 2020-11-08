@@ -25,17 +25,19 @@ export default function ScoreBox(props: ScoreBoxProps) {
 
   return (
     <table className={styles["score-box"]}>
-      <tr className={styles["score-box-row"]}>
-        <td className={styles["score-cell"]}>{edictOneScore}</td>
-        <td className={styles["score-cell"]}>{edictTwoScore}</td>
-        <td rowSpan={2} className={styles["total-score"]}>
-          {totalScore}
-        </td>
-      </tr>
-      <tr className={styles["score-box-row"]}>
-        <td className={styles["score-cell"]}>{coinScore}</td>
-        <td className={styles["score-cell"]}>{monsterScore}</td>
-      </tr>
+      <tbody>
+        <tr className={styles["score-box-row"]}>
+          <td className={styles["score-cell"]}>{edictOneScore}</td>
+          <td className={styles["score-cell"]}>{edictTwoScore}</td>
+          <td rowSpan={2} className={styles["total-score"]}>
+            {totalScore}
+          </td>
+        </tr>
+        <tr className={styles["score-box-row"]}>
+          <td className={styles["score-cell"]}>{coinScore}</td>
+          <td className={styles["score-cell"]}>{monsterScore}</td>
+        </tr>
+      </tbody>
     </table>
   );
 }

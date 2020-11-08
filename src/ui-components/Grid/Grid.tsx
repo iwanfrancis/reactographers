@@ -93,15 +93,19 @@ export default class Grid extends React.PureComponent<Props> {
     }
 
     const horizontalBorder = [];
-    horizontalBorder.push(<div className={styles["border-corner"]}></div>);
+    horizontalBorder.push(<div key="left-border-corner" className={styles["border-corner"]}></div>);
     for (let column = 0; column < mapData.cols; column++) {
       const horizontalBorderClasses = classNames(
         styles["horizontal-border"],
         column % 2 === 0 ? styles.solid : undefined
       );
-      horizontalBorder.push(<div className={horizontalBorderClasses}></div>);
+      horizontalBorder.push(
+        <div key={`horizontal-border-${column}`} className={horizontalBorderClasses}></div>
+      );
     }
-    horizontalBorder.push(<div className={styles["border-corner"]}></div>);
+    horizontalBorder.push(
+      <div key="right-border-corner" className={styles["border-corner"]}></div>
+    );
 
     return (
       <div className={styles.grid}>

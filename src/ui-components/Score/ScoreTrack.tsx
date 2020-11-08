@@ -1,5 +1,5 @@
 import React from "react";
-import Score, { SeasonScore } from "../../classes/Score";
+import { SeasonScore } from "../../classes/Score";
 import ScoreBox from "./ScoreBox/ScoreBox";
 import styles from "./ScoreTrack.module.scss";
 
@@ -15,7 +15,7 @@ export default function ScoreTrack(props: ScoreTrackProps) {
     <div className={styles["score-track"]}>
       {seasonScores.map((seasonScore, i) => {
         return (
-          <React.Fragment>
+          <React.Fragment key={`score-box-${i}`}>
             <ScoreBox {...seasonScore} />
             {i < seasonScores.length - 1 && "+"}
           </React.Fragment>

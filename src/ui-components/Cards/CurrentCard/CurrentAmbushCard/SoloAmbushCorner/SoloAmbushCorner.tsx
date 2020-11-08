@@ -1,5 +1,3 @@
-import classNames from "classnames";
-import _ from "lodash";
 import React from "react";
 import { SoloAmbushCorner as SoloAmbushCornerModel } from "../../../../../models/SoloAmbushCorner";
 import styles from "./SoloAmbushCorner.module.scss";
