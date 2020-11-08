@@ -1,6 +1,14 @@
 @import "../../assets/styles/colours.scss";
 
 .grid {
+  .row:nth-of-type(2) div {
+    border-top: 0;
+  }
+
+  .row:nth-last-of-type(2) div {
+    border-bottom: 0;
+  }
+
   .row {
     clear: both;
     content: "";
