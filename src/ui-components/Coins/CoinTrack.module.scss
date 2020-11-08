@@ -1,8 +1,11 @@
+@import "../../assets/styles/colours.scss";
+
 .track {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  border: 1px solid black;
+  border: 1px solid $map-sheet-black-stroke;
+  border-radius: 10px;
 
   .coin {
     width: 15px;

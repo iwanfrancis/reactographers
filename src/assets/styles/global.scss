@@ -1,5 +1,6 @@
 @import "./fonts.scss";
+@import "../styles/colours.scss";
 
 html {
-  background-color: #fafafa;
+  background-color: $background-color;
 }
