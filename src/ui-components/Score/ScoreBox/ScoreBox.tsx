@@ -27,8 +27,12 @@ export default function ScoreBox(props: ScoreBoxProps) {
     <table className={styles["score-box"]}>
       <tbody>
         <tr className={styles["score-box-row"]}>
-          <td className={styles["score-cell"]}>{edictOneScore}</td>
-          <td className={styles["score-cell"]}>{edictTwoScore}</td>
+          <td className={styles["score-cell"]}>
+            {edictOneScore || <div className={styles["edict-background"]}>{edictOne.code}</div>}
+          </td>
+          <td className={styles["score-cell"]}>
+            {edictTwoScore || <div className={styles["edict-background"]}>{edictTwo.code}</div>}
+          </td>
           <td rowSpan={2} className={styles["total-score"]}>
             {totalScore}
           </td>
