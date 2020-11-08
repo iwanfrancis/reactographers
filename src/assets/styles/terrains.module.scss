@@ -6,12 +6,12 @@ $monster-color: purple;
 $mountain-color: black;
 
 .forest {
-  background-color: $forest-color;
+  background-image: url("../sprites/forest/forest.svg");
   border-radius: 3px;
 }
 
 .village {
-  background-color: $village-color;
+  background-image: url("../sprites/village/village.svg");
   border-radius: 3px;
 }
 
@@ -21,12 +21,12 @@ $mountain-color: black;
 }
 
 .water {
-  background: $water-color;
+  background-image: url("../sprites/water/water.svg");
   border-radius: 3px;
 }
 
 .monster {
-  background-color: $monster-color;
+  background-image: url("../sprites/monster/monster.svg");
   border-radius: 3px;
 }
 
